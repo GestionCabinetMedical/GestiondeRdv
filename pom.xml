@@ -6,13 +6,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-<<<<<<< HEAD
 		<version>2.3.5.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
-=======
-		<version>2.4.0</version>
-		<relativePath /> <!-- lookup parent from repository -->
->>>>>>> 81bb02b84a452b643b4766927447bbadf6916f13
 	</parent>
 	<groupId>adamaing</groupId>
 	<artifactId>GestiondeRdv</artifactId>
@@ -44,30 +39,18 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-<<<<<<< HEAD
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-=======
-			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-			<version>2.2.6.RELEASE</version>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-sleuth</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-zipkin</artifactId>
->>>>>>> 81bb02b84a452b643b4766927447bbadf6916f13
+			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
