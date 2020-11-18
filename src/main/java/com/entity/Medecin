@@ -1,0 +1,46 @@
+package com.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ *  Classe objet Medecin
+ *
+ * @author rachw
+ *
+ */
+
+@Data
+@Entity
+@NoArgsConstructor 
+@AllArgsConstructor
+public class Medecin implements Serializable {
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Column(name="ID_MEDECIN")
+	private Long idMedecin; 
+	@Column(name="NOM")
+	private String nom; 
+	@Column(name="PRENOM")
+	private String prenom;
+	@Column(name="ID_FORMULE")
+	private Long idFormule;
+	@Column(name="ADRESSE_CABINET")
+	private String adresseCabinet;
+	@Column(name="SPECIALITE")
+	private String specialite;
+	@Column(name="IDENTIFIANT")
+	private String identifiant;
+	@Column(name="MOT_DE_PASSE")
+	private String motDePasse;
+
+}
