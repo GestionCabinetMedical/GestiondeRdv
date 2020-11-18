@@ -3,10 +3,12 @@
  */
 package com.service.impl;
 
+import com.service.IDaoService;
+
 /**
  * @author Maxime
  *
  */
-public class DaoServiceImpl {
+public class DaoServiceImpl<E> implements IDaoService<E> {
 
 }

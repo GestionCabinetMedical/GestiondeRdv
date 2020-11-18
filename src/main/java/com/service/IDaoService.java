@@ -7,6 +7,6 @@ package com.service;
  * @author Maxime
  *
  */
-public interface IDaoService {
+public interface IDaoService<E> {
 
 }
