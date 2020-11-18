@@ -15,6 +15,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * La classe {@code Patient} caractérise un patient. Cette classe contient une
+ * liste non-exhaustive d'attributs qui décrivent un patient.
+ * 
  * @author Sophie Lahmar
  * 
  */
@@ -50,67 +53,5 @@ public class Patient implements Serializable {
 	@OneToMany
 	@JoinColumn(name = "fk_patient", referencedColumnName = "ID_PATIENT")
 	private Reservation reservation;
-
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 */
-	public void connexion() {
-		// TODO: implement the method
-	}
-
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 */
-	public void consulterPlanning() {
-		// TODO: implement the method
-	}
-
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 * @return
-	 */
-	public Reservation reserverRdv() {
-		// TODO: implement the method
-		return reservation;
-	}
-
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 * @return
-	 */
-	public Reservation modifierRdv() {
-		// TODO: implement the method
-		return reservation;
-	}
-
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 */
-	public void consulterFicheMedicale() {
-		// TODO: implement the method
-	}
-
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 * @return
-	 */
-	public Patient modifierProfil() {
-		// TODO: implement the method
-		return null;
-	}
-
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 */
-	public void remplirQuestionnaireSatisfaction() {
-		// TODO: implement the method
-	}
 
 }

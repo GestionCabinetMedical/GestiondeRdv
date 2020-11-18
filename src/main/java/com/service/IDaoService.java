@@ -6,7 +6,9 @@ package com.service;
 import java.util.List;
 
 /**
- * Interface service générique responsable des méthodes CRUD à l'ensemble du projet.
+ * Interface service générique responsable des méthodes CRUD à l'ensemble du
+ * projet.
+ * 
  * @author Maxime
  *
  */

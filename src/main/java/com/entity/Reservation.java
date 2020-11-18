@@ -15,6 +15,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * La classe {@code Reservation} caractérise une réservation (faite par un
+ * patient). Cette classe contient une liste non-exhaustive d'attributs qui
+ * décrivent une réservation.
+ * 
  * @author Sophie Lahmar
  * 
  */
