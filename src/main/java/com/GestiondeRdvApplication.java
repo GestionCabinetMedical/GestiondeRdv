@@ -7,6 +7,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.Bean;
+
+import com.entity.Patient;
+import com.entity.Reservation;
+import com.service.IPatientService;
+import com.service.IReservationService;
 
 @EnableDiscoveryClient
 @SpringBootApplication
