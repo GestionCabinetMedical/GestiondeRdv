@@ -1,5 +1,8 @@
 package com.controller.impl;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.controller.IReservationController;
 import com.entity.Reservation;
 
@@ -11,6 +14,8 @@ import com.entity.Reservation;
  * @author Sophie Lahmar
  *
  */
+@RestController
+@RequestMapping(value = "/reservation-rest")
 public class ReservationController extends DaoControllerImpl<Reservation> implements IReservationController {
 
 }

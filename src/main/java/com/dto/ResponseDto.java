@@ -12,16 +12,18 @@ import lombok.Setter;
  * @author Maxime
  *
  */
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ResponseDto<E> {
-	
+
 	private boolean error;
-	
+
 	private E body;
-	
+
 	private String message;
-	
+
 	private int status;
 
 }

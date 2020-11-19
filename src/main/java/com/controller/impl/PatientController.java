@@ -1,5 +1,8 @@
 package com.controller.impl;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.controller.IPatientController;
 import com.entity.Patient;
 
@@ -11,6 +14,8 @@ import com.entity.Patient;
  * @author Sophie Lahmar
  *
  */
+@RestController
+@RequestMapping(value = "/patient-rest")
 public class PatientController extends DaoControllerImpl<Patient> implements IPatientController {
 
 }
