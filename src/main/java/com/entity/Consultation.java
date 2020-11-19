@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 /**
  *  Classe qui définit les Consultations
  *
- * @author rachw
+ * @author Jonathan Rachwal
  *
  */
 
@@ -28,10 +28,11 @@ public class Consultation implements Serializable {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column(name="ID_CONSULTATION", unique = true, nullable = false)
 	private Long idConsultation; 
-	@Column(name="ID_MEDECIN")
+	@Column(name="ID_MEDECIN", unique = false, nullable = false)
 	private Long idMedecin;
-	@Column(name="ID_PATIENT")
+	@Column(name="ID_PATIENT", unique = false, nullable = false)
 	private Long idPatient;
-	
+	@OneToOne
+	@JoinColumn(name="FK_RESERVATION", referencedColumnName = "ID_RESERVATION",  unique = true, nullable = true)
 	private Reservation reservation;
 }
