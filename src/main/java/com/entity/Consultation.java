@@ -33,5 +33,5 @@ public class Consultation implements Serializable {
 	@Column(name="ID_PATIENT")
 	private Long idPatient;
 	
-	private Reservation reservation;
+//	private Reservation reservation;
 }
