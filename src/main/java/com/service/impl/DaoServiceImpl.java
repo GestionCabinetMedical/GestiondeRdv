@@ -27,23 +27,35 @@ public class DaoServiceImpl<E> implements IDaoService<E>{
 	@Override
 	public E addOrUpdate(E entite) {
 		log.info("Servcie générique : méthode add Or Update appelée ");
-		log.info("Appel repo OK");
-		return repo.save(entite);
+		if (entite != null) {
+			log.info("Appel repo OK");
+			return repo.save(entite);
+		}
+		log.warn("Erreur méthode add or update: entite null");
+		return null;
 	}
 
 	@Override
 	public boolean deleteById(Long id) {
 		log.info("Servcie générique : méthode delete By Id appelée ");
-		log.info("Appel repo OK");
-		repo.deleteById(id);
-		return true;
+		if (id != null) {
+			log.info("Appel repo OK");
+			repo.deleteById(id);
+			return true;
+		}
+		log.warn("Erreur méthode delete By id: id null");
+		return false;
 	}
 
 	@Override
 	public E findById(Long id) {
 		log.info("Servcie générique : méthode find By Id appelée ");
-		log.info("Appel repo OK");
-		return repo.findById(id).orElse(null);
+		if (id != null) {
+			log.info("Appel repo OK");
+			return repo.findById(id).orElse(null);
+		}
+		log.warn("Erreur méthode find By id: id null");
+		return null;
 	}
 
 	@Override

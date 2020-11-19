@@ -3,14 +3,15 @@
  */
 package com.dto;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * 
- * Classe ResponseDto permettant la communication avec le front.
+ * Classe GainDto servant mappant le gain du micro service gestion-admin
  * 
  * @author Maxime Rembert
  *
@@ -19,14 +20,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseDto<E> {
+public class GainDto {
 
-	private boolean error;
+	private Long id;
 
-	private E body;
+	private float gain;
 
-	private String message;
-
-	private int status;
+	private Date date;
 
 }

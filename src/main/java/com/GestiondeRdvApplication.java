@@ -6,6 +6,12 @@ import java.util.stream.Stream;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import com.entity.Consultation;
+import com.entity.FichesMedicales;
+import com.service.impl.ConsultationServiceImpl;
+import com.service.impl.FichesMedicalesServiceImpl;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
@@ -14,6 +20,13 @@ import com.entity.Reservation;
 import com.service.IPatientService;
 import com.service.IReservationService;
 
+
+/**
+ * @author Pauline Humbert
+ *
+ * Classe GestiondeRdvApplication instancier des Objects et vérifier la bonne communication le back et la base de données
+ *
+ */
 @EnableDiscoveryClient
 @SpringBootApplication
 public class GestiondeRdvApplication {
@@ -24,13 +37,13 @@ public class GestiondeRdvApplication {
 
 	/**
 	 * @author Sophie Lahmar
-	 * 
+	 *
 	 * @param patientService
 	 * @param reservationService
-	 * @return 
+	 * @return
 	 */
 	@Bean
-	CommandLineRunner start(IPatientService patientService, IReservationService reservationService) {
+	CommandLineRunner start(IPatientService patientService, IReservationService reservationService, FichesMedicalesServiceImpl fichesMedicalesService, ConsultationServiceImpl consultationService) {
 		Patient p1 = new Patient(null, "NIVON", "Steven", "Mandelieu", 19478l, "stiti", "nini", null);
 		Patient p2 = new Patient(null, "MOREAU", "Cathy", "Marseille", 26757l, "mom", "lolo", null);
 
@@ -50,6 +63,22 @@ public class GestiondeRdvApplication {
 
 			patientService.findAll().forEach(System.out::println);
 			reservationService.findAll().forEach(System.out::println);
+
+
+			//pour tester fiches médicales
+			Stream.of(new Consultation(1L, 1L,1L),
+					new Consultation(2L, 2L,2L))
+			.forEach((consultations) -> {
+				consultationService.addOrUpdate(consultations);
+			});
+			consultationService.findAll().forEach(System.out::println);
+
+			Stream.of(new FichesMedicales(1L, "Grippe", "traitement contre la grippe", "pas de commentaires en plus", consultationService.findById(1L)),
+					new FichesMedicales(2L, "Angine", "traitement contre l'angine", "commentaires sur les contre indications", consultationService.findById(2L)))
+					.forEach((fiches) -> {
+						fichesMedicalesService.addOrUpdate(fiches);
+					});
+			fichesMedicalesService.findAll().forEach(System.out::println);
 		};
 	}
 
