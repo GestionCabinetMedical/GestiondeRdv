@@ -23,13 +23,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@NoArgsConstructor 
+@NoArgsConstructor
 @AllArgsConstructor
 public class Consultation implements Serializable {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column(name="ID_CONSULTATION", unique = true, nullable = false)
-	private Long idConsultation; 
+	private Long idConsultation;
 	@Column(name="ID_MEDECIN", unique = false, nullable = false)
 	private Long idMedecin;
 	@Column(name="ID_PATIENT", unique = false, nullable = false)

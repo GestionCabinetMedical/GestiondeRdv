@@ -7,7 +7,7 @@ import com.service.IMedecinService;
 
 /**
  * @author Jonathan RACHWAL
- * 
+ *
  * Classe Medecin service qui étend de DaoServiceImpl et implémente IMedecinService.
  *
  */
@@ -15,7 +15,7 @@ import com.service.IMedecinService;
 public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMedecinService {
 /**
 	 * @author Jonathan Rachwal
-	 * 
+	 *
 	 */
     @Override
 	public void connexion(){
@@ -24,7 +24,7 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 
 	/**
 	 * @author Jonathan Rachwal
-	 * 
+	 *
 	 */
     @Override
 	public float totalDesMedecins{
@@ -33,7 +33,7 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 
 	/**
 	 * @author Jonathan Rachwal
-	 * 
+	 *
 	 * @return
 	 */
     @Override
@@ -43,7 +43,7 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 
 	/**
 	 * @author Jonathan Rachwal
-	 * 
+	 *
 	 * @return
 	 */
     @Override
@@ -53,7 +53,7 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 
 	/**
 	 * @author Jonathan Rachwal
-	 * 
+	 *
 	 */
     @Override
 	public Gain consulterGainsParJour{
@@ -62,7 +62,7 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 
 	/**
 	 * @author Jonathan Rachwal
-	 * 
+	 *
 	 * @return
 	 */
     @Override
@@ -72,16 +72,16 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 
 	/**
 	 * @author Jonathan Rachwal
-	 * 
+	 *
 	 */
     @Override
     public void consulterPlanning{
         // TODO Auto-generated method stub
     }
-    
+
   	/**
 	 * @author Jonathan Rachwal
-	 * 
+	 *
 	 */
     @Override
     public void consulterRapportSatisfaction{

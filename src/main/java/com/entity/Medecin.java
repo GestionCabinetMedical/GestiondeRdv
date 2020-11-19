@@ -22,15 +22,15 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@NoArgsConstructor 
+@NoArgsConstructor
 @AllArgsConstructor
 public class Medecin implements Serializable {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column(name="ID_MEDECIN", unique = true, nullable = false)
-	private Long idMedecin; 
+	private Long idMedecin;
 	@Column(name="NOM", unique = false, nullable = true)
-	private String nom; 
+	private String nom;
 	@Column(name="PRENOM", unique = false, nullable = true)
 	private String prenom;
 	@Column(name="ID_FORMULE", unique = true, nullable = false)
