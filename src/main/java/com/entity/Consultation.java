@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- *  Classe objet Medecin
+ *  Classe qui définit les Consultations
  *
  * @author rachw
  *
@@ -23,24 +23,15 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor 
 @AllArgsConstructor
-public class Medecin implements Serializable {
+public class Consultation implements Serializable {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Column(name="ID_CONSULTATION", unique = true, nullable = false)
+	private Long idConsultation; 
 	@Column(name="ID_MEDECIN")
-	private Long idMedecin; 
-	@Column(name="NOM")
-	private String nom; 
-	@Column(name="PRENOM")
-	private String prenom;
-	@Column(name="ID_FORMULE")
-	private Long idFormule;
-	@Column(name="ADRESSE_CABINET")
-	private String adresseCabinet;
-	@Column(name="SPECIALITE")
-	private String specialite;
-	@Column(name="IDENTIFIANT")
-	private String identifiant;
-	@Column(name="MOT_DE_PASSE")
-	private String motDePasse;
-
+	private Long idMedecin;
+	@Column(name="ID_PATIENT")
+	private Long idPatient;
+	
+	private Reservation reservation;
 }
