@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,5 +43,8 @@ public class Medecin implements Serializable {
 	private String identifiant;
 	@Column(name="MOT_DE_PASSE", unique = false, nullable = true)
 	private String motDePasse;
+	@OneToMany
+	@JoinColumn(name = "fk_medecin", referencedColumnName = "ID_MEDECIN",  unique = true, nullable = true)
+	private Consultation consultation;
 
 }
