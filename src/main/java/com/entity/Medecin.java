@@ -42,5 +42,6 @@ public class Medecin implements Serializable {
 	private String identifiant;
 	@Column(name="MOT_DE_PASSE", unique = false, nullable = true)
 	private String motDePasse;
+	
 
 }

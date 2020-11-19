@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/java/com/controller/impl/ConsultationController.java
+src/main/java/com/controller/impl/ConsultationControllerImpl.java
+src/main/java/com/controller/impl/ConsultationController.java
+src/main/java/com/controller/impl/ConsultationController.java
+*.java
+src/main/java/com/controller/impl/ConsultationController.java
+src/main/java/com/controller/impl/ConsultationController.java
+*.java
+src/main/java/com/controller/impl/ConsultationController.java
