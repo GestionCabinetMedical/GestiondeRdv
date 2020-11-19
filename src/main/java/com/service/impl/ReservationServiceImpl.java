@@ -1,5 +1,7 @@
 package com.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.entity.Reservation;
 import com.service.IReservationService;
 
@@ -11,6 +13,7 @@ import com.service.IReservationService;
  * @author Sophie Lahmar
  *
  */
+@Service
 public class ReservationServiceImpl extends DaoServiceImpl<Reservation> implements IReservationService {
 
 }

@@ -1,5 +1,7 @@
 package com.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.entity.Patient;
 import com.entity.Reservation;
 import com.service.IPatientService;
@@ -13,6 +15,7 @@ import com.service.IPatientService;
  * @author Sophie Lahmar
  *
  */
+@Service
 public class PatientServiceImpl extends DaoServiceImpl<Patient> implements IPatientService {
 
 	/**
