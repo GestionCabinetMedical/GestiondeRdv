@@ -40,6 +40,6 @@ public class FichesMedicales implements Serializable{
 	private String commentaires;
 	@OneToOne
 	@JoinColumn(name="FK_CONSULTATION", referencedColumnName = "ID_CONSULTATION",  unique = true, nullable = true)
-	private Consultation consultations;
+	private Consultation consultation;
 
 }
