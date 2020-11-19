@@ -1,10 +1,17 @@
 package com.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.entity.FichesMedicales;
 import com.entity.Patient;
 import com.entity.Reservation;
+import com.repo.IPatientRepo;
 import com.service.IPatientService;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
@@ -13,82 +20,62 @@ import com.service.IPatientService;
  * spécifique {@code IPatientService}.
  * 
  * @author Sophie Lahmar
+ * @see DaoServiceImpl
+ * @see IPatientService
  *
  */
 @Service
+@Slf4j
 public class PatientServiceImpl extends DaoServiceImpl<Patient> implements IPatientService {
 
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 */
+	@Autowired
+	private IPatientRepo patientRepo;
+
 	@Override
-	public void connexion() {
-		// TODO Auto-generated method stub
-		
+	public void connexion(String login, String mdp) {
+		// TODO : implémenter la méthode
+		log.info("Service spécifique de Patient : méthode connection appelée.");
 	}
 
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 */
 	@Override
-	public void consulterPlanning() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 * @return
-	 */
-	@Override
-	public Reservation reserverRdv() {
-		// TODO Auto-generated method stub
+	public Patient modifierProfil(Patient patientUpdated) {
+		log.info("Service spécifique de Patient : méthode modifier Profil appelée.");
+		// TODO : implémenter la méthode
 		return null;
 	}
 
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 * @return
-	 */
 	@Override
-	public Reservation modifierRdv() {
-		// TODO Auto-generated method stub
+	public List<Reservation> consulterPlanning() {
+		log.info("Service spécifique de Patient : méthode consulter Planning appelée.");
+		// TODO : implémenter la méthode
 		return null;
 	}
 
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 */
 	@Override
-	public void consulterFicheMedicale() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 * @return
-	 */
-	@Override
-	public Patient modifierProfil() {
-		// TODO Auto-generated method stub
+	public Reservation reserverRdv(Reservation reservation) {
+		log.info("Service spécifique de Patient : méthode reserver Rdv appelée.");
+		// TODO : implémenter la méthode
 		return null;
 	}
 
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 */
+	@Override
+	public Reservation modifierRdv(Reservation reservation) {
+		log.info("Service spécifique de Patient : méthode modifier Rdv appelée.");
+		// TODO : implémenter la méthode
+		return null;
+	}
+
+	@Override
+	public FichesMedicales consulterFicheMedicale(Long id) {
+		log.info("Service spécifique de Patient : méthode consulter Fiche Medicale appelée.");
+		// TODO : implémenter la méthode
+		return null;
+	}
+
 	@Override
 	public void remplirQuestionnaireSatisfaction() {
-		// TODO Auto-generated method stub
-		
+		log.info("Service spécifique de Patient : méthode remplir Questionnaire Satisfaction appelée.");
+		// TODO : implémenter la méthode
 	}
 
 }

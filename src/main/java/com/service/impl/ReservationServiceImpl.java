@@ -11,6 +11,8 @@ import com.service.IReservationService;
  * l'interface spécifique {@code IReservationService}.
  * 
  * @author Sophie Lahmar
+ * @see DaoServiceImpl
+ * @see IReservationService
  *
  */
 @Service

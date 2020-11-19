@@ -1,5 +1,7 @@
 package com.controller;
 
+import org.springframework.data.repository.NoRepositoryBean;
+
 import com.entity.Reservation;
 
 /**

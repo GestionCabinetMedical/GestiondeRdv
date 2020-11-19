@@ -34,6 +34,7 @@ public interface IDaoService<E> {
 
 	/**
 	 * Méthode permettant de trouver une entité par son id.
+	 * 
 	 * @param id Id de l'entité à rechercher.
 	 * @return L'entité recherché (peut être null).
 	 */

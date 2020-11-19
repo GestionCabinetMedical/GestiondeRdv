@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.service.impl;
 
 import java.util.List;
@@ -26,7 +23,7 @@ public class DaoServiceImpl<E> implements IDaoService<E>{
 
 	@Override
 	public E addOrUpdate(E entite) {
-		log.info("Servcie générique : méthode add Or Update appelée ");
+		log.info("Service générique : méthode add Or Update appelée ");
 		if (entite != null) {
 			log.info("Appel repo OK");
 			return repo.save(entite);

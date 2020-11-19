@@ -1,5 +1,8 @@
 package com.service;
 
+import java.util.List;
+
+import com.entity.FichesMedicales;
 import com.entity.Patient;
 import com.entity.Reservation;
 
@@ -8,52 +11,63 @@ import com.entity.Reservation;
  * l'interface générique {@code IDaoService}.
  * 
  * @author Sophie Lahmar
+ * @see IDaoService
  *
  */
 public interface IPatientService extends IDaoService<Patient> {
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 */
-	public void connexion();
 
 	/**
-	 * @author Sophie Lahmar
+	 * Méthode permettant à un patient de se connecter à son espace personnel dans
+	 * l'application.
 	 * 
+	 * @param login Identifiant associé au compte personnel du patient.
+	 * @param mdp   Mot de passe pour entrer dans l'espace du patient.
 	 */
-	public void consulterPlanning();
+	public void connexion(String login, String mdp);
 
 	/**
-	 * @author Sophie Lahmar
+	 * Méthode permettant à un patient de modifier son profil sur sn espace
+	 * personnel.
 	 * 
-	 * @return
+	 * @param patientUpdated Patient dont le profil est à modifier.
+	 * @return Le patient avec un profil modifié.
 	 */
-	public Reservation reserverRdv();
+	public Patient modifierProfil(Patient patientUpdated);
 
 	/**
-	 * @author Sophie Lahmar
+	 * Méthode permettant à un patient de consulter la liste des rendez-vous
+	 * médicaux disponibles.
 	 * 
-	 * @return
+	 * @return Une liste des réservations disponibles.
 	 */
-	public Reservation modifierRdv();
+	public List<Reservation> consulterPlanning();
 
 	/**
-	 * @author Sophie Lahmar
+	 * Méthode permettant à un patient de réserver un rendez-vous médical, dans la
+	 * base de donnée.
 	 * 
+	 * @param reservation Réservation à ajouter.
+	 * @return La réservation ajoutée par le patient.
 	 */
-	public void consulterFicheMedicale();
+	public Reservation reserverRdv(Reservation reservation);
 
 	/**
-	 * @author Sophie Lahmar
+	 * Méthode permettant à un patient de modifier un rendez-vous médical.
 	 * 
-	 * @return
+	 * @param reservation Réservation à modifier.
+	 * @return La réservation modifiée par le patient.
 	 */
-	public Patient modifierProfil();
+	public Reservation modifierRdv(Reservation reservation);
 
 	/**
-	 * @author Sophie Lahmar
+	 * Méthode permettant au patient de consulter sa fiche médicale, suite à un
+	 * rendez-vous chez un médecin.
 	 * 
+	 * @param id Id de la fiche médicale d'un patient.
+	 * @return Une fiche médicale d'un patient.
 	 */
+	public FichesMedicales consulterFicheMedicale(Long id);
+
 	public void remplirQuestionnaireSatisfaction();
 
 }

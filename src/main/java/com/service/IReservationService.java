@@ -7,6 +7,7 @@ import com.entity.Reservation;
  * l'interface générique {@code IDaoService}.
  * 
  * @author Sophie Lahmar
+ * @see IDaoService
  *
  */
 public interface IReservationService extends IDaoService<Reservation> {
