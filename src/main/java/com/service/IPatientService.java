@@ -43,6 +43,13 @@ public interface IPatientService extends IDaoService<Patient> {
 	public List<Reservation> consulterPlanning();
 
 	/**
+	 * Méthode permettant de rechercher la liste de toutes les réservations.
+	 *
+	 * @return Une liste de réservations (peut être vide).
+	 */
+	public List<Reservation> findAllReservations();
+
+	/**
 	 * Méthode permettant à un patient de réserver un rendez-vous médical, dans la
 	 * base de donnée.
 	 * 

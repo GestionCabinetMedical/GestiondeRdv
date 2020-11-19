@@ -52,6 +52,13 @@ public class PatientServiceImpl extends DaoServiceImpl<Patient> implements IPati
 	}
 
 	@Override
+	public List<Reservation> findAllReservations() {
+		log.info("Service spécifique de Patient : méthode find All Reservations appelée.");
+		// TODO : implémenter la méthode
+		return null;
+	}
+
+	@Override
 	public Reservation reserverRdv(Reservation reservation) {
 		log.info("Service spécifique de Patient : méthode reserver Rdv appelée.");
 		// TODO : implémenter la méthode

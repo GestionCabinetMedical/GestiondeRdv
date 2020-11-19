@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.controller;
 
 import java.util.List;
@@ -23,7 +20,7 @@ public interface IDaoController<E> {
 	 * Méthode permettant d'ajouter une entité E à la base de donnée.
 	 * 
 	 * @param entite Entité à sauvegarder.
-	 * @return L'entité sauvegardé (peut être null)
+	 * @return L'entité sauvegardée (peut être null)
 	 */
 	public ResponseDto<E> add(E entite);
 
@@ -31,7 +28,7 @@ public interface IDaoController<E> {
 	 * Méthode permettant de modifier une entité dans la base de donnée.
 	 * 
 	 * @param entite Entité à modifier.
-	 * @return L'entité modifié (peut être null).
+	 * @return L'entité modifiée (peut être null).
 	 */
 	public ResponseDto<E> update(E entite);
 
@@ -39,15 +36,15 @@ public interface IDaoController<E> {
 	 * Méthode permettant de supprimer une entité dans la base de donnée.
 	 * 
 	 * @param id Id de l'entité à supprimer.
-	 * @return True si la suppression à été effectuer, false sinon.
+	 * @return True si la suppression a été effectuée, false sinon.
 	 */
 	public ResponseDto<Boolean> deleteById(Long id);
 
 	/**
-	 * Méthode permettant de recherche une entité E dans la base de donnée.
+	 * Méthode permettant de rechercher une entité E dans la base de donnée.
 	 * 
 	 * @param id Id de l'entité à rechercher.
-	 * @return L'entité rehcerché (peut être null).
+	 * @return L'entité recherchée (peut être null).
 	 */
 	public ResponseDto<E> findById(Long id);
 

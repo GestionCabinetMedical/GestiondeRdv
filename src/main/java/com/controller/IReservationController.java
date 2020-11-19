@@ -11,6 +11,7 @@ import com.entity.Reservation;
  * @author Sophie Lahmar
  *
  */
+@NoRepositoryBean
 public interface IReservationController extends IDaoController<Reservation> {
 
 }

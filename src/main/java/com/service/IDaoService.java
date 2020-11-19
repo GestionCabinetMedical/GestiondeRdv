@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.service;
 
 import java.util.List;
@@ -29,6 +26,7 @@ public interface IDaoService<E> {
 	 * Méthode permettant de supprimer une entité de la base de donnée par son id.
 	 *
 	 * @param id Id de l'entité à supprimer.
+	 * @return True si la suppression a été effectuée, false sinon.
 	 */
 	public boolean deleteById(Long id);
 
@@ -36,12 +34,12 @@ public interface IDaoService<E> {
 	 * Méthode permettant de trouver une entité par son id.
 	 * 
 	 * @param id Id de l'entité à rechercher.
-	 * @return L'entité recherché (peut être null).
+	 * @return L'entité recherchée (peut être null).
 	 */
 	public E findById(Long id);
 
 	/**
-	 * Méthode permettant de recherche la liste de toutes les entités.
+	 * Méthode permettant de rechercher la liste de toutes les entités.
 	 *
 	 * @return Une liste d'entité (peut être vide).
 	 */

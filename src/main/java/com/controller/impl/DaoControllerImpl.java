@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.controller.impl;
 
 import java.util.List;
