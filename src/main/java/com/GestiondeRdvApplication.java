@@ -11,6 +11,12 @@ import com.entity.FichesMedicales;
 import com.service.impl.FichesMedicalesServiceImpl;
 
 
+/**
+ * @author Pauline Humbert
+ * 
+ * Classe GestiondeRdvApplication instancier des Objects et vérifier la bonne communication le back et la base de données
+ *
+ */
 @SpringBootApplication
 public class GestiondeRdvApplication {
 
@@ -18,6 +24,11 @@ public class GestiondeRdvApplication {
 		SpringApplication.run(GestiondeRdvApplication.class, args);
 	}
 	
+ 
+	/**
+	 * @param fichesMedicalesService
+	 * @return affiche tous les éléments dans la bases de données concernant les fiches médicales après création des intances de fiches médicales
+	 */
 	@Bean
 	CommandLineRunner start(FichesMedicalesServiceImpl fichesMedicalesService)
 	{
