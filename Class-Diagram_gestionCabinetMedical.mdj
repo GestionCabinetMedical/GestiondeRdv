@@ -4159,11 +4159,64 @@
 									"model": {
 										"$ref": "AAAAAAF12vDR8+3Kx/4="
 									},
+									"subViews": [
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAF14CRdti8s8XI=",
+											"_parent": {
+												"$ref": "AAAAAAF12vDR9O3TanQ="
+											},
+											"model": {
+												"$ref": "AAAAAAF14CRdnC8pCGc="
+											},
+											"font": "Arial;13;0",
+											"left": 37,
+											"top": 450,
+											"width": 191,
+											"height": 13,
+											"text": "+findByDate()",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAF14CSiLi8zz80=",
+											"_parent": {
+												"$ref": "AAAAAAF12vDR9O3TanQ="
+											},
+											"model": {
+												"$ref": "AAAAAAF14CSiJC8w3O0="
+											},
+											"font": "Arial;13;0",
+											"left": 37,
+											"top": 465,
+											"width": 191,
+											"height": 13,
+											"text": "+calculGains()",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAF14KMUpy/KS3k=",
+											"_parent": {
+												"$ref": "AAAAAAF12vDR9O3TanQ="
+											},
+											"model": {
+												"$ref": "AAAAAAF14KMUji/Hhpk="
+											},
+											"font": "Arial;13;0",
+											"left": 37,
+											"top": 480,
+											"width": 191,
+											"height": 13,
+											"text": "+findByIdMedecin()",
+											"horizontalAlignment": 0
+										}
+									],
 									"font": "Arial;13;0",
 									"left": 32,
 									"top": 445,
 									"width": 201,
-									"height": 10
+									"height": 53
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -4203,7 +4256,7 @@
 							"left": 32,
 							"top": 352,
 							"width": 201,
-							"height": 113,
+							"height": 146,
 							"nameCompartment": {
 								"$ref": "AAAAAAF12vDR9O3NveI="
 							},
@@ -4720,6 +4773,32 @@
 							"name": "Long",
 							"visibility": "private",
 							"type": "idMedecin"
+						}
+					],
+					"operations": [
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAF14CRdnC8pCGc=",
+							"_parent": {
+								"$ref": "AAAAAAF12vDR8+3Kx/4="
+							},
+							"name": "findByDate"
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAF14CSiJC8w3O0=",
+							"_parent": {
+								"$ref": "AAAAAAF12vDR8+3Kx/4="
+							},
+							"name": "calculGains"
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAF14KMUji/Hhpk=",
+							"_parent": {
+								"$ref": "AAAAAAF12vDR8+3Kx/4="
+							},
+							"name": "findByIdMedecin"
 						}
 					]
 				},
