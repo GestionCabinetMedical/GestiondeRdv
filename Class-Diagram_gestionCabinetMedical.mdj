@@ -4174,7 +4174,7 @@
 											"top": 450,
 											"width": 191,
 											"height": 13,
-											"text": "+findByDate()",
+											"text": "+findByDateAndIdMedecin()",
 											"horizontalAlignment": 0
 										},
 										{
@@ -4203,6 +4203,7 @@
 											"model": {
 												"$ref": "AAAAAAF14KMUji/Hhpk="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 37,
 											"top": 480,
@@ -4216,7 +4217,7 @@
 									"left": 32,
 									"top": 445,
 									"width": 201,
-									"height": 53
+									"height": 38
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -4782,7 +4783,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF12vDR8+3Kx/4="
 							},
-							"name": "findByDate"
+							"name": "findByDateAndIdMedecin"
 						},
 						{
 							"_type": "UMLOperation",
