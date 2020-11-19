@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -43,6 +44,13 @@ public class Consultation implements Serializable {
 	@OneToOne
 	@JoinColumn(name="FK_RESERVATION", referencedColumnName = "ID_RESERVATION",  unique = true, nullable = true)
 	private Reservation reservation;
+	
+	public Consultation(Long idConsultation, Long idMedecin, Long idPatient) {
+		super();
+		this.idConsultation = idConsultation;
+		this.idMedecin = idMedecin;
+		this.idPatient = idPatient;
+	}
 
 
 

@@ -1,6 +1,9 @@
 package com.service;
 
+import com.dto.GainDto;
+import com.entity.FichesMedicales;
 import com.entity.Medecin;
+import com.entity.Reservation;
 
 /**
  * @author Jonathan RACHWAL
@@ -39,7 +42,7 @@ public interface IMedecinService extends IDaoService<Medecin>{
 	 * @author Jonathan Rachwal
 	 *
 	 */
-	public Gain consulterGainsParJour();
+	public GainDto consulterGainsParJour();
 
 	/**
 	 * @author Jonathan Rachwal
@@ -59,6 +62,6 @@ public interface IMedecinService extends IDaoService<Medecin>{
 	 *
 	 */
     public void consulterRapportSatisfaction();
-}
+
 
 }
