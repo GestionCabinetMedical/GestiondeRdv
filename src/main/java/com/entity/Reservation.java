@@ -29,7 +29,7 @@ public class Reservation implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_PATIENT", unique = true, nullable = false)
+	@Column(name = "ID_RESERVATION", unique = true, nullable = false)
 	private Long idReservation;
 
 	@Column(name = "STATUS", unique = true, nullable = false)
