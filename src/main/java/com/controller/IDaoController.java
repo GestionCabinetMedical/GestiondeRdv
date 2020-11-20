@@ -10,8 +10,8 @@ import org.springframework.data.repository.NoRepositoryBean;
 import com.dto.ResponseDto;
 
 /**
- * Interfacle controller générique responsables des méthodes CRUD pour
- * l'ensemble du projet.
+ * Interface controller générique responsable des méthodes CRUD pour l'ensemble
+ * du projet.
  * 
  * @author Maxime Rembert
  *

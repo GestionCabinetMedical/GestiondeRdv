@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,15 +23,15 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@NoArgsConstructor 
+@NoArgsConstructor
 @AllArgsConstructor
 public class Medecin implements Serializable {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column(name="ID_MEDECIN", unique = true, nullable = false)
-	private Long idMedecin; 
+	private Long idMedecin;
 	@Column(name="NOM", unique = false, nullable = true)
-	private String nom; 
+	private String nom;
 	@Column(name="PRENOM", unique = false, nullable = true)
 	private String prenom;
 	@Column(name="ID_FORMULE", unique = true, nullable = false)
@@ -42,6 +44,8 @@ public class Medecin implements Serializable {
 	private String identifiant;
 	@Column(name="MOT_DE_PASSE", unique = false, nullable = true)
 	private String motDePasse;
-	
+	@OneToMany
+	@JoinColumn(name = "fk_medecin", referencedColumnName = "ID_MEDECIN",  unique = true, nullable = true)
+	private Consultation consultation;
 
 }

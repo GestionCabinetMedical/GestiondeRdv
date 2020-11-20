@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.service.impl;
 
@@ -14,13 +14,13 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Classe service générique implémentant IDaoService.
- * 
+ *
  * @author Maxime rembert
  *
  */
 @Slf4j
 public class DaoServiceImpl<E> implements IDaoService<E>{
-	
+
 	@Autowired
 	private IDaoRepo<E> repo;
 
