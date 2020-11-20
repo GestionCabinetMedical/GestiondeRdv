@@ -20,11 +20,11 @@ import com.entity.Reservation;
 import com.service.IPatientService;
 import com.service.IReservationService;
 
-
 /**
  * @author Pauline Humbert
  *
- * Classe GestiondeRdvApplication instancier des Objects et vérifier la bonne communication le back et la base de données
+ *         Classe GestiondeRdvApplication instancier des Objects et vérifier la
+ *         bonne communication le back et la base de données
  *
  */
 @EnableDiscoveryClient
@@ -38,48 +38,46 @@ public class GestiondeRdvApplication {
 	/**
 	 * @author Sophie Lahmar
 	 *
-	 * @param patientService
-	 * @param reservationService
-	 * @return
 	 */
-	@Bean
-	CommandLineRunner start(IPatientService patientService, IReservationService reservationService, FichesMedicalesServiceImpl fichesMedicalesService, ConsultationServiceImpl consultationService) {
-		Patient p1 = new Patient(null, "NIVON", "Steven", "Mandelieu", 19478l, "stiti", "nini", null);
-		Patient p2 = new Patient(null, "MOREAU", "Cathy", "Marseille", 26757l, "mom", "lolo", null);
-
-		Reservation r1 = new Reservation(null, false, Date.valueOf("19/11/2020"), false, p1);
-		Reservation r2 = new Reservation(null, false, Date.valueOf("30/11/2020"), false, p2);
-
-		return (args) -> {
-			System.out.println("****** PATIENTS ******");
-			Stream.of(p1, p2).forEach((Patient p) -> {
-				patientService.addOrUpdate(p);
-			});
-
-			System.out.println("****** RESERVATIONS ******");
-			Stream.of(r1, r2).forEach((Reservation r) -> {
-				reservationService.addOrUpdate(r);
-			});
-
-			patientService.findAll().forEach(System.out::println);
-			reservationService.findAll().forEach(System.out::println);
-
-
-			//pour tester fiches médicales
-			Stream.of(new Consultation(1L, 1L,1L),
-					new Consultation(2L, 2L,2L))
-			.forEach((consultations) -> {
-				consultationService.addOrUpdate(consultations);
-			});
-			consultationService.findAll().forEach(System.out::println);
-
-			Stream.of(new FichesMedicales(1L, "Grippe", "traitement contre la grippe", "pas de commentaires en plus", consultationService.findById(1L)),
-					new FichesMedicales(2L, "Angine", "traitement contre l'angine", "commentaires sur les contre indications", consultationService.findById(2L)))
-					.forEach((fiches) -> {
-						fichesMedicalesService.addOrUpdate(fiches);
-					});
-			fichesMedicalesService.findAll().forEach(System.out::println);
-		};
-	}
+//	@Bean
+//	CommandLineRunner start(IPatientService patientService, IReservationService reservationService,
+//			FichesMedicalesServiceImpl fichesMedicalesService, ConsultationServiceImpl consultationService) {
+//		Patient p1 = new Patient(null, "NIVON", "Steven", "Mandelieu", 19478l, "stiti", "nini", null);
+//		Patient p2 = new Patient(null, "MOREAU", "Cathy", "Marseille", 26757l, "mom", "lolo", null);
+//
+//		Reservation r1 = new Reservation(null, false, Date.valueOf("19/11/2020"), false);
+//		Reservation r2 = new Reservation(null, false, Date.valueOf("30/11/2020"), false);
+//
+//		return (args) -> {
+//			System.out.println("****** PATIENTS ******");
+//			Stream.of(p1, p2).forEach((Patient p) -> {
+//				patientService.addOrUpdate(p);
+//			});
+//
+//			System.out.println("****** RESERVATIONS ******");
+//			Stream.of(r1, r2).forEach((Reservation r) -> {
+//				reservationService.addOrUpdate(r);
+//			});
+//
+//			patientService.findAll().forEach(System.out::println);
+//			reservationService.findAll().forEach(System.out::println);
+//
+//			// pour tester fiches médicales
+//			Stream.of(new Consultation(1L, 1L, 1L), new Consultation(2L, 2L, 2L)).forEach((consultations) -> {
+//				consultationService.addOrUpdate(consultations);
+//			});
+//			consultationService.findAll().forEach(System.out::println);
+//
+//			Stream.of(
+//					new FichesMedicales(1L, "Grippe", "traitement contre la grippe", "pas de commentaires en plus",
+//							consultationService.findById(1L)),
+//					new FichesMedicales(2L, "Angine", "traitement contre l'angine",
+//							"commentaires sur les contre indications", consultationService.findById(2L)))
+//					.forEach((fiches) -> {
+//						fichesMedicalesService.addOrUpdate(fiches);
+//					});
+//			fichesMedicalesService.findAll().forEach(System.out::println);
+//		};
+//	}
 
 }

@@ -1,59 +1,35 @@
 package com.service;
 
+import java.util.List;
+
+import com.entity.FichesMedicales;
 import com.entity.Patient;
-import com.entity.Reservation;
 
 /**
  * Interface service {@code IPatientService} spécifique de Patient héritant de
  * l'interface générique {@code IDaoService}.
  * 
  * @author Sophie Lahmar
+ * @see IDaoService
  *
  */
 public interface IPatientService extends IDaoService<Patient> {
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 */
-	public void connexion();
 
 	/**
-	 * @author Sophie Lahmar
+	 * Méthode permettant à un patient de se connecter à son espace personnel dans
+	 * l'application.
 	 * 
+	 * @param login Identifiant associé au compte personnel du patient.
+	 * @param mdp   Mot de passe pour entrer dans l'espace du patient.
 	 */
-	public void consulterPlanning();
+	public void connexion(String login, String mdp);
 
 	/**
-	 * @author Sophie Lahmar
+	 * Méthode permettant au patient de consulter sa liste de fiches médicales.
 	 * 
-	 * @return
+	 * @param id Id du patient.
+	 * @return Une liste de fiches médicales d'un patient.
 	 */
-	public Reservation reserverRdv();
-
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 * @return
-	 */
-	public Reservation modifierRdv();
-
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 */
-	public void consulterFicheMedicale();
-
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 * @return
-	 */
-	public Patient modifierProfil();
-
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 */
-	public void remplirQuestionnaireSatisfaction();
+	public List<FichesMedicales> consulterFicheMedicale(Long id);
 
 }

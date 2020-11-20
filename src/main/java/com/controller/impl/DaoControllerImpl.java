@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.controller.impl;
 
 import java.util.List;
@@ -84,7 +81,6 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
 		}
 		return resp;
-
 	}
 
 	public ResponseDto<Boolean> makeBooleanResponse(Boolean status) {
@@ -100,12 +96,11 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
 		}
 		return resp;
-
 	}
-	
+
 	public ResponseDto<List<E>> makeListResponse(List<E> liste) {
 		ResponseDto<List<E>> resp = new ResponseDto<>();
-		
+
 		if (liste != null) {
 			resp.setError(false);
 			resp.setBody(liste);

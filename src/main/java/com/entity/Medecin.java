@@ -1,6 +1,7 @@
 package com.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- *  Classe objet Medecin
+ * Classe objet Medecin
  *
  * @author rachw
  *
@@ -26,26 +27,35 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Medecin implements Serializable {
+
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	@Column(name="ID_MEDECIN", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_MEDECIN", unique = true, nullable = false)
 	private Long idMedecin;
-	@Column(name="NOM", unique = false, nullable = true)
+
+	@Column(name = "NOM", unique = false, nullable = true)
 	private String nom;
-	@Column(name="PRENOM", unique = false, nullable = true)
+
+	@Column(name = "PRENOM", unique = false, nullable = true)
 	private String prenom;
-	@Column(name="ID_FORMULE", unique = true, nullable = false)
+
+	@Column(name = "ID_FORMULE", unique = true, nullable = false)
 	private Long idFormule;
-	@Column(name="ADRESSE_CABINET", unique = false, nullable = true)
+
+	@Column(name = "ADRESSE_CABINET", unique = false, nullable = true)
 	private String adresseCabinet;
-	@Column(name="SPECIALITE", unique = false, nullable = true)
+
+	@Column(name = "SPECIALITE", unique = false, nullable = true)
 	private String specialite;
-	@Column(name="IDENTIFIANT", unique = true, nullable = true)
+
+	@Column(name = "IDENTIFIANT", unique = true, nullable = true)
 	private String identifiant;
-	@Column(name="MOT_DE_PASSE", unique = false, nullable = true)
+
+	@Column(name = "MOT_DE_PASSE", unique = false, nullable = true)
 	private String motDePasse;
+
 	@OneToMany
-	@JoinColumn(name = "fk_medecin", referencedColumnName = "ID_MEDECIN",  unique = true, nullable = true)
-	private Consultation consultation;
+	@JoinColumn(name = "fk_medecin", referencedColumnName = "ID_MEDECIN", unique = true, nullable = true)
+	private List<Consultation> consultations;
 
 }
