@@ -12,9 +12,8 @@ import com.service.IPatientService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 
- * Classe service {@code PatientServiceImpl} spécifique de Patient qui hérite de
- * la classe générique {@code DaoServiceImpl} et implémente l'interface
+ * Classe service {@code PatientServiceImpl} spécifique de {@link Patient} qui
+ * étend de la classe générique {@code DaoServiceImpl} et implémente l'interface
  * spécifique {@code IPatientService}.
  * 
  * @author Sophie Lahmar
@@ -26,11 +25,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PatientServiceImpl extends DaoServiceImpl<Patient> implements IPatientService {
 
+	// ATTRIBUTS
+
 	@Autowired
 	private IPatientRepo patientRepo;
 
 	@Autowired
 	private IFichesMedicalesRepository ficheRepo;
+
+	// METHODES
 
 	@Override
 	public void connexion(String login, String mdp) {

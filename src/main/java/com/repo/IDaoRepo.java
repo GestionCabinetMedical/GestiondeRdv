@@ -8,9 +8,10 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 /**
  * Interface Repository générique responsable de la communication avec la base
- * de données. Elle implémente JpaRepository.
+ * de données. Elle étend de l'interface {@code JpaRepository}.
  * 
  * @author Maxime Rembert
+ * @see JpaRepository
  *
  */
 @NoRepositoryBean

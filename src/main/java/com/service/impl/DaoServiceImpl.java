@@ -10,16 +10,22 @@ import com.service.IDaoService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Classe service générique implémentant IDaoService.
+ * Classe service générique implémentant l'interface générique
+ * {@code IDaoService}.
  *
- * @author Maxime rembert
+ * @author Maxime Rembert
+ * @see IDaoService
  *
  */
 @Slf4j
 public class DaoServiceImpl<E> implements IDaoService<E> {
 
+	// ATTRIBUTS
+
 	@Autowired
 	private IDaoRepo<E> repo;
+
+	// METHODES
 
 	@Override
 	public E addOrUpdate(E entite) {

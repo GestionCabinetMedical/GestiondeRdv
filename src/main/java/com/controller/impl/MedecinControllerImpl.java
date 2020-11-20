@@ -7,12 +7,17 @@ import com.controller.IMedecinController;
 import com.entity.Medecin;
 
 /**
+ * Classe controller {@code MedecinControllerImpl} spécifique de {@link Medecin}
+ * qui étend de la classe générique {@code DaoControllerImpl} et implémente
+ * l'interface spécifique {@code IMedecinController}.
+ * 
  * @author Jonathan Rachwal
+ * @see DaoControllerImpl
+ * @see IMedecinController
  *
- * Classe Medecin controller extend de DaoControllerImpl et implémente IMedecinController
  */
 @RestController
-@RequestMapping(value="/medecin")
-public class MedecinControllerImpl extends DaoControllerImpl<Medecin> implements IMedecinController{
+@RequestMapping(value = "/medecin")
+public class MedecinControllerImpl extends DaoControllerImpl<Medecin> implements IMedecinController {
 
 }

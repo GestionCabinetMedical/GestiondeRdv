@@ -5,11 +5,15 @@ import org.springframework.data.repository.NoRepositoryBean;
 import com.entity.Consultation;
 
 /**
+ * Interface controller {@code IConsultationController} spécifique de
+ * {@link Consultation} qui hérite de l'interface générique
+ * {@code IDaoController}.
+ * 
  * @author Jonathan Rachwal
- * Interface de Consultation controller provenant de IDaoController
+ * @see IDaoController
  *
  */
 @NoRepositoryBean
-public interface IConsultationController extends IDaoController<Consultation>{
+public interface IConsultationController extends IDaoController<Consultation> {
 
 }

@@ -6,8 +6,8 @@ import com.entity.FichesMedicales;
 import com.entity.Patient;
 
 /**
- * Interface service {@code IPatientService} spécifique de Patient héritant de
- * l'interface générique {@code IDaoService}.
+ * Interface service {@code IPatientService} spécifique de {@link Patient}
+ * qui étend de l'interface générique {@code IDaoService}.
  * 
  * @author Sophie Lahmar
  * @see IDaoService

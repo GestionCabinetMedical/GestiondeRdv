@@ -16,9 +16,10 @@ import com.service.impl.ReservationServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Classe controller {@code ReservationController} spécifique de Reservation qui
- * hérite de la classe générique {@code DaoControllerImpl} et implémente
- * l'interface spécifique {@code IReservationController}.
+ * Classe controller {@code ReservationController} spécifique de
+ * {@link Reservation} qui hérite de la classe générique
+ * {@code DaoControllerImpl} et implémente l'interface spécifique
+ * {@code IReservationController}.
  * 
  * @author Sophie Lahmar
  * @see DaoControllerImpl
@@ -30,8 +31,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ReservationController extends DaoControllerImpl<Reservation> implements IReservationController {
 
+	// ATTRIBUTS
+
 	@Autowired
 	private ReservationServiceImpl service;
+
+	// METHODES
 
 	@Override
 	@GetMapping(value = "/consulterplanning/{status}")

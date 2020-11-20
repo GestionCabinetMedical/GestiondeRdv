@@ -9,8 +9,8 @@ import com.entity.FichesMedicales;
 import com.entity.Patient;
 
 /**
- * Interface controller {@code IPatientController} spécifique de Patient
- * héritant de l'interface générique {@code IDaoController}.
+ * Interface controller {@code IPatientController} spécifique de {@link Patient}
+ * qui hérite de l'interface générique {@code IDaoController}.
  * 
  * @author Sophie Lahmar
  * @see IDaoController

@@ -22,6 +22,7 @@ import lombok.NoArgsConstructor;
  * {@code @OneToMany} avec la classe {@code Reservation}.
  * 
  * @author Sophie Lahmar
+ * @see Reservation
  * 
  */
 @Data
@@ -54,7 +55,7 @@ public class Patient implements Serializable {
 	private String motDePasse;
 
 	@OneToMany
-	@JoinColumn(name = "fk_patient", referencedColumnName = "ID_PATIENT", unique = false, nullable = true)
+	@JoinColumn(name = "FK_PATIENT", referencedColumnName = "ID_PATIENT", unique = false, nullable = true)
 	private List<Reservation> reservations = new ArrayList<>();;
 
 }

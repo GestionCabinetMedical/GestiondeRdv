@@ -5,11 +5,14 @@ import org.springframework.data.repository.NoRepositoryBean;
 import com.entity.Medecin;
 
 /**
+ * Interface controller {@code IMedecinController} spécifique de {@link Medecin}
+ * qui hérite de l'interface générique {@code IDaoController}.
+ * 
  * @author Jonathan Rachwal
- * Interface de Medecin controller provenant de IDaoController
+ * @see IDaoController
  *
  */
 @NoRepositoryBean
-public interface IMedecinController extends IDaoController<Medecin>{
+public interface IMedecinController extends IDaoController<Medecin> {
 
 }

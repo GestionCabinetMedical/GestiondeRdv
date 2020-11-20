@@ -18,16 +18,23 @@ import com.service.IDaoService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Classe controller générique implémentant IDaoController.
+ * Classe controller générique implémentant l'interface générique
+ * {@code IDaoController}. Son rôle est de contrôler les flux de données
+ * entrant.
  * 
  * @author Maxime Rembert
+ * @see IDaoController
  *
  */
 @Slf4j
 public class DaoControllerImpl<E> implements IDaoController<E> {
 
+	// ATTRIBUTS
+
 	@Autowired
 	private IDaoService<E> serv;
+
+	// METHODES
 
 	@Override
 	@PostMapping

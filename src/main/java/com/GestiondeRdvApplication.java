@@ -21,10 +21,11 @@ import com.service.IPatientService;
 import com.service.IReservationService;
 
 /**
+ * Classe principale {@code GestiondeRdvApplication} permet d'instancier des
+ * Objets et de vérifier la bonne communication entre le back et la base de
+ * données.
+ * 
  * @author Pauline Humbert
- *
- *         Classe GestiondeRdvApplication instancier des Objects et vérifier la
- *         bonne communication le back et la base de données
  *
  */
 @EnableDiscoveryClient
@@ -36,6 +37,9 @@ public class GestiondeRdvApplication {
 	}
 
 	/**
+	 * Méthode de l'interface CommandLineRunner permettant d'exécuter les beans qui
+	 * sont en entrée de la méthode.
+	 * 
 	 * @author Sophie Lahmar
 	 *
 	 */

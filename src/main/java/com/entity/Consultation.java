@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
@@ -16,9 +15,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Classe qui définit les Consultations
+ * Classe {@code Consultation} qui définit les consultations. Elle contient une
+ * liste non-exhaustive d'attributs qui caractérise une consultation faite par
+ * un {@link Medecin}, et possède une relation {@code @OneToOne} avec la classe
+ * {@code Reservation}.
  *
  * @author Jonathan Rachwal
+ * @see Reservation
  *
  */
 
@@ -38,10 +41,6 @@ public class Consultation implements Serializable {
 
 	@Column(name = "ID_PATIENT", unique = false, nullable = false)
 	private Long idPatient;
-
-//	@ManyToOne
-//	@JoinColumn(name = "FK_MEDECIN", referencedColumnName = "ID_MEDECIN", unique = true, nullable = true)
-//	private Medecin medecin;
 
 	@OneToOne
 	@JoinColumn(name = "FK_RESERVATION", referencedColumnName = "ID_RESERVATION", unique = true, nullable = true)

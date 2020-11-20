@@ -8,8 +8,9 @@ import com.dto.ResponseDto;
 import com.entity.Reservation;
 
 /**
- * Interface controller {@code IReservationController} spécifique de Reservation
- * héritant de l'interface générique {@code IDaoController}.
+ * Interface controller {@code IReservationController} spécifique de
+ * {@link Reservation} qui hérite de l'interface générique
+ * {@code IDaoController}.
  * 
  * @author Sophie Lahmar
  * @see IDaoController

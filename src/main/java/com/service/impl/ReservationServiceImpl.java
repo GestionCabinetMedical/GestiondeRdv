@@ -12,9 +12,9 @@ import com.service.IReservationService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Classe service {@code ReservationServiceImpl} spécifique de Reservation qui
- * hérite de la classe générique {@code DaoServiceImpl} et implémente
- * l'interface spécifique {@code IReservationService}.
+ * Classe service {@code ReservationServiceImpl} spécifique de
+ * {@link Reservation} qui étend de la classe générique {@code DaoServiceImpl}
+ * et implémente l'interface spécifique {@code IReservationService}.
  * 
  * @author Sophie Lahmar
  * @see DaoServiceImpl

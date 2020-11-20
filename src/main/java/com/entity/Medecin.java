@@ -16,9 +16,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Classe objet Medecin
+ * Classe {@code Medecin} qui caractérise un médecin. Elle contient une liste
+ * non-exhaustive d'attributs qui décrivent un médecin, et possède une relation
+ * {@code @OneToMany} avec la classe {@code Consultation}.
  *
- * @author rachw
+ * @author Jonathan Rachwal
+ * @see Consultation
  *
  */
 
@@ -55,7 +58,7 @@ public class Medecin implements Serializable {
 	private String motDePasse;
 
 	@OneToMany
-	@JoinColumn(name = "fk_medecin", referencedColumnName = "ID_MEDECIN", unique = true, nullable = true)
+	@JoinColumn(name = "FK_MEDECIN", referencedColumnName = "ID_MEDECIN", unique = true, nullable = true)
 	private List<Consultation> consultations;
 
 }

@@ -7,12 +7,18 @@ import com.controller.IConsultationController;
 import com.entity.Consultation;
 
 /**
+ * Classe controller {@code ConsultationControllerImpl} spécifique de
+ * {@link Consultation} qui étend de la classe générique
+ * {@code DaoControllerImpl} et implémente l'interface spécifique
+ * {@code IConsultationController}.
+ * 
  * @author Jonathan Rachwal
+ * @see DaoControllerImpl
+ * @see IConsultationController
  *
- * Classe Consultation controller extend de DaoControllerImpl et implémente IConsultationController
  */
 @RestController
-@RequestMapping(value="/consultation")
-public class ConsultationControllerImpl extends DaoControllerImpl<Consultation> implements IConsultationController{
+@RequestMapping(value = "/consultation")
+public class ConsultationControllerImpl extends DaoControllerImpl<Consultation> implements IConsultationController {
 
 }

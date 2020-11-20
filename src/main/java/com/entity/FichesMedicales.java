@@ -15,11 +15,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author Pauline Humbert
+ * Classe {@code FichesMedicales} qui définit les fiches médicales d'un
+ * {@link Patient} : générées à la fin d'une consultation par un
+ * {@link Medecin}. Elle comprend 5 attributs dont une relation
+ * {@code @OneToOne} avec la classe {@code Consultation}.
  * 
- *         Classe qui définit les fiches médicales : générer à la fin d'une
- *         consulatation par un médecin Elle comprend 5 attributs dont une
- *         relation OneToOne avec la classe Consultation
+ * @author Pauline Humbert
+ * @see Consultation
  *
  */
 @Data
