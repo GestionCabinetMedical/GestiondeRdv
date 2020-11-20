@@ -62,7 +62,6 @@ public class PatientController extends DaoControllerImpl<Patient> implements IPa
 	public ResponseDto<List<Reservation>> consulterPlanning() {
 		// TODO : implémenter la méthode
 		log.info("Controller spécifique de Patient : méthode consulter Planning appelée.");
-		List<Reservation> reservations = service.findAllReservations();
 		return null;
 	}
 

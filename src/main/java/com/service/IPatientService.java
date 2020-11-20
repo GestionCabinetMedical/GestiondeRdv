@@ -5,6 +5,7 @@ import java.util.List;
 import com.entity.FichesMedicales;
 import com.entity.Patient;
 import com.entity.Reservation;
+import com.exception.ReservationNotFoundException;
 
 /**
  * Interface service {@code IPatientService} spécifique de Patient héritant de
@@ -32,7 +33,7 @@ public interface IPatientService extends IDaoService<Patient> {
 	 * @param patientUpdated Patient dont le profil est à modifier.
 	 * @return Le patient avec un profil modifié.
 	 */
-	public Patient modifierProfil(Patient patientUpdated);
+	public Patient modifierProfil(Patient patient);
 
 	/**
 	 * Méthode permettant à un patient de consulter la liste des rendez-vous
@@ -41,13 +42,6 @@ public interface IPatientService extends IDaoService<Patient> {
 	 * @return Une liste des réservations disponibles.
 	 */
 	public List<Reservation> consulterPlanning();
-
-	/**
-	 * Méthode permettant de rechercher la liste de toutes les réservations.
-	 *
-	 * @return Une liste de réservations (peut être vide).
-	 */
-	public List<Reservation> findAllReservations();
 
 	/**
 	 * Méthode permettant à un patient de réserver un rendez-vous médical, dans la
@@ -62,18 +56,16 @@ public interface IPatientService extends IDaoService<Patient> {
 	 * Méthode permettant à un patient de modifier un rendez-vous médical.
 	 * 
 	 * @param reservation Réservation à modifier.
-	 * @return La réservation modifiée par le patient.
 	 */
-	public Reservation modifierRdv(Reservation reservation);
+	public void modifierRdv(Reservation reservation) throws ReservationNotFoundException;
 
 	/**
-	 * Méthode permettant au patient de consulter sa fiche médicale, suite à un
-	 * rendez-vous chez un médecin.
+	 * Méthode permettant au patient de consulter sa liste de fiches médicales.
 	 * 
-	 * @param id Id de la fiche médicale d'un patient.
-	 * @return Une fiche médicale d'un patient.
+	 * @param id Id du patient.
+	 * @return Une liste de fiches médicales d'un patient.
 	 */
-	public FichesMedicales consulterFicheMedicale(Long id);
+	public List<FichesMedicales> consulterFicheMedicale(Long id);
 
 	public void remplirQuestionnaireSatisfaction();
 
