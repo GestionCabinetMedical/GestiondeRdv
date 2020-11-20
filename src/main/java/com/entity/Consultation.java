@@ -43,7 +43,7 @@ public class Consultation implements Serializable {
 	private Long idPatient;
 
 	@OneToOne
-	@JoinColumn(name = "FK_RESERVATION", referencedColumnName = "ID_RESERVATION", unique = true, nullable = true)
+	@JoinColumn(name = "FK_RESERVATION", referencedColumnName = "ID_RESERVATION", unique = true, nullable = false)
 	private Reservation reservation;
 
 	public Consultation(Long idConsultation, Long idMedecin, Long idPatient) {

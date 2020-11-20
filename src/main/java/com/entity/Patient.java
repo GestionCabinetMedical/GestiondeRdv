@@ -55,7 +55,7 @@ public class Patient implements Serializable {
 	private String motDePasse;
 
 	@OneToMany
-	@JoinColumn(name = "FK_PATIENT", referencedColumnName = "ID_PATIENT", unique = false, nullable = true)
+	@JoinColumn(name = "FK_PATIENT", referencedColumnName = "ID_PATIENT", unique = true, nullable = true)
 	private List<Reservation> reservations = new ArrayList<>();;
 
 }
