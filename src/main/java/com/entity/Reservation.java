@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+
+import com.enums.HeureRdv;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,10 +38,13 @@ public class Reservation implements Serializable {
 	@Column(name = "STATUS", unique = false, nullable = false)
 	private boolean status;
 
-	@Column(name = "DATE_RESERVATION", unique = false, nullable = true)
+	@Column(name = "DATE_RESERVATION", nullable = false)
 	private Date dateRervation;
 
 	@Column(name = "CONSULTATION_EN_URGENCE",  unique = false, nullable = false)
 	private boolean isUrgent;
+	
+	@Column(name ="HEURE_RDV")
+	private HeureRdv heureRdv;
 
 }

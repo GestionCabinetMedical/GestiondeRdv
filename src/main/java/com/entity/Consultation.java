@@ -36,9 +36,6 @@ public class Consultation implements Serializable {
 	@Column(name = "ID_CONSULTATION", unique = true, nullable = false)
 	private Long idConsultation;
 
-	@Column(name = "ID_MEDECIN", unique = false, nullable = false)
-	private Long idMedecin;
-
 	@Column(name = "ID_PATIENT", unique = false, nullable = false)
 	private Long idPatient;
 
@@ -46,10 +43,9 @@ public class Consultation implements Serializable {
 	@JoinColumn(name = "FK_RESERVATION", referencedColumnName = "ID_RESERVATION", unique = true, nullable = true)
 	private Reservation reservation;
 
-	public Consultation(Long idConsultation, Long idMedecin, Long idPatient) {
+	public Consultation(Long idConsultation, Long idPatient) {
 		super();
 		this.idConsultation = idConsultation;
-		this.idMedecin = idMedecin;
 		this.idPatient = idPatient;
 	}
 

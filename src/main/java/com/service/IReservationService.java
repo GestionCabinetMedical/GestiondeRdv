@@ -1,8 +1,10 @@
 package com.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.entity.Reservation;
+import com.enums.HeureRdv;
 import com.exception.notfound.ReservationNotFoundException;
 
 /**
@@ -23,4 +25,13 @@ public interface IReservationService extends IDaoService<Reservation> {
 	 * @throws ReservationNotFoundException 
 	 */
 	public List<Reservation> findReservationsDispo() throws ReservationNotFoundException;
+	
+	/**
+	 * Méthode permettant de connaître la liste des rdv dispo par medecin et par date.
+	 * @param date La date concernée.
+	 * @param idMedecin L'id du medecin concerné.
+	 * @return Une liste d'Heure Rdv correspondant aux heures disponibles de rendez-vous.
+	 * @throws ReservationNotFoundException
+	 */
+	public List<HeureRdv> findResaParDateParMedecin(Date date, Long idMedecin) throws ReservationNotFoundException ;
 }
