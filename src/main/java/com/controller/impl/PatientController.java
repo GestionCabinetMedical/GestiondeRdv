@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dto.ResponseDto;
 import com.entity.FichesMedicales;
 import com.entity.Patient;
+import com.exception.notfound.FichesMedcialesNotFoundException;
 import com.service.impl.PatientServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -54,9 +55,10 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	 * 
 	 * @param id Id du patient.
 	 * @return Une liste de fiches médicales d'un patient.
+	 * @throws FichesMedcialesNotFoundException 
 	 */
 	@GetMapping(value = "/consulterFichesMedicales/{id}")
-	public ResponseDto<List<FichesMedicales>> consulterFicheMedicale(@PathVariable Long id) {
+	public ResponseDto<List<FichesMedicales>> consulterFicheMedicale(@PathVariable Long id) throws FichesMedcialesNotFoundException {
 		log.info("Controller spécifique de Patient : méthode consulter Fiche Medicale appelée.");
 		List<FichesMedicales> listeFiches = service.consulterFicheMedicale(id);
 		return makeListFichesMedicalesResponse(listeFiches);

@@ -3,6 +3,7 @@ package com.service;
 import java.util.List;
 
 import com.entity.Reservation;
+import com.exception.notfound.ReservationNotFoundException;
 
 /**
  * Interface service {@code IReservationService} spécifique de
@@ -20,6 +21,7 @@ public interface IReservationService extends IDaoService<Reservation> {
 	 * 
 	 * @param status Etat de la réservation (false si disponible, true sinon).
 	 * @return Une liste de réservations disponibles.
+	 * @throws ReservationNotFoundException 
 	 */
-	public List<Reservation> findByStatus(boolean status);
+	public List<Reservation> findReservationsDispo() throws ReservationNotFoundException;
 }

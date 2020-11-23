@@ -1,11 +1,13 @@
 package com.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.entity.Reservation;
+import com.exception.notfound.ReservationNotFoundException;
 import com.repo.IReservationRepo;
 import com.service.IReservationService;
 
@@ -29,13 +31,29 @@ public class ReservationServiceImpl extends DaoServiceImpl<Reservation> implemen
 	IReservationRepo repo;
 
 	@Override
-	public List<Reservation> findByStatus(boolean status) {
-		log.info("Service spécifique de Reservation : méthode find By Status appelée.");
-		if (status == false) {
-			log.info("Appel repo OK.");
-			return repo.findAll();
+	public List<Reservation> findReservationsDispo() throws ReservationNotFoundException{
+		try {
+			log.info("Service spécifique de Reservation : méthode find By Status appelée.");
+			List<Reservation> listeReservations = repo.findAll();
+			if (listeReservations != null) {
+				log.info("Appel repo OK.");
+				listeReservations = repo.findAll().stream().filter(r -> r.isStatus() == false).collect(Collectors.toList());
+				if (listeReservations != null) {
+					return listeReservations;
+				}
+				else {
+					log.warn("Tout est complet il n'y a pas de réservations disponibles");
+				}
+			}
+			else {
+				log.warn("Les réservations n'ont pas été trouvées.");
+				throw new ReservationNotFoundException("List<Reservation> pas trouvée findAll=null ");
+			}
+			
+		} catch (ReservationNotFoundException rnfe) {
+			rnfe.printStackTrace();
+			rnfe.getMessage();
 		}
-		log.warn("Les réservations sont indisponibles.");
 		return null;
 	}
 

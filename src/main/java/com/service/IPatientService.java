@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.entity.FichesMedicales;
 import com.entity.Patient;
+import com.exception.notfound.FichesMedcialesNotFoundException;
 
 /**
  * Interface service {@code IPatientService} spécifique de {@link Patient}
@@ -29,7 +30,8 @@ public interface IPatientService extends IDaoService<Patient> {
 	 * 
 	 * @param id Id du patient.
 	 * @return Une liste de fiches médicales d'un patient.
+	 * @throws FichesMedcialesNotFoundException 
 	 */
-	public List<FichesMedicales> consulterFicheMedicale(Long id);
+	public List<FichesMedicales> consulterFicheMedicale(Long id) throws FichesMedcialesNotFoundException;
 
 }

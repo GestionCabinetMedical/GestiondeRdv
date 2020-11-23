@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dto.ResponseDto;
 import com.entity.Reservation;
+import com.exception.notfound.ReservationNotFoundException;
 import com.service.impl.ReservationServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,11 +43,12 @@ public class ReservationController extends DaoControllerImpl<Reservation> {
 	 * 
 	 * @param status Etat de la réservation (false si disponible, true sinon).
 	 * @return Une liste de réservations disponibles.
+	 * @throws ReservationNotFoundException 
 	 */
 	@GetMapping(value = "/consulterplanning/{status}")
-	public ResponseDto<List<Reservation>> findByStatus(@PathVariable boolean status) {
+	public ResponseDto<List<Reservation>> findByStatus(@PathVariable boolean status) throws ReservationNotFoundException {
 		log.info("Controller spécifique de Reservation : méthode find By Status appelée.");
-		List<Reservation> listeRes = service.findByStatus(status);
+		List<Reservation> listeRes = service.findReservationsDispo();
 		return makeListResponse(listeRes);
 	}
 

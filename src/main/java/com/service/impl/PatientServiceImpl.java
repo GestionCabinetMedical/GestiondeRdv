@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.entity.FichesMedicales;
 import com.entity.Patient;
+import com.exception.notfound.FichesMedcialesNotFoundException;
 import com.repo.IFichesMedicalesRepository;
 import com.repo.IPatientRepo;
 import com.service.IPatientService;
@@ -37,20 +38,33 @@ public class PatientServiceImpl extends DaoServiceImpl<Patient> implements IPati
 
 	@Override
 	public void connexion(String login, String mdp) {
-		// TODO : implémenter la méthode
+		// TODO : implémenter la méthode et générer les exceptions qui vont avec
 		log.info("Service spécifique de Patient : méthode connection appelée.");
 	}
 
 	@Override
-	public List<FichesMedicales> consulterFicheMedicale(Long idPatient) {
-		log.info("Service spécifique de Patient : méthode consulter Fiche Medicale appelée.");
-		if (idPatient != null) {
-			log.info("Appel repo OK.");
-			List<FichesMedicales> listeFiches = ficheRepo.findAll().stream()
-					.filter(f -> f.getConsultation().getIdPatient() == idPatient).collect(Collectors.toList());
-			return listeFiches;
+	public List<FichesMedicales> consulterFicheMedicale(Long idPatient) throws FichesMedcialesNotFoundException{
+		try {
+			log.info("Service spécifique de Patient : méthode consulter Fiche Medicale appelée.");
+			if (idPatient != null) {
+				List<FichesMedicales> listeFiches = ficheRepo.findAll();
+				if (listeFiches == null) {
+					log.warn("Erreur méthode consulter Fiche Medicale: appel repo findAll Not OK");
+					throw new FichesMedcialesNotFoundException("List<FichesMedicales> findAll = null");
+				}
+				log.info("Appel repo OK.");
+				listeFiches = ficheRepo.findAll().stream()
+						.filter(f -> f.getConsultation().getIdPatient() == idPatient).collect(Collectors.toList());
+				return listeFiches;
+			}
+			else {
+				log.warn("Erreur méthode consulter Fiche Medicale: idPatient null");
+				throw new FichesMedcialesNotFoundException("List<FichesMedicales> pas trouvé idPatient = null");
+			}
+		} catch (FichesMedcialesNotFoundException fmnfe) {
+			fmnfe.printStackTrace();
+			fmnfe.getMessage();
 		}
-		log.warn("Erreur méthode consulter Fiche Medicale: idPatient null");
 		return null;
 	}
 
