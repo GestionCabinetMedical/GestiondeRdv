@@ -19,7 +19,6 @@ public interface IReservationService extends IDaoService<Reservation> {
 	 * Méthode permettant de rechercher une liste de réservations par son statut
 	 * (validée ou non par un médecin).
 	 * 
-	 * @param status Etat de la réservation (false si disponible, true sinon).
 	 * @return Une liste de réservations disponibles.
 	 * @throws ReservationNotFoundException 
 	 */

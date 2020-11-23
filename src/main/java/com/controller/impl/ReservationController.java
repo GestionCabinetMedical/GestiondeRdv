@@ -41,13 +41,12 @@ public class ReservationController extends DaoControllerImpl<Reservation> {
 	 * Méthode permettant de rechercher une liste de réservations par son statut
 	 * (validée ou non par un médecin).
 	 * 
-	 * @param status Etat de la réservation (false si disponible, true sinon).
 	 * @return Une liste de réservations disponibles.
 	 * @throws ReservationNotFoundException 
 	 */
-	@GetMapping(value = "/consulterplanning/{status}")
-	public ResponseDto<List<Reservation>> findByStatus(@PathVariable boolean status) throws ReservationNotFoundException {
-		log.info("Controller spécifique de Reservation : méthode find By Status appelée.");
+	@GetMapping(value = "/consulterplanning")
+	public ResponseDto<List<Reservation>> findReservationsDispo() throws ReservationNotFoundException {
+		log.info("Controller spécifique de Reservation : méthode findReservationsDispo appelée.");
 		List<Reservation> listeRes = service.findReservationsDispo();
 		return makeListResponse(listeRes);
 	}

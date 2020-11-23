@@ -67,10 +67,12 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	public ResponseDto<List<FichesMedicales>> makeListFichesMedicalesResponse(List<FichesMedicales> liste) {
 		ResponseDto<List<FichesMedicales>> resp = new ResponseDto<>();
 		if (liste.isEmpty() == false) {
+			log.info("makeListFichesMedicalesResponse : ResponseDto<List<FichesMedicales>> Ok");
 			resp.setError(false);
 			resp.setBody(liste);
 			resp.setStatus(HttpStatus.SC_OK);
 		} else {
+			log.info("makeListFichesMedicalesResponse : ResponseDto<List<FichesMedicales>> Erreur");
 			resp.setError(true);
 			resp.setBody(null);
 			resp.setStatus(HttpStatus.SC_BAD_REQUEST);

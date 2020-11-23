@@ -79,10 +79,12 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 	public ResponseDto<E> makeDtoResponse(E e) {
 		ResponseDto<E> resp = new ResponseDto<>();
 		if (e != null) {
+			log.info("makeDtoResponse : responseDto Ok");
 			resp.setBody(e);
 			resp.setError(false);
 			resp.setStatus(HttpStatus.SC_OK);
 		} else {
+			log.info("makeDtoResponse : responseDto Erreur");
 			resp.setError(true);
 			resp.setBody(null);
 			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
@@ -94,10 +96,12 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 		ResponseDto<Boolean> resp = new ResponseDto<>();
 
 		if (status) {
+			log.info("makeBooleanResponse : ResponseDto<Boolean> Ok");
 			resp.setError(false);
 			resp.setBody(null);
 			resp.setStatus(HttpStatus.SC_OK);
 		} else {
+			log.info("makeBooleanResponse : ResponseDto<Boolean> Erreur");
 			resp.setError(true);
 			resp.setBody(null);
 			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
@@ -109,10 +113,12 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 		ResponseDto<List<E>> resp = new ResponseDto<>();
 
 		if (liste != null) {
+			log.info("makeListResponse : ResponseDto<List<E>> Ok");
 			resp.setError(false);
 			resp.setBody(liste);
 			resp.setStatus(HttpStatus.SC_OK);
 		} else {
+			log.info("makeListResponse : ResponseDto<List<E>> Erreur");
 			resp.setError(true);
 			resp.setBody(null);
 			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
