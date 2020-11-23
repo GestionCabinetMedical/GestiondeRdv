@@ -1,12 +1,17 @@
 package com.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dto.GainDto;
 import com.entity.FichesMedicales;
 import com.entity.Medecin;
 import com.entity.Reservation;
+import com.repo.IMedecinRepository;
+import com.repo.IReservationRepo;
 import com.service.IMedecinService;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Classe service {@code MedecinServiceImpl} spécifique de {@link Medecin} qui
@@ -19,43 +24,40 @@ import com.service.IMedecinService;
  *
  */
 @Service
+@Slf4j
 public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMedecinService {
-	/**
-	 * @author Jonathan Rachwal
-	 *
-	 */
+	
+	// ATTRIBUTS
+	@Autowired
+	private IMedecinRepository medecinRepository;
+	
+	@Autowired
+	private IReservationRepo reservationRepository;
+	
+	// METHODES
+	
 	@Override
 	public void connexion() {
 		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @author Jonathan Rachwal
-	 *
-	 */
 	@Override
-	public float totalDesMedecins() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int totalDesMedecins() {
+		return medecinRepository.totalDesMedecins();
 	}
 
-	/**
-	 * @author Jonathan Rachwal
-	 *
-	 */
+
 	@Override
-	public float totalMedecinsParSpecialite() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int totalMedecinsParSpecialite() {
+		return medecinRepository.totalMedecinsParSpecialite();
 	}
 
-	/**
-	 * @author Jonathan Rachwal
-	 *
-	 */
 	@Override
-	public Reservation confirmerRdv() {
-		// TODO Auto-generated method stub
+	public Reservation confirmerRdv(Long idReservation) {
+		log.info("Service spécifique du Medecin : méthode confirmerRdv appelée.");
+		if (idReservation != null) {
+			Reservation reservationToConfirm = reservationRepository.findById(idReservation).get();
+		}
 		return null;
 	}
 
