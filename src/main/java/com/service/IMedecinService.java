@@ -1,6 +1,9 @@
 package com.service;
 
+import java.util.List;
+
 import com.dto.GainDto;
+import com.entity.Consultation;
 import com.entity.FichesMedicales;
 import com.entity.Medecin;
 import com.entity.Reservation;
@@ -40,7 +43,7 @@ public interface IMedecinService extends IDaoService<Medecin> {
 	 * Methode permettant au medecin de confirmer un rdv => ajout d'une consultation dans sa liste (=son planning)
 	 * @return ???
 	 */
-	public Reservation confirmerRdv(Long idReservation);
+	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin, Long idPatient);
 
 	/**
 	 * @author Jonathan Rachwal
