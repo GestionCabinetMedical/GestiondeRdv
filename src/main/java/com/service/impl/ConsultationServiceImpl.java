@@ -6,9 +6,13 @@ import com.entity.Consultation;
 import com.service.IConsultationService;
 
 /**
- * @author Jonathan RACHWAL
+ * Classe service {@code ConsultationServiceImpl} spécifique de
+ * {@link Consultation} qui étend de la classe générique {@code DaoServiceImpl}
+ * et implémente l'interface spécifique {@code IConsultationService}.
  * 
- * Classe Consultation service qui étend de DaoServiceImpl et implémente IMedecinService.
+ * @author Jonathan Rachwal
+ * @see DaoServiceImpl
+ * @see IConsultationService
  *
  */
 @Service

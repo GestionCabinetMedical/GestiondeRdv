@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.service;
 
 import java.util.List;
@@ -18,31 +15,34 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface IDaoService<E> {
 
 	/**
-	 * Méthode permettant d'ajouter ou modifier une entite E dans la base de donnée.
+	 * Méthode permettant d'ajouter ou modifier une entité E dans la base de
+	 * données.
 	 *
-	 * @param entite Entite à ajouter ou modifier.
+	 * @param entite Entité à ajouter ou modifier.
 	 * @return L'entité correspondante (peut être null).
 	 */
 	public E addOrUpdate(E entite);
 
 	/**
-	 * Méthode permettant de supprimer une entité de la base de donnée par son id.
+	 * Méthode permettant de supprimer une entité de la base de données par son id.
 	 *
 	 * @param id Id de l'entité à supprimer.
+	 * @return True si la suppression a été effectuée, false sinon.
 	 */
 	public boolean deleteById(Long id);
 
 	/**
 	 * Méthode permettant de trouver une entité par son id.
+	 * 
 	 * @param id Id de l'entité à rechercher.
-	 * @return L'entité recherché (peut être null).
+	 * @return L'entité recherchée (peut être null).
 	 */
 	public E findById(Long id);
 
 	/**
-	 * Méthode permettant de recherche la liste de toutes les entités.
+	 * Méthode permettant de rechercher la liste de toutes les entités.
 	 *
-	 * @return Une liste d'entité (peut être vide).
+	 * @return Une liste d'entités (peut être vide).
 	 */
 	public List<E> findAll();
 

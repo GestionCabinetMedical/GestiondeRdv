@@ -9,10 +9,13 @@ import com.entity.Reservation;
 import com.service.IMedecinService;
 
 /**
- * @author Jonathan RACHWAL
- *
- *         Classe Medecin service qui étend de DaoServiceImpl et implémente
- *         IMedecinService.
+ * Classe service {@code MedecinServiceImpl} spécifique de {@link Medecin} qui
+ * étend de la classe générique {@code DaoServiceImpl} et implémente l'interface
+ * spécifique {@code IMedecinService}.
+ * 
+ * @author Jonathan Rachwal
+ * @see DaoServiceImpl
+ * @see IMedecinService
  *
  */
 @Service

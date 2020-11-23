@@ -3,16 +3,18 @@ package com.controller.impl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.controller.IMedecinController;
 import com.entity.Medecin;
 
 /**
+ * Classe controller {@code MedecinControllerImpl} spécifique de {@link Medecin}
+ * qui étend de la classe générique {@code DaoControllerImpl}.
+ * 
  * @author Jonathan Rachwal
+ * @see DaoControllerImpl
  *
- * Classe Medecin controller extend de DaoControllerImpl et implémente IMedecinController
  */
 @RestController
-@RequestMapping(value="/medecin")
-public class MedecinControllerImpl extends DaoControllerImpl<Medecin> implements IMedecinController{
+@RequestMapping(value = "/medecin")
+public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 
 }

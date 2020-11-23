@@ -5,12 +5,15 @@ import org.springframework.stereotype.Repository;
 import com.entity.Medecin;
 
 /**
+ * Interface repository {@code IMedecinRepository} spécifique de {@link Medecin}
+ * étend de l'interface générique {@code IDaoRepo}. Cette interface permet la
+ * communication avec la table medecin dans la base de données.
+ * 
  * @author Jonathan Rachwal
- * Interface de Medecin Repository qui permet la communication avec la table Medecin de la BDD
- * Interface etendue de IDaoRepository
+ * @see IDaoRepo
  *
  */
 @Repository
-public interface IMedecinRepository extends IDaoRepo<Medecin>{
+public interface IMedecinRepository extends IDaoRepo<Medecin> {
 
 }

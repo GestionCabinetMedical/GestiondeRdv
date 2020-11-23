@@ -6,13 +6,16 @@ import com.entity.Medecin;
 import com.entity.Reservation;
 
 /**
- * @author Jonathan RACHWAL
- * Interface Medecin service qui extend de IDaoService
- *
- *
+ * Interface service {@code IFichesMedicalesService} spécifique de
+ * {@link FichesMedicales} qui étend de l'interface générique
+ * {@code IDaoService}.
+ * 
+ * @author Jonathan Rachwal
+ * @see IDaoService
  */
-public interface IMedecinService extends IDaoService<Medecin>{
-    /**
+public interface IMedecinService extends IDaoService<Medecin> {
+
+	/**
 	 * @author Jonathan Rachwal
 	 *
 	 */
@@ -20,6 +23,8 @@ public interface IMedecinService extends IDaoService<Medecin>{
 
 	/**
 	 * @author Jonathan Rachwal
+	 * 
+	 * @return
 	 *
 	 */
 	public float totalDesMedecins();
@@ -55,13 +60,12 @@ public interface IMedecinService extends IDaoService<Medecin>{
 	 * @author Jonathan Rachwal
 	 *
 	 */
-    public void consulterPlanning();
+	public void consulterPlanning();
 
-  	/**
+	/**
 	 * @author Jonathan Rachwal
 	 *
 	 */
-    public void consulterRapportSatisfaction();
-
+	public void consulterRapportSatisfaction();
 
 }

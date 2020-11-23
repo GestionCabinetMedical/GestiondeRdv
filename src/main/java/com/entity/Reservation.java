@@ -8,16 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * La classe {@code Reservation} caractérise une réservation (faite par un
- * patient). Cette classe contient une liste non-exhaustive d'attributs qui
- * décrivent une réservation.
+ * Classe {@code Reservation} qui caractérise une réservation faite par un
+ * {@link Patient}. Cette classe contient une liste non-exhaustive d'attributs
+ * qui décrivent une réservation.
  * 
  * @author Sophie Lahmar
  * 
@@ -30,19 +29,16 @@ public class Reservation implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_PATIENT")
+	@Column(name = "ID_RESERVATION")
 	private Long idReservation;
 
-	@Column(name = "STATUS")
+	@Column(name = "STATUS", unique = false, nullable = false)
 	private boolean status;
 
-	@Column(name = "DATE_RESERVATION")
+	@Column(name = "DATE_RESERVATION", unique = false, nullable = true)
 	private Date dateRervation;
 
-	@Column(name = "CONSULTATION_EN_URGENCE")
+	@Column(name = "CONSULTATION_EN_URGENCE",  unique = false, nullable = false)
 	private boolean isUrgent;
-
-	@ManyToOne
-	private Patient patient;
 
 }

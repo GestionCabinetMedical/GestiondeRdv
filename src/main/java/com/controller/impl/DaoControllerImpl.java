@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.controller.impl;
 
 import java.util.List;
@@ -21,16 +18,23 @@ import com.service.IDaoService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Classe controller générique implémentant IDaoController.
+ * Classe controller générique implémentant l'interface générique
+ * {@code IDaoController}. Son rôle est de contrôler les flux de données
+ * entrant.
  * 
  * @author Maxime Rembert
+ * @see IDaoController
  *
  */
 @Slf4j
 public class DaoControllerImpl<E> implements IDaoController<E> {
 
+	// ATTRIBUTS
+
 	@Autowired
 	private IDaoService<E> serv;
+
+	// METHODES
 
 	@Override
 	@PostMapping
@@ -75,42 +79,46 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 	public ResponseDto<E> makeDtoResponse(E e) {
 		ResponseDto<E> resp = new ResponseDto<>();
 		if (e != null) {
+			log.info("makeDtoResponse : responseDto Ok");
 			resp.setBody(e);
 			resp.setError(false);
 			resp.setStatus(HttpStatus.SC_OK);
 		} else {
+			log.info("makeDtoResponse : responseDto Erreur");
 			resp.setError(true);
 			resp.setBody(null);
 			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
 		}
 		return resp;
-
 	}
 
 	public ResponseDto<Boolean> makeBooleanResponse(Boolean status) {
 		ResponseDto<Boolean> resp = new ResponseDto<>();
 
 		if (status) {
+			log.info("makeBooleanResponse : ResponseDto<Boolean> Ok");
 			resp.setError(false);
 			resp.setBody(null);
 			resp.setStatus(HttpStatus.SC_OK);
 		} else {
+			log.info("makeBooleanResponse : ResponseDto<Boolean> Erreur");
 			resp.setError(true);
 			resp.setBody(null);
 			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
 		}
 		return resp;
-
 	}
-	
+
 	public ResponseDto<List<E>> makeListResponse(List<E> liste) {
 		ResponseDto<List<E>> resp = new ResponseDto<>();
-		
+
 		if (liste != null) {
+			log.info("makeListResponse : ResponseDto<List<E>> Ok");
 			resp.setError(false);
 			resp.setBody(liste);
 			resp.setStatus(HttpStatus.SC_OK);
 		} else {
+			log.info("makeListResponse : ResponseDto<List<E>> Erreur");
 			resp.setError(true);
 			resp.setBody(null);
 			resp.setStatus(HttpStatus.SC_BAD_REQUEST);

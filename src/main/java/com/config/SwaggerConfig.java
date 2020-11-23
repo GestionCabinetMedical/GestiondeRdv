@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.config;
 
 import org.springframework.context.annotation.Bean;
@@ -13,7 +10,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * Classe de configuration pour l'intégration de Swagger 2.
+ * Classe de configuration pour l'intégration de {@code Swagger 2}.
  * 
  * @author Maxime Rembert
  *
@@ -21,7 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {
-	
+
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()

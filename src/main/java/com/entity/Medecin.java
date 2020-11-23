@@ -1,6 +1,7 @@
 package com.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,9 +16,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- *  Classe objet Medecin
+ * Classe {@code Medecin} qui caractérise un médecin. Elle contient une liste
+ * non-exhaustive d'attributs qui décrivent un médecin, et possède une relation
+ * {@code @OneToMany} avec la classe {@code Consultation}.
  *
- * @author rachw
+ * @author Jonathan Rachwal
+ * @see Consultation
  *
  */
 
@@ -26,26 +30,35 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Medecin implements Serializable {
+
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	@Column(name="ID_MEDECIN", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_MEDECIN", unique = true, nullable = false)
 	private Long idMedecin;
-	@Column(name="NOM", unique = false, nullable = true)
+
+	@Column(name = "NOM", unique = false, nullable = false)
 	private String nom;
-	@Column(name="PRENOM", unique = false, nullable = true)
+
+	@Column(name = "PRENOM", unique = false, nullable = false)
 	private String prenom;
-	@Column(name="ID_FORMULE", unique = true, nullable = false)
+
+	@Column(name = "ID_FORMULE", unique = false, nullable = false)
 	private Long idFormule;
-	@Column(name="ADRESSE_CABINET", unique = false, nullable = true)
+
+	@Column(name = "ADRESSE_CABINET", unique = false, nullable = false)
 	private String adresseCabinet;
-	@Column(name="SPECIALITE", unique = false, nullable = true)
+
+	@Column(name = "SPECIALITE", unique = false, nullable = false)
 	private String specialite;
-	@Column(name="IDENTIFIANT", unique = true, nullable = true)
+
+	@Column(name = "IDENTIFIANT", unique = true, nullable = true)
 	private String identifiant;
-	@Column(name="MOT_DE_PASSE", unique = false, nullable = true)
+
+	@Column(name = "MOT_DE_PASSE", unique = true, nullable = true)
 	private String motDePasse;
+
 	@OneToMany
-	@JoinColumn(name = "fk_medecin", referencedColumnName = "ID_MEDECIN",  unique = true, nullable = true)
-	private Consultation consultation;
+	@JoinColumn(name = "FK_MEDECIN", referencedColumnName = "ID_MEDECIN", unique = false, nullable = true)
+	private List<Consultation> consultations;
 
 }
