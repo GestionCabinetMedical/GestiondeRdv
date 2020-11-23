@@ -29,16 +29,16 @@ public class Reservation implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_RESERVATION", unique = true, nullable = false)
+	@Column(name = "ID_RESERVATION")
 	private Long idReservation;
 
-	@Column(name = "STATUS", unique = true, nullable = false)
+	@Column(name = "STATUS", unique = false, nullable = false)
 	private boolean status;
 
-	@Column(name = "DATE_RESERVATION", unique = true, nullable = false)
+	@Column(name = "DATE_RESERVATION", unique = false, nullable = true)
 	private Date dateRervation;
 
-	@Column(name = "CONSULTATION_EN_URGENCE", unique = true, nullable = true)
+	@Column(name = "CONSULTATION_EN_URGENCE",  unique = false, nullable = false)
 	private boolean isUrgent;
 
 }

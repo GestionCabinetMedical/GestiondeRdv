@@ -12,6 +12,9 @@ import com.entity.Consultation;
 import com.entity.FichesMedicales;
 import com.service.impl.ConsultationServiceImpl;
 import com.service.impl.FichesMedicalesServiceImpl;
+
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
@@ -29,6 +32,7 @@ import com.service.IReservationService;
  *
  */
 @EnableDiscoveryClient
+@EnableSwagger2
 @SpringBootApplication
 public class GestiondeRdvApplication {
 
@@ -49,8 +53,8 @@ public class GestiondeRdvApplication {
 //		Patient p1 = new Patient(null, "NIVON", "Steven", "Mandelieu", 19478l, "stiti", "nini", null);
 //		Patient p2 = new Patient(null, "MOREAU", "Cathy", "Marseille", 26757l, "mom", "lolo", null);
 //
-//		Reservation r1 = new Reservation(null, false, Date.valueOf("19/11/2020"), false);
-//		Reservation r2 = new Reservation(null, false, Date.valueOf("30/11/2020"), false);
+//		Reservation r1 = new Reservation(null, false, Date.valueOf("2020-11-11"), false);
+//		Reservation r2 = new Reservation(null, false, Date.valueOf("2020-11-16"), false);
 //
 //		return (args) -> {
 //			System.out.println("****** PATIENTS ******");

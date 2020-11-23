@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,13 +37,13 @@ public class Patient implements Serializable {
 	@Column(name = "ID_PATIENT", unique = true, nullable = false)
 	private Long idPatient;
 
-	@Column(name = "NOM", unique = true, nullable = false)
+	@Column(name = "NOM", unique = false, nullable = false)
 	private String nom;
 
 	@Column(name = "PRENOM", unique = false, nullable = false)
 	private String prenom;
 
-	@Column(name = "ADRESSE", unique = true, nullable = false)
+	@Column(name = "ADRESSE", unique = false, nullable = false)
 	private String adresse;
 
 	@Column(name = "NUMERO_SECURITE_SOCIALE", unique = true, nullable = false)
@@ -54,8 +55,8 @@ public class Patient implements Serializable {
 	@Column(name = "MOT_DE_PASSE", unique = true, nullable = false)
 	private String motDePasse;
 
-	@OneToMany
-	@JoinColumn(name = "FK_PATIENT", referencedColumnName = "ID_PATIENT", unique = true, nullable = true)
-	private List<Reservation> reservations = new ArrayList<>();;
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "FK_PATIENT", referencedColumnName = "ID_PATIENT", unique = false, nullable = true)
+	private List<Reservation> reservations = new ArrayList<>();
 
 }
