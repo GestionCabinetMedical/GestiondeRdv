@@ -2,7 +2,6 @@ package com.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +9,8 @@ import com.entity.Consultation;
 import com.entity.FichesMedicales;
 import com.entity.Patient;
 import com.entity.Reservation;
-import com.exception.notfound.FichesMedcialesNotFoundException;
+import com.exception.notfound.FichesMedicalesNotFoundException;
+import com.exception.notfound.PatientNotFoundException;
 import com.repo.IConsultationRepository;
 import com.repo.IFichesMedicalesRepository;
 import com.repo.IPatientRepo;
