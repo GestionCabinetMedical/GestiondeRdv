@@ -14,15 +14,24 @@ import com.session.ConnectedUser;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * Classe {@code TokenManagement} qui permet de configurer des sessions
+ * utilisateur dans le front. Elle implémente l'interface
+ * {@code ITokenManagement}.
+ * 
  * @author Sophie Lahmar
+ * @see ITokenManagement
  *
  */
 @Component
 @Slf4j
 public class TokenManagement implements ITokenManagement {
 
+	// ATTRIBUTS
+
 	@Autowired
 	private ConnectedUser user;
+
+	// METHODES
 
 	@Override
 	public String makePatientSession(ConnectedUserDto patient) {

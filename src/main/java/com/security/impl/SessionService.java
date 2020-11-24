@@ -12,21 +12,28 @@ import com.session.IConnectedUser;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Classe : couche entre l'objet ConnectedUser et le controller.
+ * Classe {@code SessionService} qui permet de faire la communication entre un
+ * objet {@link ConnectedUser} et le controller. Elle implémente l'interface
+ * {@code ISessionService}.
  * 
  * @author Sophie Lahmar
+ * @see ISessionService
  *
  */
 @Component
 @Slf4j
 public class SessionService implements ISessionService {
 
+	// ATTRIBUTS
+	
 	@Autowired
 	private IConnectedUser user;
 
 	@Autowired
 	private IConnectedUserConverter converter;
 
+	// METHODES
+	
 	@Override
 	public String getUserIdentifiant(String token) {
 		log.info("Bean SessionService : méthode 'get User Identifiant' appelée.");

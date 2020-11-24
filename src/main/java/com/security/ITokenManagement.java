@@ -3,6 +3,9 @@ package com.security;
 import com.dto.ConnectedUserDto;
 
 /**
+ * Interface {@code ITokenManagement} qui permet de configurer des sessions
+ * utilisateur dans le front.
+ * 
  * @author Sophie Lahmar
  *
  */

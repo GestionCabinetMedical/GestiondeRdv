@@ -10,9 +10,11 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Classe qui permet de stocker les données pour une session d'un utilisateur.
+ * Classe {@code ConnectedUser} qui permet de stocker les données pour une
+ * session d'un utilisateur. Elle implémente l'interface {@code IConnectedUser}.
  * 
  * @author Sophie Lahmar
+ * @see IConnectedUser
  *
  */
 @SessionScope
@@ -22,10 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ConnectedUser implements IConnectedUser {
 
+	// ATTRIBUTS
+
 	private String identifiant;
 	private String motDePasse;
 	private String token;
 	private Role role;
+
+	// METHODES
 
 	@Override
 	public String getIdentifiant(String token) {

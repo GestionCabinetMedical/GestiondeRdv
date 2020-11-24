@@ -10,19 +10,28 @@ import com.session.IConnectedUser;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * Classe {@code ConnectedUserConverter} qui permet qui permet d'extraire les
+ * données de session de {@link ConnectedUserDto}. Elle implémente l'interface
+ * {@code IConnectedUserConverter}.
+ * 
  * @author Sophie Lahmar
+ * @see IConnectedUserConverter
  *
  */
 @Component
 @Slf4j
 public class ConnectedUserConverter implements IConnectedUserConverter {
 
+	// ATTRIBUTS
+	
 	@Autowired
 	IConnectedUser user;
 
+	// METHODES
+	
 	@Override
 	public ConnectedUserDto convertUserToDto(String token) {
-		log.info("Bean PatientConnected : méthode 'convert User To Dto' appelée.");
+		log.info("Bean ConnectedUserDto : méthode 'convertUserToDto' appelée.");
 		if (token != null) {
 			log.info("Conversion user OK.");
 			ConnectedUserDto dto = new ConnectedUserDto();
@@ -31,7 +40,7 @@ public class ConnectedUserConverter implements IConnectedUserConverter {
 			dto.setRole(user.getRole(token));
 			return dto;
 		} else {
-			log.warn("Erreur méthode 'convert User To Dto': token null.");
+			log.warn("Erreur méthode 'convertUserToDto': token null.");
 			return null;
 		}
 	}
