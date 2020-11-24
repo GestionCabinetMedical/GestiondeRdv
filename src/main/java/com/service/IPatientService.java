@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.entity.FichesMedicales;
 import com.entity.Patient;
-import com.exception.notfound.FichesMedcialesNotFoundException;
+import com.exception.notfound.FichesMedicalesNotFoundException;
 
 /**
- * Interface service {@code IPatientService} spécifique de {@link Patient}
- * qui étend de l'interface générique {@code IDaoService}.
+ * Interface service {@code IPatientService} spécifique de {@link Patient} qui
+ * étend de l'interface générique {@code IDaoService}.
  * 
  * @author Sophie Lahmar
  * @see IDaoService
@@ -17,21 +17,31 @@ import com.exception.notfound.FichesMedcialesNotFoundException;
 public interface IPatientService extends IDaoService<Patient> {
 
 	/**
-	 * Méthode permettant à un patient de se connecter à son espace personnel dans
-	 * l'application.
+	 * Méthode permettant de rechercher un patient par son identifiant et son mot de
+	 * passe.
 	 * 
-	 * @param login Identifiant associé au compte personnel du patient.
-	 * @param mdp   Mot de passe pour entrer dans l'espace du patient.
+	 * @param identifiant Identifiant du patient recherché.
+	 * @param mdp         Mot de passe du patient recherché.
+	 * @return Le patient correspondant à l'identifiant et au mot de passe entrés.
 	 */
-	public void connexion(String login, String mdp);
+	public Patient findByIdentifiantAndMotDePasse(String identifiant, String mdp);
+
+	/**
+	 * Méthode permettant la recherche d'un patient par son nom et son prénom.
+	 * 
+	 * @param nom    Nom du patient recherché.
+	 * @param prenom Prénom du patient recherché.
+	 * @return Le patient correspondant au nom et prénom entrés.
+	 */
+	public Patient findByNomAndPrenom(String nom, String prenom);
 
 	/**
 	 * Méthode permettant au patient de consulter sa liste de fiches médicales.
 	 * 
 	 * @param id Id du patient.
 	 * @return Une liste de fiches médicales d'un patient.
-	 * @throws FichesMedcialesNotFoundException 
+	 * @throws FichesMedcialesNotFoundException
 	 */
-	public List<FichesMedicales> consulterFicheMedicale(Long id) throws FichesMedcialesNotFoundException;
+	public List<FichesMedicales> consulterFicheMedicale(Long id) throws FichesMedicalesNotFoundException;
 
 }

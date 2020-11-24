@@ -31,25 +31,24 @@ public class ReservationServiceImpl extends DaoServiceImpl<Reservation> implemen
 	IReservationRepo repo;
 
 	@Override
-	public List<Reservation> findReservationsDispo() throws ReservationNotFoundException{
+	public List<Reservation> findReservationsDispo() throws ReservationNotFoundException {
 		try {
 			log.info("Service spécifique de Reservation : méthode find By Status appelée.");
 			List<Reservation> listeReservations = repo.findAll();
 			if (listeReservations != null) {
 				log.info("Appel repo OK.");
-				listeReservations = repo.findAll().stream().filter(r -> r.isStatus() == false).collect(Collectors.toList());
+				listeReservations = repo.findAll().stream().filter(r -> r.isStatus() == false)
+						.collect(Collectors.toList());
 				if (listeReservations != null) {
 					return listeReservations;
-				}
-				else {
+				} else {
 					log.warn("Tout est complet il n'y a pas de réservations disponibles");
 				}
-			}
-			else {
+			} else {
 				log.warn("Les réservations n'ont pas été trouvées.");
 				throw new ReservationNotFoundException("List<Reservation> pas trouvée findAll=null ");
 			}
-			
+
 		} catch (ReservationNotFoundException rnfe) {
 			rnfe.printStackTrace();
 			rnfe.getMessage();

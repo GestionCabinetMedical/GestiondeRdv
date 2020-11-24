@@ -4,15 +4,17 @@ import java.util.List;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dto.ResponseDto;
 import com.entity.FichesMedicales;
 import com.entity.Patient;
-import com.exception.notfound.FichesMedcialesNotFoundException;
+import com.exception.notfound.FichesMedicalesNotFoundException;
 import com.service.impl.PatientServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,27 +29,43 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @RequestMapping(value = "/patient")
+//@CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
 @Slf4j
 public class PatientController extends DaoControllerImpl<Patient> {
 
 	// ATTRIBUTS
 
 	@Autowired
-	private PatientServiceImpl service;
+	PatientServiceImpl service;
 
 	// METHODES
 
 	/**
-	 * Méthode permettant à un patient de se connecter à son espace personnel dans
-	 * l'application.
+	 * Méthode permettant de rechercher un patient par son identifiant et son mot de
+	 * passe.
 	 * 
-	 * @param login Identifiant associé au compte personnel du patient.
-	 * @param mdp   Mot de passe pour entrer dans l'espace du patient.
+	 * @param identifiant Identifiant du patient recherché.
+	 * @param mdp         Mot de passe du patient recherché.
+	 * @return Le patient correspondant à l'identifiant et au mot de passe entrés.
 	 */
-	@RequestMapping
-	public void connexion(String login, String mdp) {
-		// TODO : implémenter la méthode
-		log.info("Controller spécifique de Patient : méthode connexion appelée.");
+	@GetMapping(value = "/identifiant-mdp")
+	public ResponseDto<Patient> findByIdentifiantAndMotDePasse(@RequestParam(name = "identifiant") String identifiant,
+			@RequestParam(name = "motDePasse") String mdp) {
+		log.info("Controller spécifique de Patient : méthode 'find By Identifiant And MotDePasse' appelée.");
+		Patient patient = service.findByIdentifiantAndMotDePasse(identifiant, mdp);
+		return makeDtoResponse(patient);
+	}
+
+	/**
+	 * Méthode permettant la recherche d'un patient par son nom et son prénom.
+	 * 
+	 * @param nom    Nom du patient recherché.
+	 * @param prenom Prénom du patient recherché.
+	 * @return Le patient correspondant au nom et prénom entrés.
+	 */
+	@GetMapping(value = "/nom-prenom")
+	public ResponseDto<Patient> findByNomAndPrenom(String nom, String prenom) {
+		return null;
 	}
 
 	/**
@@ -55,10 +73,11 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	 * 
 	 * @param id Id du patient.
 	 * @return Une liste de fiches médicales d'un patient.
-	 * @throws FichesMedcialesNotFoundException 
+	 * @throws FichesMedcialesNotFoundException
 	 */
 	@GetMapping(value = "/consulterFichesMedicales/{id}")
-	public ResponseDto<List<FichesMedicales>> consulterFicheMedicale(@PathVariable Long id) throws FichesMedcialesNotFoundException {
+	public ResponseDto<List<FichesMedicales>> consulterFicheMedicale(@PathVariable Long id)
+			throws FichesMedicalesNotFoundException {
 		log.info("Controller spécifique de Patient : méthode consulter Fiche Medicale appelée.");
 		List<FichesMedicales> listeFiches = service.consulterFicheMedicale(id);
 		return makeListFichesMedicalesResponse(listeFiches);
