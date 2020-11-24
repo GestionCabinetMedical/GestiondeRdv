@@ -1,10 +1,12 @@
 package com.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,8 +59,8 @@ public class Medecin implements Serializable {
 	@Column(name = "MOT_DE_PASSE", unique = true, nullable = true)
 	private String motDePasse;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "FK_MEDECIN", referencedColumnName = "ID_MEDECIN", unique = false, nullable = true)
-	private List<Consultation> consultations;
+	private List<Consultation> consultations= new ArrayList<>();
 
 }

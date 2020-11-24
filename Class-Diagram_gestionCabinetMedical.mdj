@@ -1005,7 +1005,7 @@
 											"top": 226,
 											"width": 151,
 											"height": 13,
-											"text": "+findByStatus()",
+											"text": "+findReservationDispo()",
 											"horizontalAlignment": 0
 										}
 									],
@@ -3131,7 +3131,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF12sOEfMx0lh8="
 							},
-							"name": "findByStatus"
+							"name": "findReservationDispo"
 						}
 					]
 				},
