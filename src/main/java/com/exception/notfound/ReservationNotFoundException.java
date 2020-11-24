@@ -3,8 +3,8 @@ package com.exception.notfound;
 import javassist.NotFoundException;
 
 /**
- * Classe exception {@code ReservationNotFoundException} si une
- * {@link Réservation} n'est pas trouvée. Elle étend de
+ * Classe exception {@code ReservationNotFoundException} si un objet de
+ * {@link Reservation} n'est pas trouvé. Elle étend de
  * {@code NotFoundException}.
  * 
  * @author Pauline Humbert

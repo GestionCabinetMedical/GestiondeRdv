@@ -1,14 +1,16 @@
 package com.exception.notfound;
 
+import com.entity.FichesMedicales;
+
 import javassist.NotFoundException;
 
 /**
- * @author Pauline Humbert
- *
- *         Classe exception {@code FichesMedcialesNotFoundException} si elle
- *         n'est pas trouvée. Elle étend de {@code NotFoundException}
- * @see NotFoundException
+ * Classe exception {@code FichesMedicalesNotFoundException} si un objet de
+ * {@link FichesMedicales} n'est pas trouvé. Elle étend de
+ * {@code NotFoundException}.
  * 
+ * @author Pauline Humbert
+ * @see NotFoundException
  */
 public class FichesMedicalesNotFoundException extends NotFoundException {
 
