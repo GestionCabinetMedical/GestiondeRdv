@@ -1,14 +1,13 @@
 package com.service;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.dto.GainDto;
 import com.entity.Consultation;
 import com.entity.FichesMedicales;
 import com.entity.Medecin;
-import com.entity.Reservation;
 
 /**
  * Interface service {@code IFichesMedicalesService} spécifique de
@@ -52,22 +51,11 @@ public interface IMedecinService extends IDaoService<Medecin> {
 	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin, Long idPatient) throws ParseException;
 
 	/**
-	 * @author Jonathan Rachwal
+	 * Methode permettant au medecin de consulter ses rdv prévus / consultations => son planning
+	 * @param idMedecin Long associé à un medecin qui souhaite consulter le planning.
+	 * @return Map<Consultation, Date> qui liste en Key une consultation et en valeur la date de celle-ci
 	 *
-	 */
-	public GainDto consulterGainsParJour();
-
-	/**
-	 * @author Jonathan Rachwal
-	 *
-	 */
-	//TODO map consultation et date via réservation 
-	public void consulterPlanning();
-
-	/**
-	 * @author Jonathan Rachwal
-	 *
-	 */
-	public void consulterRapportSatisfaction();
+	 */ 
+	public Map<Consultation, Date> consulterPlanning(Long idMedecin);
 
 }

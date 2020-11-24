@@ -3,6 +3,7 @@ package com.service.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,11 +13,9 @@ import org.springframework.stereotype.Service;
 
 import com.dto.GainDto;
 import com.entity.Consultation;
-import com.entity.FichesMedicales;
 import com.entity.Medecin;
 import com.entity.Reservation;
 import com.repo.IConsultationRepository;
-import com.repo.IFichesMedicalesRepository;
 import com.repo.IMedecinRepository;
 import com.repo.IReservationRepo;
 import com.service.IMedecinService;
@@ -94,7 +93,7 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 					    Date timeToConfirm = simpleDateFormat.parse(simpleDateFormatToConfirm);
 					    if ((timeToConfirm.after(TimeStartMorning) && timeToConfirm.before(TimeStopMorning))
 					    		|| (timeToConfirm.after(TimeStartAfternoon) && timeToConfirm.before(TimeStopAfternoon))) {
-					    	Consultation consultationConfirmed = new Consultation(null, idMedecin, idPatient, reservationToConfirm);
+					    	Consultation consultationConfirmed = new Consultation(null, idPatient, reservationToConfirm);
 							consultationRepository.save(consultationConfirmed);
 							
 							listeConsultation.add(consultationConfirmed);
@@ -121,34 +120,23 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 		}
 		return null;
 	}
-
-	/**
-	 * @author Jonathan Rachwal
-	 *
-	 */
+	
 	@Override
-	public GainDto consulterGainsParJour() {
+	public Map<Consultation, Date> consulterPlanning(Long idMedecin) {
 		// TODO Auto-generated method stub
+		log.info("Service spécifique du Medecin : méthode consulterPlanning appelée.");
+		if (idMedecin != null) {
+			Medecin medecinConcerned = medecinRepository.findById(idMedecin).get();
+			log.info("Appel repo medecin OK.");
+			List<Consultation> listeConsultations = medecinConcerned.getConsultations();
+			Map<Consultation, Date> planningConsultations = new HashMap<>();
+			for (int i=0; i<listeConsultations.size(); i++) {
+				Consultation consultationPlanned = listeConsultations.get(i);
+				planningConsultations.put(consultationPlanned, consultationPlanned.getReservation().getDateRervation());
+			}
+			return planningConsultations;
+		}
 		return null;
 	}
 
-	/**
-	 * @author Jonathan Rachwal
-	 *
-	 */
-	@Override
-	public void consulterPlanning() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * @author Jonathan Rachwal
-	 *
-	 */
-	@Override
-	public void consulterRapportSatisfaction() {
-		// TODO Auto-generated method stub
-
-	}
 }
