@@ -82,11 +82,13 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 			log.info("makeDtoResponse : responseDto Ok");
 			resp.setBody(e);
 			resp.setError(false);
+			resp.setMessage("Success");
 			resp.setStatus(HttpStatus.SC_OK);
 		} else {
 			log.info("makeDtoResponse : responseDto Erreur");
 			resp.setError(true);
 			resp.setBody(null);
+			resp.setMessage("Error");
 			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
 		}
 		return resp;

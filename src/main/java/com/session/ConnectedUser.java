@@ -25,7 +25,7 @@ public class ConnectedUser implements IConnectedUser {
 	private String identifiant;
 	private String motDePasse;
 	private String token;
-	private Role role = Role.None;
+	private Role role;
 
 	@Override
 	public String getIdentifiant(String token) {

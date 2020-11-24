@@ -3,7 +3,6 @@ package com.controller.impl;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +34,7 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	@Autowired
 	IAdminService adminService;
 
+	@Autowired
 	ITokenManagement tokenManage;
 
 	// METHODES
@@ -52,22 +52,6 @@ public class AdminController extends DaoControllerImpl<Admin> {
 		return makeDtoResponse(admin);
 	}
 
-	/**
-	 * Méthode permettant de vérifier l'existence d'un admin par son identifiant et
-	 * son mot de passe.
-	 * 
-	 * @param username Identifiant de l'admin recherché.
-	 * @param password Mot de passe de l'admin recherché.
-	 * @return Un admin s'il existe déjà, null sinon.
-	 */
-	@GetMapping(path = "/exists/{username}/{mdp}")
-	public ResponseDto<Admin> existsByUsernameAndPassword(@PathVariable String username, @PathVariable String mdp) {
-		// TODO : ajouter les exceptions !
-
-		log.info("Controller spécifique de Admin : méthode 'existsByUsernameAndPassword' appelée.");
-		Admin admin = adminService.existsByUsernameAndPassword(username, mdp);
-		return makeDtoResponse(admin);
-	}
 
 	/**
 	 * @author Sophie Lahmar
@@ -78,7 +62,8 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	@PostMapping(path = "/identifiant-mdp")
 	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau) {
 		// TODO : ajouter les exceptions !
-
+		log.info("Controller spécifique de Admin : méthode 'existsByUsernameAndPassword' appelée.");
+		
 		ConnexionDto connexionDto = new ConnexionDto();
 
 		try {
@@ -107,7 +92,7 @@ public class AdminController extends DaoControllerImpl<Admin> {
 			}
 
 		} catch (NullPointerException e) {
-			log.info("Null Pointer Exception" + e.getMessage());
+			log.info("Null Pointer Exception : " + e.getMessage());
 			connexionDto.setUser(null);
 			connexionDto.setToken(null);
 			return connexionDto;
@@ -122,7 +107,7 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	private ConnectedUserDto makeConnectedUserDtoResponse(Admin admin) {
 		ConnectedUserDto response = new ConnectedUserDto();
 		if (admin != null) {
-			log.info("makeConnectedUserDtoResponse : ConnectedUserDto OK.");
+			log.info("makeConnectedUserDtoResponse : admin OK.");
 			response.setRole(Role.Admin);
 			response.setIdentifiant(admin.getUsername());
 			response.setMdp(admin.getPassword());

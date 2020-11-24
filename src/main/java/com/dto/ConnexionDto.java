@@ -7,7 +7,6 @@ import lombok.Setter;
 
 /**
  * @author Sophie Lahmar
- * @param <U>
  *
  */
 @Getter
