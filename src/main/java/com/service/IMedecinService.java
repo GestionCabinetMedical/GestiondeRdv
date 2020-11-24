@@ -1,9 +1,13 @@
 package com.service;
 
-import com.dto.GainDto;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import com.entity.Consultation;
 import com.entity.FichesMedicales;
 import com.entity.Medecin;
-import com.entity.Reservation;
 
 /**
  * Interface service {@code IFichesMedicalesService} spécifique de
@@ -16,56 +20,42 @@ import com.entity.Reservation;
 public interface IMedecinService extends IDaoService<Medecin> {
 
 	/**
-	 * @author Jonathan Rachwal
-	 *
+	 * Méthode permettant à un medecin de se connecter à son espace personnel dans
+	 * l'application.
+	 * 
+	 * @param login Identifiant associé au compte personnel du medecin.
+	 * @param mdp   Mot de passe pour entrer dans l'espace du medecin.
 	 */
 	public void connexion();
 
 	/**
-	 * @author Jonathan Rachwal
-	 * 
-	 * @return
-	 *
+	 * Methode permettant d'avoir le nombre total de medecin dans l'application
+	 * @return int du nombre total de medecin 
 	 */
-	public float totalDesMedecins();
+	public int totalDesMedecins();
 
 	/**
-	 * @author Jonathan Rachwal
-	 *
-	 * @return
+	 * Methode permettant d'avoir le nombre total de medecin par specialite dans l'application
+	 * @return Map<String, Integer> key: specialité et value: nombre total de medecin pour cette specialite dans la BD
 	 */
-	public float totalMedecinsParSpecialite();
+	public Map<String, Integer> totalMedecinsParSpecialite();
 
 	/**
-	 * @author Jonathan Rachwal
-	 *
-	 * @return
+	 * Methode permettant au medecin de confirmer un rdv => ajout d'une consultation dans sa liste (=son planning)
+	 * @param idReservation Long associé à la Réservation faite par un patient à réserver.
+	 * @param idMedecin Long associé à un medecin qui peut confirmer ou non le rdv.
+	 * @param idPatient Long associé à un patient qui a fait la Réservation.
+	 * @return List<Consultation> d'un medecin avec la nouvelle consultation prévue une fois la Réservation confirmée
+	 * @throws ParseException 
 	 */
-	public Reservation confirmerRdv();
+	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin, Long idPatient) throws ParseException;
 
 	/**
-	 * @author Jonathan Rachwal
+	 * Methode permettant au medecin de consulter ses rdv prévus / consultations => son planning
+	 * @param idMedecin Long associé à un medecin qui souhaite consulter le planning.
+	 * @return Map<Consultation, Date> qui liste en Key une consultation et en valeur la date de celle-ci
 	 *
-	 */
-	public GainDto consulterGainsParJour();
-
-	/**
-	 * @author Jonathan Rachwal
-	 *
-	 * @return
-	 */
-	public FichesMedicales modifierFichesMedicales();
-
-	/**
-	 * @author Jonathan Rachwal
-	 *
-	 */
-	public void consulterPlanning();
-
-	/**
-	 * @author Jonathan Rachwal
-	 *
-	 */
-	public void consulterRapportSatisfaction();
+	 */ 
+	public Map<Consultation, Date> consulterPlanning(Long idMedecin);
 
 }

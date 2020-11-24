@@ -1,14 +1,20 @@
 package com.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.entity.Consultation;
 import com.entity.FichesMedicales;
 import com.entity.Patient;
+import com.entity.Reservation;
 import com.exception.notfound.FichesMedcialesNotFoundException;
+import com.repo.IConsultationRepository;
 import com.repo.IFichesMedicalesRepository;
 import com.repo.IPatientRepo;
+import com.repo.IReservationRepo;
 import com.service.IPatientService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +39,12 @@ public class PatientServiceImpl extends DaoServiceImpl<Patient> implements IPati
 
 	@Autowired
 	private IFichesMedicalesRepository ficheRepo;
+	
+	@Autowired
+	private IReservationRepo resaRepo;
+	
+	@Autowired
+	private IConsultationRepository consultRepo;
 
 	// METHODES
 
@@ -53,8 +65,19 @@ public class PatientServiceImpl extends DaoServiceImpl<Patient> implements IPati
 					throw new FichesMedcialesNotFoundException("List<FichesMedicales> findAll = null");
 				}
 				log.info("Appel repo OK.");
-				listeFiches = ficheRepo.findAll().stream()
-						.filter(f -> f.getConsultation().getIdPatient() == idPatient).collect(Collectors.toList());
+				//trouver les fiches correspondant à un patient
+				
+				//trouver toutes les consultations d'un patient
+				List<Reservation> listeResa = resaRepo.findAllByFkPatient(idPatient);
+				//trouver toutes les consultations lié à cette consult
+				List<Consultation> listeConsult = new ArrayList<>();
+				for (Reservation r : listeResa) {
+					listeConsult.add(consultRepo.findByReservation(r));
+				}
+				//trouver toutes les fiches médicales lié à cette consult
+				for (Consultation c : listeConsult) {
+					listeFiches.add(ficheRepo.findByConsultation(c));
+				}
 				return listeFiches;
 			}
 			else {
