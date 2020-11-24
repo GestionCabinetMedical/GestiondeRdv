@@ -69,7 +69,7 @@ public interface IMedecinService extends IDaoService<Medecin> {
 	 *         une fois la Réservation confirmée.
 	 * @throws ParseException
 	 */
-	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin, Long idPatient) throws ParseException;
+	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin) throws ParseException;
 
 	/**
 	 * Methode permettant au medecin de consulter ses rdv prévus / consultations (=

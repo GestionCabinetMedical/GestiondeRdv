@@ -102,7 +102,7 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 	}
 
 	@Override
-	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin, Long idPatient) throws ParseException {
+	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin) throws ParseException {
 		log.info("Service spécifique du Medecin : méthode confirmerRdv appelée.");
 		if (idReservation != null) {
 			Reservation reservationToConfirm = reservationRepository.findById(idReservation).get();
@@ -115,23 +115,28 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 				List<Consultation> listeConsultationAlreadyToThisDate = listeConsultation.stream()
 						.filter(c -> c.getReservation().getDateRervation() == dateToConfirm)
 						.collect(Collectors.toList());
+				log.info("Stream OK.");
 				if (listeConsultationAlreadyToThisDate.isEmpty()) {
+					log.info("enter if no consult OK.");
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
 					// verifie si l'heure est entre 8h-12h et 14h-18h
 					try {
-						// TODO : update ces horaires devrait être spécifique pour chaque medecin pour
+						// TODO : update : ces horaires devrait être spécifique pour chaque medecin pour
 						// varier ses temps de travail
 						Date TimeStartMorning = simpleDateFormat.parse("08:00");
 						Date TimeStopMorning = simpleDateFormat.parse("12:00");
 						Date TimeStartAfternoon = simpleDateFormat.parse("14:00");
 						Date TimeStopAfternoon = simpleDateFormat.parse("18:00");
-
+						log.info("dates ref OK.");
 						String simpleDateFormatToConfirm = simpleDateFormat.format(dateToConfirm);
 					    Date timeToConfirm = simpleDateFormat.parse(simpleDateFormatToConfirm);
 					    if ((timeToConfirm.after(TimeStartMorning) && timeToConfirm.before(TimeStopMorning))
 					    		|| (timeToConfirm.after(TimeStartAfternoon) && timeToConfirm.before(TimeStopAfternoon))) {
-					    	Consultation consultationConfirmed = new Consultation(null, reservationToConfirm);
+					    	log.info("enter time to work OK.");
+					    	Consultation consultationConfirmed = new Consultation(reservationToConfirm);
+					    	log.info("creation consultation OK.");
 							consultationRepository.save(consultationConfirmed);
+							log.info("save consultation OK.");
 
 							listeConsultation.add(consultationConfirmed);
 							medecinConcerned.setConsultations(listeConsultation);

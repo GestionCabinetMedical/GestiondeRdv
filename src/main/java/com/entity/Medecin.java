@@ -59,7 +59,7 @@ public class Medecin implements Serializable {
 	private String motDePasse;
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "FK_MEDECIN", referencedColumnName = "ID_MEDECIN")
+	@JoinColumn(name = "FK_MEDECIN", referencedColumnName = "ID_MEDECIN", nullable = true)
 	private List<Consultation> consultations= new ArrayList<>();
 
 }

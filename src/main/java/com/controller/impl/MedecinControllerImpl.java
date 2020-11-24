@@ -156,10 +156,9 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 	 * @throws ParseException
 	 */
 	@GetMapping(value = "/confirmerRdv")
-	public ResponseDto<List<Consultation>> confirmerRdv(@RequestParam Long idReservation, @RequestParam Long idMedecin,
-			@RequestParam Long idPatient) throws ParseException {
+	public ResponseDto<List<Consultation>> confirmerRdv(@RequestParam Long idReservation, @RequestParam Long idMedecin) throws ParseException {
 		log.info("Controller medecin : méthode confirmerRdv appelée");
-		List<Consultation> listeConsultations = medecinService.confirmerRdv(idReservation, idMedecin, idPatient);
+		List<Consultation> listeConsultations = medecinService.confirmerRdv(idReservation, idMedecin);
 		return makeListConsultationResponse(listeConsultations);
 	}
 

@@ -40,9 +40,13 @@ public class Consultation implements Serializable {
 	@JoinColumn(name = "FK_RESERVATION", referencedColumnName = "ID_RESERVATION", unique = true, nullable = false)
 	private Reservation reservation;
 
-	public Consultation(Long idConsultation) {
-		super();
-		this.idConsultation = idConsultation;
+//	public Consultation(Long idConsultation) {
+//		super();
+//		this.idConsultation = idConsultation;
+//	}
+	
+	public Consultation(Reservation reservation) {
+		this.reservation = reservation;
 	}
 
 }
