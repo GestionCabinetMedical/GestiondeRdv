@@ -1,8 +1,11 @@
 package com.repo;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.entity.Consultation;
+import com.entity.Reservation;
 
 /**
  * Interface repository {@code IConsultationRepository} spécifique de
@@ -16,5 +19,7 @@ import com.entity.Consultation;
  */
 @Repository
 public interface IConsultationRepository extends IDaoRepo<Consultation> {
+	
+	public Consultation findByReservation(Reservation r);
 
 }
