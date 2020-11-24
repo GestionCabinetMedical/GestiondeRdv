@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @RequestMapping(value = "/patient")
-//@CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
+@CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
 @Slf4j
 public class PatientController extends DaoControllerImpl<Patient> {
 

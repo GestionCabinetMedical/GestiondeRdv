@@ -43,7 +43,7 @@ public class Medecin implements Serializable {
 	@Column(name = "PRENOM", nullable = false)
 	private String prenom;
 
-	@Column(name = "ID_FORMULE", nullable = false)
+	@Column(name = "ID_FORMULE", nullable = true)
 	private Long idFormule;
 
 	@Column(name = "ADRESSE_CABINET",  nullable = false)
