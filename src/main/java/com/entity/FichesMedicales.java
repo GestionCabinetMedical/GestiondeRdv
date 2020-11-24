@@ -35,17 +35,17 @@ public class FichesMedicales implements Serializable {
 	@Column(name = "ID_FICHE_MEDICAL")
 	private Long idFicheMedical;
 
-	@Column(name = "PATHOLOGIE")
+	@Column(name = "PATHOLOGIE", nullable = false)
 	private String pathologie;
 
 	@Column(name = "TRAITEMENT",  nullable = false)
 	private String traitement;
 
-	@Column(name = "COMMENTAIRES",  nullable = false)
+	@Column(name = "COMMENTAIRES")
 	private String commentaires;
 
 	@OneToOne
-	@JoinColumn(name = "FK_CONSULTATION", referencedColumnName = "ID_CONSULTATION", unique = true)
+	@JoinColumn(name = "FK_CONSULTATION", referencedColumnName = "ID_CONSULTATION", unique = true, nullable = false)
 	private Consultation consultation;
 
 }
