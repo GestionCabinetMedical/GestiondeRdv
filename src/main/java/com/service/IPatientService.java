@@ -4,11 +4,12 @@ import java.util.List;
 
 import com.entity.FichesMedicales;
 import com.entity.Patient;
-import com.exception.notfound.FichesMedcialesNotFoundException;
+import com.exception.notfound.FichesMedicalesNotFoundException;
+import com.exception.notfound.PatientNotFoundException;
 
 /**
- * Interface service {@code IPatientService} spécifique de {@link Patient}
- * qui étend de l'interface générique {@code IDaoService}.
+ * Interface service {@code IPatientService} spécifique de {@link Patient} qui
+ * étend de l'interface générique {@code IDaoService}.
  * 
  * @author Sophie Lahmar
  * @see IDaoService
@@ -17,21 +18,32 @@ import com.exception.notfound.FichesMedcialesNotFoundException;
 public interface IPatientService extends IDaoService<Patient> {
 
 	/**
-	 * Méthode permettant à un patient de se connecter à son espace personnel dans
-	 * l'application.
+	 * Méthode permettant de vérifier l'existence d'un patient par son identifiant.
 	 * 
-	 * @param login Identifiant associé au compte personnel du patient.
-	 * @param mdp   Mot de passe pour entrer dans l'espace du patient.
+	 * @param identifiant Identifiant du patient recherché.
+	 * @return Un patient s'il existe déjà, null sinon.
+	 * @throws PatientNotFoundException 
 	 */
-	public void connexion(String login, String mdp);
+	public Patient existsByIdentifiant(String identifiant) throws PatientNotFoundException;
+
+	/**
+	 * Méthode permettant de vérifier l'existence d'un patient par son identifiant
+	 * et son mot de passe.
+	 * 
+	 * @param identifiant Identifiant du patient recherché.
+	 * @param mdp         Mot de passe du patient recherché.
+	 * @return Un patient s'il existe déjà, null sinon.
+	 * @throws PatientNotFoundException
+	 */
+	public Patient existsByIdentifiantAndMotDePasse(String identifiant, String mdp) throws PatientNotFoundException;
 
 	/**
 	 * Méthode permettant au patient de consulter sa liste de fiches médicales.
 	 * 
 	 * @param id Id du patient.
 	 * @return Une liste de fiches médicales d'un patient.
-	 * @throws FichesMedcialesNotFoundException 
+	 * @throws FichesMedcialesNotFoundException
 	 */
-	public List<FichesMedicales> consulterFicheMedicale(Long id) throws FichesMedcialesNotFoundException;
+	public List<FichesMedicales> consulterFicheMedicale(Long id) throws FichesMedicalesNotFoundException;
 
 }
