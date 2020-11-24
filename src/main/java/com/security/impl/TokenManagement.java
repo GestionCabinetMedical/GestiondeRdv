@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.dto.ConnectedUserDto;
-import com.entity.Role;
+import com.enums.Role;
 import com.security.ITokenManagement;
 import com.session.ConnectedUser;
 
@@ -29,7 +29,7 @@ public class TokenManagement implements ITokenManagement {
 		log.info("Bean TokenManagement : méthode 'makePatientSession' appelée.");
 		user.setIdentifiant(patient.getIdentifiant());
 		user.setMotDePasse(patient.getMdp());
-		user.setRole(Role.Patient);
+		user.setRole(Role.PATIENT);
 
 		String token = generateToken();
 		user.setToken(token);
@@ -43,7 +43,7 @@ public class TokenManagement implements ITokenManagement {
 		log.info("Bean TokenManagement : méthode 'makeMedecinSession' appelée.");
 		user.setIdentifiant(medecin.getIdentifiant());
 		user.setMotDePasse(medecin.getMdp());
-		user.setRole(Role.Medecin);
+		user.setRole(Role.MEDECIN);
 
 		String token = generateToken();
 		user.setToken(token);
@@ -57,7 +57,7 @@ public class TokenManagement implements ITokenManagement {
 		log.info("Bean TokenManagement : méthode 'makeAdminSession' appelée.");
 		user.setIdentifiant(admin.getIdentifiant());
 		user.setMotDePasse(admin.getMdp());
-		user.setRole(Role.Admin);
+		user.setRole(Role.ADMIN);
 
 		String token = generateToken();
 		user.setToken(token);

@@ -1,6 +1,6 @@
 package com.session;
 
-import com.entity.Role;
+import com.enums.Role;
 
 /**
  * Interface qui permet le stockage des détails d'une session utilisateur.

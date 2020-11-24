@@ -76,6 +76,12 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 		return makeListResponse(liste);
 	}
 
+	/**
+	 * @author Sophie Lahmar
+	 * 
+	 * @param e Entité.
+	 * @return ResponseDto de type générique <E>.
+	 */
 	public ResponseDto<E> makeDtoResponse(E e) {
 		ResponseDto<E> resp = new ResponseDto<>();
 		if (e != null) {
@@ -94,9 +100,14 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 		return resp;
 	}
 
+	/**
+	 * Méthode
+	 * 
+	 * @param status Status de la réponse.
+	 * @return ResponseDto de type booléen.
+	 */
 	public ResponseDto<Boolean> makeBooleanResponse(Boolean status) {
 		ResponseDto<Boolean> resp = new ResponseDto<>();
-
 		if (status) {
 			log.info("makeBooleanResponse : ResponseDto<Boolean> Ok");
 			resp.setError(false);
@@ -111,9 +122,14 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 		return resp;
 	}
 
+	/**
+	 * @author Sophie Lahmar
+	 * 
+	 * @param liste Liste d'instances de la classe <E>.
+	 * @return ResponseDto contenant une liste de type générique <E>.
+	 */
 	public ResponseDto<List<E>> makeListResponse(List<E> liste) {
 		ResponseDto<List<E>> resp = new ResponseDto<>();
-
 		if (liste != null) {
 			log.info("makeListResponse : ResponseDto<List<E>> Ok");
 			resp.setError(false);

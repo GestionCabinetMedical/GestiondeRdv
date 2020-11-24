@@ -3,7 +3,7 @@ package com.session;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-import com.entity.Role;
+import com.enums.Role;
 
 import lombok.Setter;
 import lombok.ToString;
@@ -45,7 +45,7 @@ public class ConnectedUser implements IConnectedUser {
 		log.debug("token input: " + token);
 		log.debug("token in memory: " + this.token);
 		log.debug("id: " + this.role);
-		return token.equals(this.token) ? role : Role.None;
+		return token.equals(this.token) ? role : Role.NONE;
 	}
 
 	@Override

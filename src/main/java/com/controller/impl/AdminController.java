@@ -13,15 +13,20 @@ import com.dto.ConnectedUserDto;
 import com.dto.ConnexionDto;
 import com.dto.ResponseDto;
 import com.entity.Admin;
-import com.entity.Role;
+import com.enums.Role;
+import com.exception.notfound.AdminNotFoundException;
 import com.security.ITokenManagement;
 import com.service.IAdminService;
 
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * Classe controller {@code AdminController} spécifique de {@link Admin} qui
+ * hérite de la classe générique {@code DaoControllerImpl}.
+ * 
  * @author Sophie Lahmar
- *
+ * @see DaoControllerImpl
+ * 
  */
 @RestController
 @RequestMapping(value = "/admin")
@@ -44,26 +49,29 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * 
 	 * @param username Identifiant de l'admin.
 	 * @return Un admin s'il existe déjà, null sinon.
+	 * @throws AdminNotFoundException
 	 */
-	@GetMapping(value = "/exists/identifiant")
-	public ResponseDto<Admin> existsByUsername(@RequestParam(name = "identifiant") String username) {
+	@GetMapping(value = "/identifiant")
+	public ResponseDto<Admin> existsByUsername(@RequestParam(name = "identifiant") String username)
+			throws AdminNotFoundException {
 		log.info("Controller spécifique de Admin : méthode 'existsByUsername' appelée.");
 		Admin admin = adminService.existsByUsername(username);
 		return makeDtoResponse(admin);
 	}
 
-
 	/**
-	 * @author Sophie Lahmar
+	 * Méthode permettant de vérifier l'existence d'un admin par son identifiant et
+	 * son mot de passe.
 	 * 
-	 * @param tableau
-	 * @return
+	 * @param username Identifiant de l'admin recherché.
+	 * @param password Mot de passe de l'admin recherché.
+	 * @return Un admin s'il existe déjà, null sinon.
+	 * @throws AdminNotFoundException
 	 */
 	@PostMapping(path = "/identifiant-mdp")
-	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau) {
-		// TODO : ajouter les exceptions !
+	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau) throws AdminNotFoundException {
 		log.info("Controller spécifique de Admin : méthode 'existsByUsernameAndPassword' appelée.");
-		
+
 		ConnexionDto connexionDto = new ConnexionDto();
 
 		try {
@@ -100,24 +108,27 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	}
 
 	/**
+	 * Méthode permettant de créer une réponse de type ConnectedUserDto, et
+	 * d'injecter les paramètres de connection d'un Admin (identifiant et mdp) dans
+	 * un adminDto.
 	 * 
-	 * @param admin
-	 * @return
+	 * @param admin Instance de la classe Admin.
+	 * @return Un objet ConnectedUserDto.
 	 */
 	private ConnectedUserDto makeConnectedUserDtoResponse(Admin admin) {
 		ConnectedUserDto response = new ConnectedUserDto();
 		if (admin != null) {
 			log.info("makeConnectedUserDtoResponse : admin OK.");
-			response.setRole(Role.Admin);
+			response.setRole(Role.ADMIN);
 			response.setIdentifiant(admin.getUsername());
 			response.setMdp(admin.getPassword());
 			response.setError(false);
-			response.setStatus(HttpStatus.SC_OK);
+			response.setMsg("Success !");
 		} else {
 			log.info("Erreur 'makeConnectedUserDtoResponse' : admin null.");
-			response.setRole(Role.None);
+			response.setRole(Role.NONE);
 			response.setError(true);
-			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			response.setMsg("Error: Bad request.");
 		}
 		return response;
 	}

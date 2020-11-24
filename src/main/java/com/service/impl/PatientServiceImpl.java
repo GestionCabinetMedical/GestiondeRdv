@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.entity.FichesMedicales;
 import com.entity.Patient;
 import com.exception.notfound.FichesMedicalesNotFoundException;
+import com.exception.notfound.PatientNotFoundException;
 import com.repo.IFichesMedicalesRepository;
 import com.repo.IPatientRepo;
 import com.service.IPatientService;
@@ -38,31 +39,46 @@ public class PatientServiceImpl extends DaoServiceImpl<Patient> implements IPati
 	// METHODES
 
 	@Override
-	public Patient findByIdentifiantAndMotDePasse(String identifiant, String mdp) {
-		// TODO : ajouter les exceptions !
-
-		if (identifiant != null && mdp != null) {
-			log.info("Service spécifique de Patient: méthode 'find By Identifiant And MotDePasse' appelée.");
-			Patient patient = patientRepo.findByIdentifiantAndMotDePasse(identifiant, mdp);
-			return patient;
-		} else {
-			log.warn("Erreur méthode 'find By Identifiant And MotDePasse': identifiant null ou mdp null.");
-			return null;
+	public Patient existsByIdentifiant(String identifiant) throws PatientNotFoundException {
+		try {
+			log.info("Service spécifique de Patient: méthode 'existsByIdentifiant' appelée.");
+			if (identifiant != null) {
+				log.info("Appel repo OK.");
+				Patient patient = patientRepo.findByIdentifiant(identifiant);
+				return patient;
+			} else {
+				log.warn("Erreur méthode 'existsByIdentifiant': identifiant null.");
+				throw new PatientNotFoundException("Aucun Patient n'existe avec cet identifiant.");
+			}
+		} catch (PatientNotFoundException pnfe) {
+			pnfe.printStackTrace();
+			pnfe.getMessage();
 		}
+		return null;
 	}
 
 	@Override
-	public Patient findByNomAndPrenom(String nom, String prenom) {
-		// TODO : ajouter les exceptions !
-
-		if (nom != null && prenom != null) {
-			log.info("Service spécifique de Patient: méthode 'find By Nom And Prenom' appelée.");
-			Patient patient = patientRepo.findByNomAndPrenom(nom, prenom);
-			return patient;
-		} else {
-			log.warn("Erreur méthode 'find By Nom And Prenom': nom null ou penom null.");
-			return null;
+	public Patient existsByIdentifiantAndMotDePasse(String identifiant, String mdp) throws PatientNotFoundException {
+		try {
+			log.info("Service spécifique de Admin: méthode 'existsByIdentifiantAndMotDePasse' appelée.");
+			if (identifiant != null) {
+				if (mdp != null) {
+					log.info("Appel repo OK.");
+					Patient patient = patientRepo.findByIdentifiantAndMotDePasse(identifiant, mdp);
+					return patient;
+				} else {
+					log.warn("Erreur méthode 'existsByIdentifiantAndMotDePasse': mdp null.");
+					throw new PatientNotFoundException("Patient non trouvé : mpd = null.");
+				}
+			} else {
+				log.warn("Erreur méthode 'existsByIdentifiantAndMotDePasse': identifiant null et mdp null.");
+				throw new PatientNotFoundException("Aucun Patient n'existe avec cet identifiant et ce mdp.");
+			}
+		} catch (PatientNotFoundException pnfe) {
+			pnfe.printStackTrace();
+			pnfe.getMessage();
 		}
+		return null;
 	}
 
 	@Override

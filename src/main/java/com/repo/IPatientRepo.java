@@ -6,7 +6,9 @@ import com.entity.Patient;
 
 /**
  * Interface repository {@code IPatientRepo} spécifique de {@link Patient} qui
- * hérite de l'interface générique {@code IDaoRepo}.
+ * hérite de l'interface générique {@code IDaoRepo}. Cette interface est
+ * responsable de la communication avec la table patient dans la base de
+ * données.
  * 
  * @author Sophie Lahmar
  * @see IDaoRepo
@@ -16,16 +18,6 @@ import com.entity.Patient;
 public interface IPatientRepo extends IDaoRepo<Patient> {
 
 	/**
-	 * Méthode permettant de rechercher un patient par son identifiant et son mot de
-	 * passe.
-	 * 
-	 * @param identifiant Identifiant du patient recherché.
-	 * @param mdp         Mot de passe du patient recherché.
-	 * @return Le patient recherché.
-	 */
-	public Patient findByIdentifiantAndMotDePasse(String identifiant, String mdp);
-
-	/**
 	 * Méthode permettant de rechercher un patient par son nom de famille et son
 	 * prénom.
 	 * 
@@ -33,25 +25,24 @@ public interface IPatientRepo extends IDaoRepo<Patient> {
 	 * @param prenom Prénom du patient recherché.
 	 * @return Le patient recherché.
 	 */
-	public Patient findByNomAndPrenom(String nom, String prenom);
+//	public Patient findByNomAndPrenom(String nom, String prenom);
 
 	/**
-	 * Méthode permettant de vérifier l'existence d'un patient dans la base de
-	 * données avec cet identifiant.
+	 * Méthode permettant de rechercher un patient par son identifiant.
 	 * 
-	 * @param identifiant Identifiant du patient.
-	 * @return True si l'identifiant du patient existe déjà, false sinon.
+	 * @param identifiant Identifiant du patient recherché.
+	 * @return Un patient correpondant à l'identifiant entré.
 	 */
-//	public boolean existsByIdentifiant(String identifiant);
+	public Patient findByIdentifiant(String identifiant);
 
 	/**
-	 * Méthode permettant de vérifier l'existence d'un patient dans la base de
-	 * données avec ce nom et ce prénom.
+	 * Méthode permettant de rechercher un patient par son identifiant et son mot de
+	 * passe.
 	 * 
-	 * @param name Nom de famille et prénom du patient.
-	 * @return True si le nom de famille et le prénom du patient existent déjà,
-	 *         false sinon.
+	 * @param identifiant Identifiant du patient recherché.
+	 * @param mdp         Mot de passe du patient recherché.
+	 * @return Un patient correpondant à l'identifiant et au mot de passe entrés.
 	 */
-//	public boolean existsByNomAndPrenom(String name);
+	public Patient findByIdentifiantAndMotDePasse(String identifiant, String mdp);
 
 }

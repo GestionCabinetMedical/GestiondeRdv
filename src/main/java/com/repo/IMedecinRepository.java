@@ -18,20 +18,41 @@ import com.entity.Medecin;
  */
 @Repository
 public interface IMedecinRepository extends IDaoRepo<Medecin> {
-	
-	
+
 	/**
-	 * Requête sur la table medecin du nombre total de medecin dans BD
-	 * @return int du nombre total de medecin dans la BD 
+	 * Requête sur la table medecin du nombre total de medecin dans BDD.
+	 * 
+	 * @return int Nombre total de médecins dans la BDD.
 	 */
-	@Query("SELECT COUNT(m) FROM Medecin m") 
-    int totalDesMedecins();
-	
+	@Query("SELECT COUNT(m) FROM Medecin m")
+	int totalDesMedecins();
+
 	/**
-	 * Requête sur la table medecin dans la BD du nombre total de medecin pour chaque specialite
-	 * @return Map<String, Integer> key: specialité et value: nombre total de medecin pour cette specialite dans la BD
+	 * Requête sur la table medecin dans la BDD du nombre total de médecins pour
+	 * chaque spécialité.
+	 * 
+	 * @return Map<String, Integer> key: specialité et value: nombre total de
+	 *         medecin pour cette specialite dans la BD.
 	 */
 	@Query("SELECT specialite, COUNT(m)  FROM Medecin m GROUP BY specialite")
-    Map<String, Integer> totalMedecinsParSpecialite();
+	Map<String, Integer> totalMedecinsParSpecialite();
+
+	/**
+	 * Méthode permettant de rechercher un médecin par son identifiant.
+	 * 
+	 * @param identifiant Identifiant du médecin recherché.
+	 * @return Un médecin correpondant à l'identifiant entré.
+	 */
+	public Medecin findByIdentifiant(String identifiant);
+
+	/**
+	 * Méthode permettant de rechercher un médecin par son identifiant et son mot de
+	 * passe.
+	 * 
+	 * @param identifiant Identifiant du médecin recherché.
+	 * @param mdp         Mot de passe du médecin recherché.
+	 * @return Un médecin correpondant à l'identifiant et au mot de passe entrés.
+	 */
+	public Medecin findByIdentifiantAndMotDePasse(String identifiant, String mdp);
 
 }

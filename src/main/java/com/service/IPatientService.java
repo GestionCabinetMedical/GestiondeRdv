@@ -5,6 +5,7 @@ import java.util.List;
 import com.entity.FichesMedicales;
 import com.entity.Patient;
 import com.exception.notfound.FichesMedicalesNotFoundException;
+import com.exception.notfound.PatientNotFoundException;
 
 /**
  * Interface service {@code IPatientService} spécifique de {@link Patient} qui
@@ -17,23 +18,24 @@ import com.exception.notfound.FichesMedicalesNotFoundException;
 public interface IPatientService extends IDaoService<Patient> {
 
 	/**
-	 * Méthode permettant de rechercher un patient par son identifiant et son mot de
-	 * passe.
+	 * Méthode permettant de vérifier l'existence d'un patient par son identifiant.
+	 * 
+	 * @param identifiant Identifiant du patient recherché.
+	 * @return Un patient s'il existe déjà, null sinon.
+	 * @throws PatientNotFoundException 
+	 */
+	public Patient existsByIdentifiant(String identifiant) throws PatientNotFoundException;
+
+	/**
+	 * Méthode permettant de vérifier l'existence d'un patient par son identifiant
+	 * et son mot de passe.
 	 * 
 	 * @param identifiant Identifiant du patient recherché.
 	 * @param mdp         Mot de passe du patient recherché.
-	 * @return Le patient correspondant à l'identifiant et au mot de passe entrés.
+	 * @return Un patient s'il existe déjà, null sinon.
+	 * @throws PatientNotFoundException
 	 */
-	public Patient findByIdentifiantAndMotDePasse(String identifiant, String mdp);
-
-	/**
-	 * Méthode permettant la recherche d'un patient par son nom et son prénom.
-	 * 
-	 * @param nom    Nom du patient recherché.
-	 * @param prenom Prénom du patient recherché.
-	 * @return Le patient correspondant au nom et prénom entrés.
-	 */
-	public Patient findByNomAndPrenom(String nom, String prenom);
+	public Patient existsByIdentifiantAndMotDePasse(String identifiant, String mdp) throws PatientNotFoundException;
 
 	/**
 	 * Méthode permettant au patient de consulter sa liste de fiches médicales.

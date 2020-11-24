@@ -1,9 +1,14 @@
 package com.service;
 
 import com.entity.Admin;
+import com.exception.notfound.AdminNotFoundException;
 
 /**
+ * Interface service {@code IAdminService} spécifique de {@link Admin} qui étend
+ * de l'interface générique {@code IDaoService}.
+ * 
  * @author Sophie Lahmar
+ * @see IDaoService
  *
  */
 public interface IAdminService extends IDaoService<Admin> {
@@ -13,8 +18,9 @@ public interface IAdminService extends IDaoService<Admin> {
 	 * 
 	 * @param username Identifiant de l'admin.
 	 * @return Un admin s'il existe déjà, null sinon.
+	 * @throws AdminNotFoundException
 	 */
-	public Admin existsByUsername(String username);
+	public Admin existsByUsername(String username) throws AdminNotFoundException;
 
 	/**
 	 * Méthode permettant de vérifier l'existence d'un admin par son identifiant et
@@ -23,7 +29,8 @@ public interface IAdminService extends IDaoService<Admin> {
 	 * @param username Identifiant de l'admin recherché.
 	 * @param password Mot de passe de l'admin recherché.
 	 * @return Un admin s'il existe déjà, null sinon.
+	 * @throws AdminNotFoundException 
 	 */
-	public Admin existsByUsernameAndPassword(String username, String password);
+	public Admin existsByUsernameAndPassword(String username, String password) throws AdminNotFoundException;
 
 }

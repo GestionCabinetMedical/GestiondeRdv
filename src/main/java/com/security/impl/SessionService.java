@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.dto.ConnectedUserDto;
-import com.entity.Role;
+import com.enums.Role;
 import com.security.IConnectedUserConverter;
 import com.security.ISessionService;
 import com.session.IConnectedUser;

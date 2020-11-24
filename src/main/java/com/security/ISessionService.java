@@ -1,7 +1,7 @@
 package com.security;
 
 import com.dto.ConnectedUserDto;
-import com.entity.Role;
+import com.enums.Role;
 
 /**
  * Interface : couche entre l'objet ConnectedUser et le controller.

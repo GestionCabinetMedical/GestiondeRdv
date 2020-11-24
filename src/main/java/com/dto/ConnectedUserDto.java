@@ -1,6 +1,6 @@
 package com.dto;
 
-import com.entity.Role;
+import com.enums.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public class ConnectedUserDto {
 	private Role role;
 
 	private boolean error;
-	private int status;
+	private String msg;
 	
 	
 

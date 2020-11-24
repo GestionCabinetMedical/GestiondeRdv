@@ -26,7 +26,6 @@ import lombok.NoArgsConstructor;
  * @see Consultation
  *
  */
-
 @Data
 @Entity
 @NoArgsConstructor

@@ -33,7 +33,7 @@ public class ReservationServiceImpl extends DaoServiceImpl<Reservation> implemen
 	@Override
 	public List<Reservation> findReservationsDispo() throws ReservationNotFoundException {
 		try {
-			log.info("Service spécifique de Reservation : méthode find By Status appelée.");
+			log.info("Service spécifique de Reservation : méthode 'findReservationsDispo' appelée.");
 			List<Reservation> listeReservations = repo.findAll();
 			if (listeReservations != null) {
 				log.info("Appel repo OK.");
@@ -42,13 +42,12 @@ public class ReservationServiceImpl extends DaoServiceImpl<Reservation> implemen
 				if (listeReservations != null) {
 					return listeReservations;
 				} else {
-					log.warn("Tout est complet il n'y a pas de réservations disponibles");
+					log.warn("Tout est complet il n'y a pas de réservations disponibles.");
 				}
 			} else {
 				log.warn("Les réservations n'ont pas été trouvées.");
-				throw new ReservationNotFoundException("List<Reservation> pas trouvée findAll=null ");
+				throw new ReservationNotFoundException("List<Reservation> pas trouvée findAll = null.");
 			}
-
 		} catch (ReservationNotFoundException rnfe) {
 			rnfe.printStackTrace();
 			rnfe.getMessage();

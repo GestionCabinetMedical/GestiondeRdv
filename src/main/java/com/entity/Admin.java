@@ -13,8 +13,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * Classe représentative de l'entité {@code Admin}.
+ * 
  * @author Sophie Lahmar
- *
  */
 @Data
 @AllArgsConstructor
