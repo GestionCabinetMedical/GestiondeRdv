@@ -34,16 +34,16 @@ public class Patient implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_PATIENT", unique = true, nullable = false)
+	@Column(name = "ID_PATIENT")
 	private Long idPatient;
 
-	@Column(name = "NOM", unique = false, nullable = false)
+	@Column(name = "NOM", nullable = false)
 	private String nom;
 
-	@Column(name = "PRENOM", unique = false, nullable = false)
+	@Column(name = "PRENOM",  nullable = false)
 	private String prenom;
 
-	@Column(name = "ADRESSE", unique = false, nullable = false)
+	@Column(name = "ADRESSE",  nullable = false)
 	private String adresse;
 
 	@Column(name = "NUMERO_SECURITE_SOCIALE", unique = true, nullable = false)
@@ -56,7 +56,7 @@ public class Patient implements Serializable {
 	private String motDePasse;
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "FK_PATIENT", referencedColumnName = "ID_PATIENT", unique = false, nullable = true)
+	@JoinColumn(name = "FK_PATIENT", referencedColumnName = "ID_PATIENT")
 	private List<Reservation> reservations = new ArrayList<>();
 
 }

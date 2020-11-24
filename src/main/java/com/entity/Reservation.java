@@ -32,13 +32,13 @@ public class Reservation implements Serializable {
 	@Column(name = "ID_RESERVATION")
 	private Long idReservation;
 
-	@Column(name = "STATUS", unique = false, nullable = false)
+	@Column(name = "STATUS")
 	private boolean status;
 
-	@Column(name = "DATE_RESERVATION", unique = false, nullable = true)
+	@Column(name = "DATE_RESERVATION")
 	private Date dateRervation;
 
-	@Column(name = "CONSULTATION_EN_URGENCE",  unique = false, nullable = false)
+	@Column(name = "CONSULTATION_EN_URGENCE")
 	private boolean isUrgent;
 
 }

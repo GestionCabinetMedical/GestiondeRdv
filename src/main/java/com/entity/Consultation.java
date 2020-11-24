@@ -33,11 +33,11 @@ public class Consultation implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_CONSULTATION", unique = true, nullable = false)
+	@Column (name="ID_CONSULTATION")
 	private Long idConsultation;
 
 	@OneToOne
-	@JoinColumn(name = "FK_RESERVATION", referencedColumnName = "ID_RESERVATION", unique = true, nullable = true)
+	@JoinColumn(name = "FK_RESERVATION", referencedColumnName = "ID_RESERVATION", unique = true)
 	private Reservation reservation;
 
 	public Consultation(Long idConsultation) {
