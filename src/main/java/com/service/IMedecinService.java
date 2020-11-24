@@ -1,6 +1,8 @@
 package com.service;
 
+import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 import com.dto.GainDto;
 import com.entity.Consultation;
@@ -35,15 +37,19 @@ public interface IMedecinService extends IDaoService<Medecin> {
 
 	/**
 	 * Methode permettant d'avoir le nombre total de medecin par specialite dans l'application
-	 * @return int du nombre total de medecin par specialite 
+	 * @return Map<String, Integer> key: specialité et value: nombre total de medecin pour cette specialite dans la BD
 	 */
-	public int totalMedecinsParSpecialite();
+	public Map<String, Integer> totalMedecinsParSpecialite();
 
 	/**
 	 * Methode permettant au medecin de confirmer un rdv => ajout d'une consultation dans sa liste (=son planning)
-	 * @return ???
+	 * @param idReservation Long associé à la Réservation faite par un patient à réserver.
+	 * @param idMedecin Long associé à un medecin qui peut confirmer ou non le rdv.
+	 * @param idPatient Long associé à un patient qui a fait la Réservation.
+	 * @return List<Consultation> d'un medecin avec la nouvelle consultation prévue une fois la Réservation confirmée
+	 * @throws ParseException 
 	 */
-	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin, Long idPatient);
+	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin, Long idPatient) throws ParseException;
 
 	/**
 	 * @author Jonathan Rachwal
@@ -54,14 +60,8 @@ public interface IMedecinService extends IDaoService<Medecin> {
 	/**
 	 * @author Jonathan Rachwal
 	 *
-	 * @return
 	 */
-	public FichesMedicales modifierFichesMedicales();
-
-	/**
-	 * @author Jonathan Rachwal
-	 *
-	 */
+	//TODO map consultation et date via réservation 
 	public void consulterPlanning();
 
 	/**

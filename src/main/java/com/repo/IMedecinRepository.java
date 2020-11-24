@@ -1,5 +1,7 @@
 package com.repo;
 
+import java.util.Map;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -27,9 +29,9 @@ public interface IMedecinRepository extends IDaoRepo<Medecin> {
 	
 	/**
 	 * Requête sur la table medecin dans la BD du nombre total de medecin pour chaque specialite
-	 * @return int du nombre total de medecin par specialite dans la BD
+	 * @return Map<String, Integer> key: specialité et value: nombre total de medecin pour cette specialite dans la BD
 	 */
-	@Query("SELECT COUNT(*), specialite FROM medecin GROUP BY specialite")
-    int totalMedecinsParSpecialite();
+	@Query("SELECT specialite, COUNT(*)  FROM medecin GROUP BY specialite")
+    Map<String, Integer> totalMedecinsParSpecialite();
 
 }

@@ -1,7 +1,10 @@
 package com.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import com.entity.FichesMedicales;
 import com.entity.Medecin;
 import com.entity.Reservation;
 import com.repo.IConsultationRepository;
+import com.repo.IFichesMedicalesRepository;
 import com.repo.IMedecinRepository;
 import com.repo.IReservationRepo;
 import com.service.IMedecinService;
@@ -57,12 +61,12 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 
 
 	@Override
-	public int totalMedecinsParSpecialite() {
+	public Map<String, Integer> totalMedecinsParSpecialite() {
 		return medecinRepository.totalMedecinsParSpecialite();
 	}
 
 	@Override
-	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin, Long idPatient) {
+	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin, Long idPatient) throws ParseException {
 		log.info("Service spécifique du Medecin : méthode confirmerRdv appelée.");
 		if (idReservation != null) {
 			Reservation reservationToConfirm = reservationRepository.findById(idReservation).get();
@@ -76,21 +80,43 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 																	filter(c -> c.getReservation().getDateRervation() == dateToConfirm).
 																	collect(Collectors.toList());
 				if (listeConsultationAlreadyToThisDate.isEmpty()) {
-//					SimpleDataFormat 
-					// verifier que l'heure est entre 8h-12h et 14h-18h
-					Consultation consultationConfirmed = new Consultation(null, idMedecin, idPatient, reservationToConfirm);
-					consultationRepository.save(consultationConfirmed);
-					listeConsultation.add(consultationConfirmed);
-					medecinConcerned.setConsultations(listeConsultation);
-					medecinRepository.save(medecinConcerned);
-					return medecinConcerned.getConsultations();
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+					// verifie si l'heure est entre 8h-12h et 14h-18h
+					try {
+						// TODO : update ces horaires devrait être spécifique pour chaque medecin pour varier ses temps de travail
+						Date TimeStartMorning = simpleDateFormat.parse("08:00");
+						Date TimeStopMorning = simpleDateFormat.parse("12:00");
+						Date TimeStartAfternoon = simpleDateFormat.parse("14:00");
+						Date TimeStopAfternoon = simpleDateFormat.parse("18:00");
+					
+					
+						String simpleDateFormatToConfirm = simpleDateFormat.format(dateToConfirm);
+					    Date timeToConfirm = simpleDateFormat.parse(simpleDateFormatToConfirm);
+					    if ((timeToConfirm.after(TimeStartMorning) && timeToConfirm.before(TimeStopMorning))
+					    		|| (timeToConfirm.after(TimeStartAfternoon) && timeToConfirm.before(TimeStopAfternoon))) {
+					    	Consultation consultationConfirmed = new Consultation(null, idMedecin, idPatient, reservationToConfirm);
+							consultationRepository.save(consultationConfirmed);
+							
+							listeConsultation.add(consultationConfirmed);
+							medecinConcerned.setConsultations(listeConsultation);
+							medecinRepository.save(medecinConcerned);
+							
+							reservationToConfirm.setStatus(true);
+							reservationRepository.save(reservationToConfirm);
+							return medecinConcerned.getConsultations();
+					    }
+					} catch (ParseException e) {
+					    // faire les exceptions
+					}
+					
+					
 				}
 				else {
-					System.out.println("medecin déjà occupé");
+					log.warn("medecin déjà en rdv à ce créneau en choisir un autre");
 				}
 			} 
 			else {
-				System.out.println("déjà réservé");
+				log.warn("votre réservation est déjà prise en compte");
 			}
 		}
 		return null;
@@ -102,16 +128,6 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 	 */
 	@Override
 	public GainDto consulterGainsParJour() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * @author Jonathan Rachwal
-	 *
-	 */
-	@Override
-	public FichesMedicales modifierFichesMedicales() {
 		// TODO Auto-generated method stub
 		return null;
 	}
