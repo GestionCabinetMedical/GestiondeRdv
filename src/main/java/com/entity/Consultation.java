@@ -36,17 +36,13 @@ public class Consultation implements Serializable {
 	@Column(name = "ID_CONSULTATION", unique = true, nullable = false)
 	private Long idConsultation;
 
-	@Column(name = "ID_PATIENT", unique = false, nullable = false)
-	private Long idPatient;
-
 	@OneToOne
 	@JoinColumn(name = "FK_RESERVATION", referencedColumnName = "ID_RESERVATION", unique = true, nullable = true)
 	private Reservation reservation;
 
-	public Consultation(Long idConsultation, Long idPatient) {
+	public Consultation(Long idConsultation) {
 		super();
 		this.idConsultation = idConsultation;
-		this.idPatient = idPatient;
 	}
 
 }

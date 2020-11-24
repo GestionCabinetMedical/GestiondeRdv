@@ -93,7 +93,7 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 					    Date timeToConfirm = simpleDateFormat.parse(simpleDateFormatToConfirm);
 					    if ((timeToConfirm.after(TimeStartMorning) && timeToConfirm.before(TimeStopMorning))
 					    		|| (timeToConfirm.after(TimeStartAfternoon) && timeToConfirm.before(TimeStopAfternoon))) {
-					    	Consultation consultationConfirmed = new Consultation(null, idPatient, reservationToConfirm);
+					    	Consultation consultationConfirmed = new Consultation(null, reservationToConfirm);
 							consultationRepository.save(consultationConfirmed);
 							
 							listeConsultation.add(consultationConfirmed);

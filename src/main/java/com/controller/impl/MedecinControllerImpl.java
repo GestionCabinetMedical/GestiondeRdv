@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,7 +48,7 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 	 * @param login Identifiant associé au compte personnel du medecin.
 	 * @param mdp   Mot de passe pour entrer dans l'espace du medecin.
 	 */
-	@RequestMapping
+	@PostMapping(path="/connexion")
 	public void connexion(String login, String mdp) {
 		// TODO : implémenter la méthode
 		log.info("Controller spécifique de Medecin : méthode connexion appelée.");
