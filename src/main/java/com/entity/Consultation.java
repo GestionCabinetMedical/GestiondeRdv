@@ -44,7 +44,7 @@ public class Consultation implements Serializable {
 //		super();
 //		this.idConsultation = idConsultation;
 //	}
-	
+
 	public Consultation(Reservation reservation) {
 		this.reservation = reservation;
 	}
