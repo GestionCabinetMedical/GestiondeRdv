@@ -17,6 +17,10 @@ import com.entity.Admin;
 import com.enums.Role;
 import com.exception.notfound.AdminNotFoundException;
 import com.exception.notsuccess.AdminNotSuccessException;
+import com.exception.notsuccess.ConnectedUserDtoNotSuccessException;
+import com.exception.notsuccess.ConnectedUserNotSuccessException;
+import com.exception.notsuccess.ResponseDtoNotSuccessException;
+import com.exception.notsuccess.TokenNotSuccessException;
 import com.security.ITokenManagement;
 import com.service.IAdminService;
 
@@ -53,10 +57,11 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * @return Un admin s'il existe déjà, null sinon.
 	 * @throws AdminNotFoundException
 	 * @throws AdminNotSuccessException 
+	 * @throws ResponseDtoNotSuccessException 
 	 */
 	@GetMapping(value = "/identifiant")
 	public ResponseDto<Admin> existsByUsername(@RequestParam(name = "identifiant") String username)
-			throws AdminNotFoundException, AdminNotSuccessException {
+			throws AdminNotFoundException, AdminNotSuccessException, ResponseDtoNotSuccessException {
 		log.info("Controller spécifique de Admin : méthode 'existsByUsername' appelée.");
 		Admin admin = adminService.existsByUsername(username);
 		return makeDtoResponse(admin);
@@ -71,9 +76,13 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * @return Un admin s'il existe déjà, null sinon.
 	 * @throws AdminNotFoundException
 	 * @throws AdminNotSuccessException 
+	 * @throws TokenNotSuccessException 
+	 * @throws ConnectedUserNotSuccessException 
+	 * @throws ConnectedUserDtoNotSuccessException 
 	 */
 	@PostMapping(path = "/identifiant-mdp")
-	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau) throws AdminNotFoundException, AdminNotSuccessException {
+	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau) 
+			throws AdminNotFoundException, AdminNotSuccessException, ConnectedUserNotSuccessException, TokenNotSuccessException, ConnectedUserDtoNotSuccessException {
 		log.info("Controller spécifique de Admin : méthode 'existsByUsernameAndPassword' appelée.");
 
 		ConnexionDto connexionDto = new ConnexionDto();
@@ -118,23 +127,38 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * 
 	 * @param admin Instance de la classe Admin.
 	 * @return Un objet ConnectedUserDto.
+	 * @throws ConnectedUserDtoNotSuccessException
 	 */
-	private ConnectedUserDto makeConnectedUserDtoResponse(Admin admin) {
-		ConnectedUserDto response = new ConnectedUserDto();
-		if (admin != null) {
-			log.info("makeConnectedUserDtoResponse : admin OK.");
-			response.setRole(Role.ADMIN);
-			response.setIdentifiant(admin.getUsername());
-			response.setMdp(admin.getPassword());
-			response.setError(false);
-			response.setMsg("Success !");
-		} else {
-			log.info("Erreur 'makeConnectedUserDtoResponse' : admin null.");
-			response.setRole(Role.NONE);
-			response.setError(true);
-			response.setMsg("Error: Bad request.");
+	private ConnectedUserDto makeConnectedUserDtoResponse(Admin admin) throws ConnectedUserDtoNotSuccessException{
+		try {
+			ConnectedUserDto response = new ConnectedUserDto();
+			if (admin != null) {
+				log.info("makeConnectedUserDtoResponse : admin OK.");
+				response.setRole(Role.ADMIN);
+				response.setIdentifiant(admin.getUsername());
+				response.setMdp(admin.getPassword());
+				response.setError(false);
+				response.setMsg("Success !");
+			} else {
+				log.info("Erreur 'makeConnectedUserDtoResponse' : admin null.");
+				response.setRole(Role.NONE);
+				response.setError(true);
+				response.setMsg("Error: Bad request.");
+			}
+			if (response.getMsg() != null ) {
+				return response;
+			}
+			else {
+				log.warn("Erreur méthode 'makeConnectedUserDtoResponse': set du ConnectedUserDto non fonctionnel.");
+				throw new ConnectedUserDtoNotSuccessException("Modification ConnectedUserDto échouée");
+			}
+		} catch (ConnectedUserDtoNotSuccessException dnse) {
+			dnse.printStackTrace();
+			dnse.getMessage();
+			
 		}
-		return response;
+		return null;
+		
 	}
 
 }

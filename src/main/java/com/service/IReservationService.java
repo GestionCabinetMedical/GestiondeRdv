@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.entity.Reservation;
 import com.enums.HeureRdv;
-import com.exception.notfound.ReservationNotFoundException;
+import com.exception.notsuccess.ReservationNotSuccessException;
 
 /**
  * Interface service {@code IReservationService} spécifique de
@@ -23,7 +23,9 @@ public interface IReservationService extends IDaoService<Reservation> {
 	 * @param date La date concernée.
 	 * @param idMedecin L'id du medecin concerné.
 	 * @return Une liste d'Heure Rdv correspondant aux heures disponibles de rendez-vous.
-	 * @throws ReservationNotFoundException
+	 * @throws ReservationNotSuccessException 
 	 */
-	public List<HeureRdv> findResaParDateParMedecin(String date, Long idMedecin) throws ReservationNotFoundException ;
+
+	public List<HeureRdv> findResaParDateParMedecin(String date, Long idMedecin) throws ReservationNotSuccessException ;
+
 }

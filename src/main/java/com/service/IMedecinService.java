@@ -49,8 +49,9 @@ public interface IMedecinService extends IDaoService<Medecin> {
 	 * Methode permettant d'avoir le nombre total de medecin dans l'application.
 	 * 
 	 * @return int du nombre total de medecin.
+	 * @throws MedecinNotSuccessException 
 	 */
-	public int totalDesMedecins();
+	public int totalDesMedecins() throws MedecinNotSuccessException;
 
 	/**
 	 * Methode permettant d'avoir le nombre total de medecin par specialite dans
@@ -58,8 +59,9 @@ public interface IMedecinService extends IDaoService<Medecin> {
 	 * 
 	 * @return Map<String, Integer> key: specialité et value: nombre total de
 	 *         medecin pour cette specialite dans la BD.
+	 * @throws MedecinNotSuccessException 
 	 */
-	public Map<String, Integer> totalMedecinsParSpecialite();
+	public Map<String, Integer> totalMedecinsParSpecialite() throws MedecinNotSuccessException;
 
 	/**
 	 * Methode permettant au medecin de confirmer un rdv => ajout d'une consultation

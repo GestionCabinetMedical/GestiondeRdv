@@ -106,12 +106,12 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 	}
 
 	@Override
-	public int totalDesMedecins() {
+	public int totalDesMedecins() throws MedecinNotSuccessException {
 		return medecinRepository.totalDesMedecins();
 	}
 
 	@Override
-	public Map<String, Integer> totalMedecinsParSpecialite() {
+	public Map<String, Integer> totalMedecinsParSpecialite() throws MedecinNotSuccessException {
 		return medecinRepository.totalMedecinsParSpecialite();
 	}
 
@@ -207,8 +207,8 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 //			me.getMessage();
 //			
 //		}
-		return null;
-	}
+
+	
 
 	@Override
 	public Map<Consultation, Date> consulterPlanning(Long idMedecin) throws MedecinNotFoundException {
