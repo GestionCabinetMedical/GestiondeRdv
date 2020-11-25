@@ -106,17 +106,18 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 	}
 
 	@Override
-	public int totalDesMedecins() {
+	public int totalDesMedecins() throws MedecinNotSuccessException {
 		return medecinRepository.totalDesMedecins();
 	}
 
 	@Override
-	public Map<String, Integer> totalMedecinsParSpecialite() {
+	public Map<String, Integer> totalMedecinsParSpecialite() throws MedecinNotSuccessException {
 		return medecinRepository.totalMedecinsParSpecialite();
 	}
 
 	@Override
-	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin) throws ParseException, ReservationNotFoundException, MedecinNotSuccessException, ReservationNotSuccessException {
+	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin) 
+			throws ParseException, ReservationNotFoundException, MedecinNotSuccessException, ReservationNotSuccessException {
 		try {
 			log.info("Service spécifique du Medecin : méthode confirmerRdv appelée.");
 			
