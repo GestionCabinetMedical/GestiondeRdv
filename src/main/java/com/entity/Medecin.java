@@ -34,32 +34,32 @@ public class Medecin implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_MEDECIN", unique = true, nullable = false)
+	@Column(name = "ID_MEDECIN")
 	private Long idMedecin;
 
-	@Column(name = "NOM", unique = false, nullable = false)
+	@Column(name = "NOM", nullable = false)
 	private String nom;
 
-	@Column(name = "PRENOM", unique = false, nullable = false)
+	@Column(name = "PRENOM", nullable = false)
 	private String prenom;
 
-	@Column(name = "ID_FORMULE", unique = false, nullable = false)
+	@Column(name = "ID_FORMULE", nullable = true)
 	private Long idFormule;
 
-	@Column(name = "ADRESSE_CABINET", unique = false, nullable = false)
+	@Column(name = "ADRESSE_CABINET",  nullable = false)
 	private String adresseCabinet;
 
-	@Column(name = "SPECIALITE", unique = false, nullable = false)
+	@Column(name = "SPECIALITE",  nullable = false)
 	private String specialite;
 
-	@Column(name = "IDENTIFIANT", unique = true, nullable = true)
+	@Column(name = "IDENTIFIANT", unique = true, nullable = false)
 	private String identifiant;
 
-	@Column(name = "MOT_DE_PASSE", unique = true, nullable = true)
+	@Column(name = "MOT_DE_PASSE", unique = true, nullable = false)
 	private String motDePasse;
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "FK_MEDECIN", referencedColumnName = "ID_MEDECIN", unique = false, nullable = true)
+	@JoinColumn(name = "FK_MEDECIN", referencedColumnName = "ID_MEDECIN", nullable = true)
 	private List<Consultation> consultations= new ArrayList<>();
 
 }

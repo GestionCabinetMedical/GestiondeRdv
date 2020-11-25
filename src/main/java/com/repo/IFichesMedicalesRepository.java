@@ -5,7 +5,9 @@ package com.repo;
 
 import org.springframework.stereotype.Repository;
 
+import com.entity.Consultation;
 import com.entity.FichesMedicales;
+import com.exception.notsuccess.FichesMedicalesNotSuccessException;
 
 /**
  * Interface repository {@code IFichesMedicalesRepository} spécifique de
@@ -19,5 +21,7 @@ import com.entity.FichesMedicales;
  */
 @Repository
 public interface IFichesMedicalesRepository extends IDaoRepo<FichesMedicales> {
+	
+	public FichesMedicales findByConsultation (Consultation c) throws FichesMedicalesNotSuccessException;
 
 }

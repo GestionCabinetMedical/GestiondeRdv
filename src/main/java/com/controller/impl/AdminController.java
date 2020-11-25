@@ -2,6 +2,7 @@ package com.controller.impl;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import com.dto.ResponseDto;
 import com.entity.Admin;
 import com.enums.Role;
 import com.exception.notfound.AdminNotFoundException;
+import com.exception.notsuccess.AdminNotSuccessException;
 import com.security.ITokenManagement;
 import com.service.IAdminService;
 
@@ -30,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @RequestMapping(value = "/admin")
-//@CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
+@CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
 @Slf4j
 public class AdminController extends DaoControllerImpl<Admin> {
 
@@ -50,10 +52,11 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * @param username Identifiant de l'admin.
 	 * @return Un admin s'il existe déjà, null sinon.
 	 * @throws AdminNotFoundException
+	 * @throws AdminNotSuccessException 
 	 */
 	@GetMapping(value = "/identifiant")
 	public ResponseDto<Admin> existsByUsername(@RequestParam(name = "identifiant") String username)
-			throws AdminNotFoundException {
+			throws AdminNotFoundException, AdminNotSuccessException {
 		log.info("Controller spécifique de Admin : méthode 'existsByUsername' appelée.");
 		Admin admin = adminService.existsByUsername(username);
 		return makeDtoResponse(admin);
@@ -67,9 +70,10 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * @param password Mot de passe de l'admin recherché.
 	 * @return Un admin s'il existe déjà, null sinon.
 	 * @throws AdminNotFoundException
+	 * @throws AdminNotSuccessException 
 	 */
 	@PostMapping(path = "/identifiant-mdp")
-	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau) throws AdminNotFoundException {
+	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau) throws AdminNotFoundException, AdminNotSuccessException {
 		log.info("Controller spécifique de Admin : méthode 'existsByUsernameAndPassword' appelée.");
 
 		ConnexionDto connexionDto = new ConnexionDto();

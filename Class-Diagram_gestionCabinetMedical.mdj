@@ -684,6 +684,7 @@
 											"model": {
 												"$ref": "AAAAAAF12wn4BfWHbGo="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 133,
 											"top": 602,
@@ -701,9 +702,10 @@
 											"model": {
 												"$ref": "AAAAAAF12wpJbfY36W0="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 133,
-											"top": 617,
+											"top": 602,
 											"width": 206,
 											"height": 13,
 											"text": "+modifierFichesMedicales()",
@@ -720,7 +722,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 133,
-											"top": 632,
+											"top": 602,
 											"width": 206,
 											"height": 13,
 											"text": "+consulterPlanning()",
@@ -735,9 +737,10 @@
 											"model": {
 												"$ref": "AAAAAAF12wq/lfeXA1A="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 133,
-											"top": 647,
+											"top": 632,
 											"width": 206,
 											"height": 13,
 											"text": "+consulterRapportSatisfaction()",
@@ -748,7 +751,7 @@
 									"left": 128,
 									"top": 537,
 									"width": 216,
-									"height": 128
+									"height": 83
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -1005,7 +1008,7 @@
 											"top": 226,
 											"width": 151,
 											"height": 13,
-											"text": "+findReservationDispo()",
+											"text": "+findByStatus()",
 											"horizontalAlignment": 0
 										}
 									],
@@ -1207,23 +1210,6 @@
 										},
 										{
 											"_type": "UMLAttributeView",
-											"_id": "AAAAAAF12shSlc76pGE=",
-											"_parent": {
-												"$ref": "AAAAAAF12sPpC8z6VGY="
-											},
-											"model": {
-												"$ref": "AAAAAAF12shSj873cG0="
-											},
-											"font": "Arial;13;0",
-											"left": 565,
-											"top": 524,
-											"width": 158,
-											"height": 13,
-											"text": "-Long: idPatient",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
 											"_id": "AAAAAAF12s6QotVwj2Y=",
 											"_parent": {
 												"$ref": "AAAAAAF12sPpC8z6VGY="
@@ -1233,7 +1219,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 565,
-											"top": 539,
+											"top": 524,
 											"width": 158,
 											"height": 13,
 											"text": "-Reservation: reservation",
@@ -1244,7 +1230,7 @@
 									"left": 560,
 									"top": 489,
 									"width": 168,
-									"height": 68
+									"height": 53
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -1267,7 +1253,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 565,
-											"top": 562,
+											"top": 547,
 											"width": 158,
 											"height": 13,
 											"text": "+CRUD()",
@@ -1276,7 +1262,7 @@
 									],
 									"font": "Arial;13;0",
 									"left": 560,
-									"top": 557,
+									"top": 542,
 									"width": 168,
 									"height": 23
 								},
@@ -3131,7 +3117,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF12sOEfMx0lh8="
 							},
-							"name": "findReservationDispo"
+							"name": "findByStatus"
 						}
 					]
 				},
@@ -3193,16 +3179,6 @@
 							"name": "Long",
 							"visibility": "private",
 							"type": "idMedecin"
-						},
-						{
-							"_type": "UMLAttribute",
-							"_id": "AAAAAAF12shSj873cG0=",
-							"_parent": {
-								"$ref": "AAAAAAF12sPpC8zyUP0="
-							},
-							"name": "Long",
-							"visibility": "private",
-							"type": "idPatient"
 						},
 						{
 							"_type": "UMLAttribute",

@@ -3,6 +3,7 @@ package com.repo;
 import org.springframework.stereotype.Repository;
 
 import com.entity.Patient;
+import com.exception.notsuccess.PatientNotSuccessException;
 
 /**
  * Interface repository {@code IPatientRepo} spécifique de {@link Patient} qui
@@ -33,7 +34,7 @@ public interface IPatientRepo extends IDaoRepo<Patient> {
 	 * @param identifiant Identifiant du patient recherché.
 	 * @return Un patient correpondant à l'identifiant entré.
 	 */
-	public Patient findByIdentifiant(String identifiant);
+	public Patient findByIdentifiant(String identifiant) throws PatientNotSuccessException;
 
 	/**
 	 * Méthode permettant de rechercher un patient par son identifiant et son mot de
@@ -43,6 +44,6 @@ public interface IPatientRepo extends IDaoRepo<Patient> {
 	 * @param mdp         Mot de passe du patient recherché.
 	 * @return Un patient correpondant à l'identifiant et au mot de passe entrés.
 	 */
-	public Patient findByIdentifiantAndMotDePasse(String identifiant, String mdp);
+	public Patient findByIdentifiantAndMotDePasse(String identifiant, String mdp) throws PatientNotSuccessException;
 
 }

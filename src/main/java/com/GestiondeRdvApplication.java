@@ -71,7 +71,7 @@ public class GestiondeRdvApplication {
 //			reservationService.findAll().forEach(System.out::println);
 //
 //			// pour tester fiches médicales
-//			Stream.of(new Consultation(1L, 1L, 1L), new Consultation(2L, 2L, 2L)).forEach((consultations) -> {
+//			Stream.of(new Consultation(1L, 1L), new Consultation(2L, 2L)).forEach((consultations) -> {
 //				consultationService.addOrUpdate(consultations);
 //			});
 //			consultationService.findAll().forEach(System.out::println);

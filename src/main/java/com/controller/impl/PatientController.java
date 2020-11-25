@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,10 @@ import com.entity.Patient;
 import com.enums.Role;
 import com.exception.notfound.FichesMedicalesNotFoundException;
 import com.exception.notfound.PatientNotFoundException;
+import com.exception.notsuccess.ConsultationNotSuccessException;
+import com.exception.notsuccess.FichesMedicalesNotSuccessException;
+import com.exception.notsuccess.PatientNotSuccessException;
+import com.exception.notsuccess.ReservationNotSuccessException;
 import com.security.ITokenManagement;
 import com.service.IPatientService;
 
@@ -35,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @RequestMapping(value = "/patient")
-//@CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
+@CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
 @Slf4j
 public class PatientController extends DaoControllerImpl<Patient> {
 
@@ -55,10 +60,11 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	 * @param identifiant Identifiant du patient recherché.
 	 * @return Un patient s'il existe déjà, null sinon.
 	 * @throws PatientNotFoundException
+	 * @throws PatientNotSuccessException 
 	 */
 	@GetMapping(value = "/identifiant")
 	public ResponseDto<Patient> existsByIdentifiant(@RequestParam(name = "identifiant") String identifiant)
-			throws PatientNotFoundException {
+			throws PatientNotFoundException, PatientNotSuccessException {
 		log.info("Controller spécifique de Patient: méthode 'existsByIdentifiant' appelée.");
 		Patient patient = patientService.existsByIdentifiant(identifiant);
 		return makeDtoResponse(patient);
@@ -72,10 +78,11 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	 * @param mdp         Mot de passe du patient recherché.
 	 * @return Un patient s'il existe déjà, null sinon.
 	 * @throws PatientNotFoundException
+	 * @throws PatientNotSuccessException 
 	 */
 	@PostMapping(path = "/identifiant-mdp")
 	public ConnexionDto existsByIdentifiantAndMotDePasse(@RequestBody String[] tableau)
-			throws PatientNotFoundException {
+			throws PatientNotFoundException, PatientNotSuccessException {
 		log.info("Controller spécifique de Patient: méthode 'existsByIdentifiantAndMotDePasse' appelée.");
 
 		ConnexionDto connexionDto = new ConnexionDto();
@@ -144,11 +151,14 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	 * 
 	 * @param id Id du patient.
 	 * @return Une liste de fiches médicales d'un patient.
+	 * @throws FichesMedicalesNotSuccessException 
+	 * @throws ConsultationNotSuccessException 
+	 * @throws ReservationNotSuccessException 
 	 * @throws FichesMedcialesNotFoundException
 	 */
 	@GetMapping(value = "/consulterFichesMedicales/{id}")
 	public ResponseDto<List<FichesMedicales>> consulterFicheMedicale(@PathVariable Long id)
-			throws FichesMedicalesNotFoundException {
+			throws FichesMedicalesNotFoundException, ReservationNotSuccessException, ConsultationNotSuccessException, FichesMedicalesNotSuccessException {
 		log.info("Controller spécifique de Patient : méthode consulter Fiche Medicale appelée.");
 		List<FichesMedicales> listeFiches = patientService.consulterFicheMedicale(id);
 		return makeListFichesMedicalesResponse(listeFiches);

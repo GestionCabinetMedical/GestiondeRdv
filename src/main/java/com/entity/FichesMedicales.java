@@ -32,20 +32,20 @@ public class FichesMedicales implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_FICHE_MEDICAL", unique = true, nullable = false)
+	@Column(name = "ID_FICHE_MEDICAL")
 	private Long idFicheMedical;
 
-	@Column(name = "PATHOLOGIE", unique = false, nullable = true)
+	@Column(name = "PATHOLOGIE", nullable = false)
 	private String pathologie;
 
-	@Column(name = "TRAITEMENT", unique = false, nullable = false)
+	@Column(name = "TRAITEMENT",  nullable = false)
 	private String traitement;
 
-	@Column(name = "COMMENTAIRES", unique = false, nullable = false)
+	@Column(name = "COMMENTAIRES")
 	private String commentaires;
 
 	@OneToOne
-	@JoinColumn(name = "FK_CONSULTATION", referencedColumnName = "ID_CONSULTATION", unique = true, nullable = true)
+	@JoinColumn(name = "FK_CONSULTATION", referencedColumnName = "ID_CONSULTATION", unique = true, nullable = false)
 	private Consultation consultation;
 
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.entity.Admin;
 import com.exception.notfound.AdminNotFoundException;
+import com.exception.notsuccess.AdminNotSuccessException;
 import com.repo.IAdminRepo;
 import com.service.IAdminService;
 
@@ -32,13 +33,19 @@ public class AdminServiceImpl extends DaoServiceImpl<Admin> implements IAdminSer
 	// METHODES
 
 	@Override
-	public Admin existsByUsername(String username) throws AdminNotFoundException {
+	public Admin existsByUsername(String username) throws AdminNotFoundException, AdminNotSuccessException {
 		try {
 			log.info("Service spécifique de Admin: méthode 'existsByUsername' appelée.");
 			if (username != null) {
 				log.info("Appel repo OK.");
-				Admin admin = adminRepo.findByUsername(username);
-				return admin;
+				try {
+					Admin admin = adminRepo.findByUsername(username);
+					return admin;
+				} catch (AdminNotSuccessException anse) {
+					log.warn("Erreur méthode 'existsByUsername': findByUsername dans repo => échoué trouver objet Admin..");
+					anse.printStackTrace();
+				}
+				
 			} else {
 				log.warn("Erreur méthode 'existsByUsername': username null.");
 				throw new AdminNotFoundException("Aucun Admin n'existe avec cet identifiant.");
@@ -51,14 +58,20 @@ public class AdminServiceImpl extends DaoServiceImpl<Admin> implements IAdminSer
 	}
 
 	@Override
-	public Admin existsByUsernameAndPassword(String username, String password) throws AdminNotFoundException {
+	public Admin existsByUsernameAndPassword(String username, String password) throws AdminNotFoundException, AdminNotSuccessException {
 		try {
 			log.info("Service spécifique de Admin: méthode 'existsByUsernameAndPassword' appelée.");
 			if (username != null) {
 				if (password != null) {
 					log.info("Appel repo OK.");
-					Admin admin = adminRepo.findByUsernameAndPassword(username, password);
-					return admin;
+					try {
+						Admin admin = adminRepo.findByUsernameAndPassword(username, password);
+						return admin;
+					} catch (AdminNotSuccessException anse) {
+						log.warn("Erreur méthode 'existsByUsernameAndPassword': findByUsernameAndPassword dans repo => échoué trouver objet Admin..");
+						anse.printStackTrace();
+					}
+					
 				} else {
 					log.warn("Erreur méthode 'existsByUsernameAndPassword': password null.");
 					throw new AdminNotFoundException("Admin non trouvé : password = null.");
