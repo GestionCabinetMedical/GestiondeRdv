@@ -6,24 +6,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * 
- * Classe {@code ResponseDto} permettant la communication avec le front.
- * 
- * @author Maxime Rembert
+ * @author Sophie Lahmar
  *
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseDto<E> {
+public class ConnexionDto {
+
+	private String token;
+	private ConnectedUserDto user;
 
 	private boolean error;
-
-	private E body;
-
-	private String message;
-
 	private int status;
 
 }
