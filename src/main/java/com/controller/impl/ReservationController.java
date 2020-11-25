@@ -3,7 +3,6 @@ package com.controller.impl;
 import java.util.Date;
 import java.util.List;
 
-import javax.websocket.server.PathParam;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
  * {@link Reservation} qui hérite de la classe générique
  * {@code DaoControllerImpl}.
  * 
- * @author Sophie Lahmar
+ * @author Sophie Lahmar, Maxime Rembert
  * @see DaoControllerImpl
  * @see IReservationController
  *
@@ -45,22 +44,7 @@ public class ReservationController extends DaoControllerImpl<Reservation> {
 
 	// METHODES
 
-	/**
-	 * Méthode permettant de rechercher une liste de réservations par son statut
-	 * (validée ou non par un médecin).
-	 * 
-	 * @return Une liste de réservations disponibles.
-	 * @throws ReservationNotFoundException
-	 * @throws ResponseDtoNotSuccessException 
-	 */
-	@GetMapping(value = "/consulterplanning")
-	public ResponseDto<List<Reservation>> findReservationsDispo() throws ReservationNotFoundException, ResponseDtoNotSuccessException {
-		log.info("Controller spécifique de Reservation : méthode findReservationsDispo appelée.");
-		List<Reservation> listeRes = service.findReservationsDispo();
-		return makeListResponse(listeRes);
-	}
-	
-	/**
+		/**
 	 * Méthode permettant de connaître les rdv disponible par jour et par medecin.
 	 * @param idMedecin L'id du medecin concerné.
 	 * @param date La date concernée.
@@ -72,28 +56,34 @@ public class ReservationController extends DaoControllerImpl<Reservation> {
 		log.info("Controller spécifique de Reservation : méthode find all resa dispo par medecin appelée.");
 		return makeListHeureRdvResponse(service.findResaParDateParMedecin(date, idMedecin));
 	}
-
-	
+  
 	/**
-	 * Méthode permettant de renvoyer un Response Dto contenant une liste d'Heure Rdv.
-	 * @param liste Liste d'Heure Rdv à envoyer.
-	 * @return Un ResponseDto contenant un boolean eror, un body de liste Heure Rdv et un status Http response.
+	 * @author Maxime Rembert
+	 * 
+	 * @param liste Liste d'instances de l'enum HeureRdv.
+	 * @return ResponseDto contenant une liste de type HeureRdv.
 	 */
 	public ResponseDto<List<HeureRdv>> makeListHeureRdvResponse(List<HeureRdv> liste) {
 		ResponseDto<List<HeureRdv>> resp = new ResponseDto<>();
-
 		if (liste != null) {
-			log.info("makeListResponse : ResponseDto<List<E>> Ok");
+			log.info("makeListResponse : ResponseDto<List<HeureRdv>> Ok");
 			resp.setError(false);
 			resp.setBody(liste);
 			resp.setStatus(HttpStatus.SC_OK);
 		} else {
-			log.info("makeListResponse : ResponseDto<List<E>> Erreur");
+			log.info("makeListResponse : ResponseDto<List<HeureRdv>> Erreur");
 			resp.setError(true);
 			resp.setBody(null);
 			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
 		}
 		return resp;
 	}
+	
+
+
+
+
+	
+
 	
 }
