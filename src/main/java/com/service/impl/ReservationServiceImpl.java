@@ -1,9 +1,8 @@
 package com.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,28 +33,61 @@ public class ReservationServiceImpl extends DaoServiceImpl<Reservation> implemen
 	IReservationRepo repo;
 
 	@Override
-	public List<Reservation> findReservationsDispo() throws ReservationNotFoundException {
-		try {
-			log.info("Service spécifique de Reservation : méthode 'findReservationsDispo' appelée.");
-			List<Reservation> listeReservations = repo.findAll();
-			if (listeReservations != null) {
-				log.info("Appel repo OK.");
-				listeReservations = repo.findAll().stream().filter(r -> r.isStatus() == false)
-						.collect(Collectors.toList());
-				if (listeReservations != null) {
-					return listeReservations;
-				} else {
-					log.warn("Tout est complet il n'y a pas de réservations disponibles.");
-				}
-			} else {
-				log.warn("Les réservations n'ont pas été trouvées.");
-				throw new ReservationNotFoundException("List<Reservation> pas trouvée findAll = null.");
-			}
-		} catch (ReservationNotFoundException rnfe) {
-			rnfe.printStackTrace();
-			rnfe.getMessage();
+	public List<HeureRdv> findResaParDateParMedecin(String stringDate, Long idMedecin)
+			throws ReservationNotFoundException {
+		log.info("Service spécifique de Reservation : méthode find Resa dispo par medecin appelée.");
+		// aller chercher toutes les resa status true par date et pour 1 medeicn
+		log.info("appel repo find all resa par date et idMedecin");
+		List<Reservation> listeResa = repo.findAllResaParDateEtMedecin(stringDate, idMedecin);
+		// lire les heure rdv prise
+		List<HeureRdv> listeRdvStatusTrue = new ArrayList<HeureRdv>();
+		for (Reservation e : listeResa) {
+			listeRdvStatusTrue.add(e.getHeureRdv());
 		}
-		return null;
+		// deduire les heures libre
+		List<HeureRdv> listeRdvDispo = new ArrayList<HeureRdv>();
+		listeRdvDispo.add(HeureRdv.huit);
+		listeRdvDispo.add(HeureRdv.neuf);
+		listeRdvDispo.add(HeureRdv.dix);
+		listeRdvDispo.add(HeureRdv.onze);
+		listeRdvDispo.add(HeureRdv.quatorze);
+		listeRdvDispo.add(HeureRdv.quinze);
+		listeRdvDispo.add(HeureRdv.seize);
+		listeRdvDispo.add(HeureRdv.dixSept);
+		//parcours de la liste et suppression des rdv deja pris
+		for (HeureRdv h : listeRdvStatusTrue) {
+			switch (h) {
+			case huit:
+				listeRdvDispo.remove(HeureRdv.huit);
+				break;
+			case neuf:
+				listeRdvDispo.remove(HeureRdv.neuf);
+				break;
+			case dix:
+				listeRdvDispo.remove(HeureRdv.dix);
+				break;
+			case onze:
+				listeRdvDispo.remove(HeureRdv.onze);
+				break;
+			case quatorze:
+				listeRdvDispo.remove(HeureRdv.quatorze);
+				break;
+			case quinze:
+				listeRdvDispo.remove(HeureRdv.quinze);
+				break;
+			case seize:
+				listeRdvDispo.remove(HeureRdv.seize);
+				break;
+			case dixSept:
+				listeRdvDispo.remove(HeureRdv.dixSept);
+				break;
+			default:
+				break;
+			}
+
+		}
+		// renvoyer liste des heure rdv libre
+		return listeRdvDispo;
 	}
 
 	@Override

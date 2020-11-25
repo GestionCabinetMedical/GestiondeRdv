@@ -22,6 +22,7 @@ public interface IAdminRepo extends IDaoRepo<Admin> {
 	 * 
 	 * @param username Identifiant de l'admin recherché.
 	 * @return Un admin correpondant à l'identifiant entré.
+	 * @throws AdminNotSuccessException
 	 */
 	public Admin findByUsername(String username) throws AdminNotSuccessException;
 
@@ -32,6 +33,7 @@ public interface IAdminRepo extends IDaoRepo<Admin> {
 	 * @param username Identifiant de l'admin recherché.
 	 * @param password Mot de passe de l'admin recherché.
 	 * @return Un admin correpondant à l'identifiant et au mot de passe entrés.
+	 * @throws AdminNotSuccessException
 	 */
 	public Admin findByUsernameAndPassword(String username, String password) throws AdminNotSuccessException;
 

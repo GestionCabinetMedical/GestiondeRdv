@@ -19,6 +19,13 @@ import com.exception.notsuccess.ConsultationNotSuccessException;
 @Repository
 public interface IConsultationRepository extends IDaoRepo<Consultation> {
 	
+	/**
+	 * Méthode permettant de rechercher une Consultation par une réservation associée.
+	 * 
+	 * @param r Reservation de la consultation recherchée.
+	 * @return Une Consultation correpondante.
+	 * @throws ConsultationNotSuccessException
+	 */
 	public Consultation findByReservation(Reservation r) throws ConsultationNotSuccessException;
 
 }
