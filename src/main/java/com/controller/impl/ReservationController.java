@@ -1,6 +1,5 @@
 package com.controller.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.http.HttpStatus;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dto.ResponseDto;
 import com.entity.Reservation;
 import com.enums.HeureRdv;
-import com.exception.notfound.ReservationNotFoundException;
+import com.exception.notsuccess.ReservationNotSuccessException;
 import com.exception.notsuccess.ResponseDtoNotSuccessException;
 import com.service.impl.ReservationServiceImpl;
 
@@ -48,11 +47,12 @@ public class ReservationController extends DaoControllerImpl<Reservation> {
 	 * @param idMedecin L'id du medecin concerné.
 	 * @param date La date concernée.
 	 * @return Un ResponseDto contenant un boolean eror, un body de liste Heure Rdv et un status Http response.
-	 * @throws ReservationNotFoundException
+	 * @throws ReservationNotSuccessException 
+	 * @throws ResponseDtoNotSuccessException 
 	 */
 	@GetMapping (path="getAllResaParDateEtMedecin/")
-	public ResponseDto<List<HeureRdv>> findResaDispoParMedecin(@RequestParam Long idMedecin, @RequestParam  Date date )
-			throws ReservationNotFoundException {
+	public ResponseDto<List<HeureRdv>> findResaDispoParMedecin(@RequestParam Long idMedecin, @RequestParam  String date )
+			throws ReservationNotSuccessException, ResponseDtoNotSuccessException {
 		log.info("Controller spécifique de Reservation : méthode find all resa dispo par medecin appelée.");
 		return makeListHeureRdvResponse(service.findResaParDateParMedecin(date, idMedecin));
 	}
@@ -62,28 +62,35 @@ public class ReservationController extends DaoControllerImpl<Reservation> {
 	 *
 	 * @param liste Liste d'instances de l'enum HeureRdv.
 	 * @return ResponseDto contenant une liste de type HeureRdv.
+	 * @throws ResponseDtoNotSuccessException
 	 */
-	public ResponseDto<List<HeureRdv>> makeListHeureRdvResponse(List<HeureRdv> liste) {
-		ResponseDto<List<HeureRdv>> resp = new ResponseDto<>();
-		if (liste != null) {
-			log.info("makeListResponse : ResponseDto<List<HeureRdv>> Ok");
-			resp.setError(false);
-			resp.setBody(liste);
-			resp.setStatus(HttpStatus.SC_OK);
-		} else {
-			log.info("makeListResponse : ResponseDto<List<HeureRdv>> Erreur");
-			resp.setError(true);
-			resp.setBody(null);
-			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
+	public ResponseDto<List<HeureRdv>> makeListHeureRdvResponse(List<HeureRdv> liste) throws ResponseDtoNotSuccessException {
+		try {
+			ResponseDto<List<HeureRdv>> resp = new ResponseDto<>();
+			if (liste != null) {
+				log.info("makeListResponse : ResponseDto<List<HeureRdv>> Ok");
+				resp.setError(false);
+				resp.setBody(liste);
+				resp.setStatus(HttpStatus.SC_OK);
+			} else {
+				log.info("makeListResponse : ResponseDto<List<HeureRdv>> Erreur");
+				resp.setError(true);
+				resp.setBody(null);
+				resp.setStatus(HttpStatus.SC_BAD_REQUEST);
+			}
+			if (resp.getStatus() != 200 || resp.getStatus() != 400) {
+				return resp;
+			}
+			else {
+				log.warn("Erreur méthode 'makeListHeureRdvResponse': set du ResponseDto non fonctionnel.");
+				throw new ResponseDtoNotSuccessException("Modification ResponseDto échouée");
+			}
+		} catch (ResponseDtoNotSuccessException dnse) {
+			dnse.printStackTrace();
+			dnse.getMessage();
+			
 		}
-		return resp;
+		return null;
 	}
-
-
-
-
-
-
-
 
 }

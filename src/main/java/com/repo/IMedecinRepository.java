@@ -24,9 +24,10 @@ public interface IMedecinRepository extends IDaoRepo<Medecin> {
 	 * Requête sur la table medecin du nombre total de medecin dans BDD.
 	 * 
 	 * @return int Nombre total de médecins dans la BDD.
+	 * @throws MedecinNotSuccessException
 	 */
-	@Query("SELECT COUNT(m) FROM Medecin m")
-	int totalDesMedecins();
+	@Query(value="SELECT COUNT(*) FROM medecin", nativeQuery = true)
+	public int totalDesMedecins() throws MedecinNotSuccessException;
 
 	/**
 	 * Requête sur la table medecin dans la BDD du nombre total de médecins pour
@@ -34,9 +35,10 @@ public interface IMedecinRepository extends IDaoRepo<Medecin> {
 	 * 
 	 * @return Map<String, Integer> key: specialité et value: nombre total de
 	 *         medecin pour cette specialite dans la BD.
+	 * @throws MedecinNotSuccessException
 	 */
-	@Query("SELECT specialite, COUNT(m)  FROM Medecin m GROUP BY specialite")
-	Map<String, Integer> totalMedecinsParSpecialite();
+	@Query(value="SELECT specialite, COUNT(*)  FROM medecin GROUP BY specialite", nativeQuery = true)
+	public Map<String, Integer> totalMedecinsParSpecialite() throws MedecinNotSuccessException;
 
 	/**
 	 * Méthode permettant de rechercher un médecin par son identifiant.
@@ -52,7 +54,7 @@ public interface IMedecinRepository extends IDaoRepo<Medecin> {
 	 * passe.
 	 * 
 	 * @param identifiant Identifiant du médecin recherché.
-	 * @param mdp         Mot de passe du médecin recherché.
+	 * @param mdp Mot de passe du médecin recherché.
 	 * @return Un médecin correpondant à l'identifiant et au mot de passe entrés.
 	 * @throws MedecinNotSuccessException
 	 */
