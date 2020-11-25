@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.entity.Consultation;
 import com.entity.Reservation;
+import com.exception.notsuccess.ConsultationNotSuccessException;
 
 /**
  * Interface repository {@code IConsultationRepository} spécifique de
@@ -20,6 +21,6 @@ import com.entity.Reservation;
 @Repository
 public interface IConsultationRepository extends IDaoRepo<Consultation> {
 	
-	public Consultation findByReservation(Reservation r);
+	public Consultation findByReservation(Reservation r) throws ConsultationNotSuccessException;
 
 }

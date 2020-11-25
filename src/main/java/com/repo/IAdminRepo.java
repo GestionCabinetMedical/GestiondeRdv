@@ -3,6 +3,7 @@ package com.repo;
 import org.springframework.stereotype.Repository;
 
 import com.entity.Admin;
+import com.exception.notsuccess.AdminNotSuccessException;
 
 /**
  * Interface repository {@code IReservationRepo} spécifique de {@link Admin} qui
@@ -22,7 +23,7 @@ public interface IAdminRepo extends IDaoRepo<Admin> {
 	 * @param username Identifiant de l'admin recherché.
 	 * @return Un admin correpondant à l'identifiant entré.
 	 */
-	public Admin findByUsername(String username);
+	public Admin findByUsername(String username) throws AdminNotSuccessException;
 
 	/**
 	 * Méthode permettant de rechercher un admin par son identifiant et son mot de
@@ -32,6 +33,6 @@ public interface IAdminRepo extends IDaoRepo<Admin> {
 	 * @param password Mot de passe de l'admin recherché.
 	 * @return Un admin correpondant à l'identifiant et au mot de passe entrés.
 	 */
-	public Admin findByUsernameAndPassword(String username, String password);
+	public Admin findByUsernameAndPassword(String username, String password) throws AdminNotSuccessException;
 
 }

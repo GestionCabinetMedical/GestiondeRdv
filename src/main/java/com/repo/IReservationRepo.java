@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.entity.Reservation;
+import com.exception.notsuccess.ReservationNotSuccessException;
 
 /**
  * Interface repository {@code IReservationRepo} spécifique de
@@ -27,5 +28,5 @@ public interface IReservationRepo extends IDaoRepo<Reservation> {
 	 * @return Une liste de reservations.
 	 */
 	@Query (value = "SELECT * FROM reservation WHERE fk_patient = :idPatient", nativeQuery = true)
-	public List<Reservation> findAllByFkPatient(Long idPatient);
+	public List<Reservation> findAllByFkPatient(Long idPatient) throws ReservationNotSuccessException;
 }

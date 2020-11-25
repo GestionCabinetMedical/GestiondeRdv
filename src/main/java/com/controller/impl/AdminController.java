@@ -16,6 +16,7 @@ import com.dto.ResponseDto;
 import com.entity.Admin;
 import com.enums.Role;
 import com.exception.notfound.AdminNotFoundException;
+import com.exception.notsuccess.AdminNotSuccessException;
 import com.security.ITokenManagement;
 import com.service.IAdminService;
 
@@ -51,10 +52,11 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * @param username Identifiant de l'admin.
 	 * @return Un admin s'il existe déjà, null sinon.
 	 * @throws AdminNotFoundException
+	 * @throws AdminNotSuccessException 
 	 */
 	@GetMapping(value = "/identifiant")
 	public ResponseDto<Admin> existsByUsername(@RequestParam(name = "identifiant") String username)
-			throws AdminNotFoundException {
+			throws AdminNotFoundException, AdminNotSuccessException {
 		log.info("Controller spécifique de Admin : méthode 'existsByUsername' appelée.");
 		Admin admin = adminService.existsByUsername(username);
 		return makeDtoResponse(admin);
@@ -68,9 +70,10 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * @param password Mot de passe de l'admin recherché.
 	 * @return Un admin s'il existe déjà, null sinon.
 	 * @throws AdminNotFoundException
+	 * @throws AdminNotSuccessException 
 	 */
 	@PostMapping(path = "/identifiant-mdp")
-	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau) throws AdminNotFoundException {
+	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau) throws AdminNotFoundException, AdminNotSuccessException {
 		log.info("Controller spécifique de Admin : méthode 'existsByUsernameAndPassword' appelée.");
 
 		ConnexionDto connexionDto = new ConnexionDto();

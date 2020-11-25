@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.entity.Medecin;
+import com.exception.notsuccess.MedecinNotSuccessException;
 
 /**
  * Interface repository {@code IMedecinRepository} spécifique de {@link Medecin}
@@ -43,7 +44,7 @@ public interface IMedecinRepository extends IDaoRepo<Medecin> {
 	 * @param identifiant Identifiant du médecin recherché.
 	 * @return Un médecin correpondant à l'identifiant entré.
 	 */
-	public Medecin findByIdentifiant(String identifiant);
+	public Medecin findByIdentifiant(String identifiant) throws MedecinNotSuccessException;
 
 	/**
 	 * Méthode permettant de rechercher un médecin par son identifiant et son mot de
@@ -53,6 +54,6 @@ public interface IMedecinRepository extends IDaoRepo<Medecin> {
 	 * @param mdp         Mot de passe du médecin recherché.
 	 * @return Un médecin correpondant à l'identifiant et au mot de passe entrés.
 	 */
-	public Medecin findByIdentifiantAndMotDePasse(String identifiant, String mdp);
+	public Medecin findByIdentifiantAndMotDePasse(String identifiant, String mdp) throws MedecinNotSuccessException;
 
 }
