@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.entity.Reservation;
+import com.exception.notsuccess.ReservationNotSuccessException;
 
 /**
  * Interface repository {@code IReservationRepo} spécifique de
  * {@link Reservation} qui hérite de l'interface générique {@code IDaoRepo}.
+ * Cette interface est responsable de la communication avec la table reservation
+ * dans la base de données.
  * 
  * @author Sophie Lahmar, Maxime Rembert
  * @see IDaoRepo
@@ -25,5 +28,5 @@ public interface IReservationRepo extends IDaoRepo<Reservation> {
 	 * @return Une liste de reservations.
 	 */
 	@Query (value = "SELECT * FROM reservation WHERE fk_patient = :idPatient", nativeQuery = true)
-	public List<Reservation> findAllByFkPatient(Long idPatient);
+	public List<Reservation> findAllByFkPatient(Long idPatient) throws ReservationNotSuccessException;
 }

@@ -26,7 +26,6 @@ import lombok.NoArgsConstructor;
  * @see Consultation
  *
  */
-
 @Data
 @Entity
 @NoArgsConstructor
@@ -44,7 +43,7 @@ public class Medecin implements Serializable {
 	@Column(name = "PRENOM", nullable = false)
 	private String prenom;
 
-	@Column(name = "ID_FORMULE", nullable = false)
+	@Column(name = "ID_FORMULE", nullable = true)
 	private Long idFormule;
 
 	@Column(name = "ADRESSE_CABINET",  nullable = false)
@@ -60,7 +59,7 @@ public class Medecin implements Serializable {
 	private String motDePasse;
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "FK_MEDECIN", referencedColumnName = "ID_MEDECIN")
+	@JoinColumn(name = "FK_MEDECIN", referencedColumnName = "ID_MEDECIN", nullable = true)
 	private List<Consultation> consultations= new ArrayList<>();
 
 }
