@@ -12,6 +12,8 @@ import javax.persistence.IdClass;
 
 import com.enums.HeureRdv;
 
+import com.enums.HeureRdv;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
