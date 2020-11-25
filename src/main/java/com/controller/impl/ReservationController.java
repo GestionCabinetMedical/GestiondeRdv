@@ -3,8 +3,6 @@ package com.controller.impl;
 import java.util.Date;
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -68,7 +66,8 @@ public class ReservationController extends DaoControllerImpl<Reservation> {
 	 * @throws ReservationNotFoundException
 	 */
 	@GetMapping (path="getAllResaParDateEtMedecin/")
-	public ResponseDto<List<HeureRdv>> findResaDispoParMedecin(@RequestParam Long idMedecin, @RequestParam  Date date ) throws ReservationNotFoundException {
+	public ResponseDto<List<HeureRdv>> findResaDispoParMedecin(@RequestParam Long idMedecin, @RequestParam  Date date ) 
+			throws ReservationNotFoundException {
 		log.info("Controller spécifique de Reservation : méthode find all resa dispo par medecin appelée.");
 		return makeListHeureRdvResponse(service.findResaParDateParMedecin(date, idMedecin));
 	}

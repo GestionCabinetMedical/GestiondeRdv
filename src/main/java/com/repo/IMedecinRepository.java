@@ -43,6 +43,7 @@ public interface IMedecinRepository extends IDaoRepo<Medecin> {
 	 * 
 	 * @param identifiant Identifiant du médecin recherché.
 	 * @return Un médecin correpondant à l'identifiant entré.
+	 * @throws MedecinNotSuccessException
 	 */
 	public Medecin findByIdentifiant(String identifiant) throws MedecinNotSuccessException;
 
@@ -53,6 +54,7 @@ public interface IMedecinRepository extends IDaoRepo<Medecin> {
 	 * @param identifiant Identifiant du médecin recherché.
 	 * @param mdp         Mot de passe du médecin recherché.
 	 * @return Un médecin correpondant à l'identifiant et au mot de passe entrés.
+	 * @throws MedecinNotSuccessException
 	 */
 	public Medecin findByIdentifiantAndMotDePasse(String identifiant, String mdp) throws MedecinNotSuccessException;
 

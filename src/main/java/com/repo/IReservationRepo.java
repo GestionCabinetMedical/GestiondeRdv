@@ -30,6 +30,7 @@ public interface IReservationRepo extends IDaoRepo<Reservation> {
 	 * Méthode retournant la liste de toutes les réservations d'un patient.
 	 * @param idPatient Id du patient concerné.
 	 * @return Une liste de reservations.
+	 * @throws ReservationNotSuccessException
 	 */
 	@Query (value = "SELECT * FROM reservation WHERE fk_patient = :idPatient", nativeQuery = true)
 	public List<Reservation> findAllByFkPatient(Long idPatient) throws ReservationNotSuccessException;

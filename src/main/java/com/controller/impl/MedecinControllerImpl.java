@@ -149,7 +149,8 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 	 * @throws ResponseDtoNotSuccessException 
 	 */
 	@GetMapping(value = "/confirmerRdv")
-	public ResponseDto<List<Consultation>> confirmerRdv(@RequestParam Long idReservation, @RequestParam Long idMedecin) throws ParseException, ReservationNotFoundException, MedecinNotSuccessException, ReservationNotSuccessException, ResponseDtoNotSuccessException {
+	public ResponseDto<List<Consultation>> confirmerRdv(@RequestParam Long idReservation, @RequestParam Long idMedecin) 
+			throws ParseException, ReservationNotFoundException, MedecinNotSuccessException, ReservationNotSuccessException, ResponseDtoNotSuccessException {
 		log.info("Controller medecin : méthode confirmerRdv appelée");
 		List<Consultation> listeConsultations = medecinService.confirmerRdv(idReservation, idMedecin);
 		return makeListConsultationResponse(listeConsultations);
@@ -168,7 +169,8 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 	 *
 	 */
 	@GetMapping(value = "/consulterPlanning")
-	public ResponseDto<Map<Consultation, Date>> consulterPlanning(@RequestParam Long idMedecin) throws MedecinNotFoundException, ResponseDtoNotSuccessException {
+	public ResponseDto<Map<Consultation, Date>> consulterPlanning(@RequestParam Long idMedecin) 
+			throws MedecinNotFoundException, ResponseDtoNotSuccessException {
 		log.info("Controller medecin : méthode consulterPlanning appelée");
 		Map<Consultation, Date> planning = medecinService.consulterPlanning(idMedecin);
 		return makeMapConsultationDateResponse(planning);
@@ -183,7 +185,8 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 	 * @return Un objet ConnectedUserDto.
 	 * @throws ConnectedUserDtoNotSuccessException
 	 */
-	private ConnectedUserDto makeConnectedUserDtoResponse(Medecin medecin) throws ConnectedUserDtoNotSuccessException {
+	private ConnectedUserDto makeConnectedUserDtoResponse(Medecin medecin) 
+			throws ConnectedUserDtoNotSuccessException {
 		try {
 			ConnectedUserDto response = new ConnectedUserDto();
 			if (medecin != null) {

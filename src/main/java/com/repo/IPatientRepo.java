@@ -33,6 +33,7 @@ public interface IPatientRepo extends IDaoRepo<Patient> {
 	 * 
 	 * @param identifiant Identifiant du patient recherché.
 	 * @return Un patient correpondant à l'identifiant entré.
+	 * @throws PatientNotSuccessException
 	 */
 	public Patient findByIdentifiant(String identifiant) throws PatientNotSuccessException;
 
@@ -43,6 +44,7 @@ public interface IPatientRepo extends IDaoRepo<Patient> {
 	 * @param identifiant Identifiant du patient recherché.
 	 * @param mdp         Mot de passe du patient recherché.
 	 * @return Un patient correpondant à l'identifiant et au mot de passe entrés.
+	 * @throws PatientNotSuccessException
 	 */
 	public Patient findByIdentifiantAndMotDePasse(String identifiant, String mdp) throws PatientNotSuccessException;
 

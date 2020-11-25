@@ -81,7 +81,8 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * @throws ConnectedUserDtoNotSuccessException 
 	 */
 	@PostMapping(path = "/identifiant-mdp")
-	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau) throws AdminNotFoundException, AdminNotSuccessException, ConnectedUserNotSuccessException, TokenNotSuccessException, ConnectedUserDtoNotSuccessException {
+	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau) 
+			throws AdminNotFoundException, AdminNotSuccessException, ConnectedUserNotSuccessException, TokenNotSuccessException, ConnectedUserDtoNotSuccessException {
 		log.info("Controller spécifique de Admin : méthode 'existsByUsernameAndPassword' appelée.");
 
 		ConnexionDto connexionDto = new ConnexionDto();
