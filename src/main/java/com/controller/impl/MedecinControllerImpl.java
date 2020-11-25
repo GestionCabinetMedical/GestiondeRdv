@@ -47,8 +47,6 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
 public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 
-	// TODO: RESPONSEDTO A FAIRE
-
 	// ATTRIBUTS
 
 	@Autowired

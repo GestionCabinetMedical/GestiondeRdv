@@ -1,6 +1,5 @@
 package com.repo;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -22,10 +21,6 @@ import com.exception.notsuccess.ReservationNotSuccessException;
 @Repository
 public interface IReservationRepo extends IDaoRepo<Reservation> {
 
-	@Query (value = "SELECT * FROM reservation R INNER JOIN consultation C on R.id_reservation = C.fk_reservation  WHERE (R.status = true AND C.fk_medecin = :idMedecin AND R.date_reservation =:dateResa)",nativeQuery = true)
-	public List<Reservation> findAllResaParDateEtMedecin(Date dateResa, Long idMedecin);
-
-
 	/**
 	 * Méthode retournant la liste de toutes les réservations d'un patient.
 	 * @param idPatient Id du patient concerné.
@@ -40,7 +35,8 @@ public interface IReservationRepo extends IDaoRepo<Reservation> {
 	 * @param dateResa Date concerné.
 	 * @param idMedecin Id du medecin voulu.
 	 * @return Une liste de Reservation.
+	 * @throws ReservationNotSuccessException
 	 */
 	@Query (value = "SELECT * FROM reservation R INNER JOIN consultation C on R.id_reservation = C.fk_reservation  WHERE (R.status = true AND C.fk_medecin = :idMedecin AND R.date_reservation =:dateResa)",nativeQuery = true)
-	public List<Reservation> findAllResaParDateEtMedecin(String dateResa, Long idMedecin);
+	public List<Reservation> findAllResaParDateEtMedecin(String dateResa, Long idMedecin) throws ReservationNotSuccessException;
 }
