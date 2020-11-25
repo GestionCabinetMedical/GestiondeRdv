@@ -92,5 +92,19 @@ public interface IMedecinService extends IDaoService<Medecin> {
 	 * @throws MedecinNotFoundException 
 	 */
 	public Map<Consultation, Date> consulterPlanning(Long idMedecin) throws MedecinNotFoundException;
+	
+	/**
+	 * méthode permettant la recherche de medecin par nom.
+	 * @param nom Nom du medecin recherché.
+	 * @return Une liste de medecin.
+	 */
+	public List<Medecin> findByNom (String nom) throws MedecinNotFoundException ;
+	
+	/**
+	 * méthode permettant la recherche de medecin par specialite.
+	 * @param specialite Specialite du medecin recherché.
+	 * @return Une liste de Medecin.
+	 */
+	public List<Medecin> findBySpecialite (String specialite) throws MedecinNotFoundException ;
 
 }

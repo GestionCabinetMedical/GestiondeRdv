@@ -18,8 +18,9 @@ import lombok.extern.slf4j.Slf4j;
  * Classe service {@code ReservationServiceImpl} spécifique de
  * {@link Reservation} qui étend de la classe générique {@code DaoServiceImpl}
  * et implémente l'interface spécifique {@code IReservationService}.
- *
- * @author Sophie Lahmar
+ * 
+ * @author Sophie Lahmar, Maxime Rembert
+
  * @see DaoServiceImpl
  * @see IReservationService
  *
@@ -30,6 +31,7 @@ public class ReservationServiceImpl extends DaoServiceImpl<Reservation> implemen
 
 	@Autowired
 	IReservationRepo repo;
+
 
 	@Override
 	public List<HeureRdv> findResaParDateParMedecin(String stringDate, Long idMedecin)
@@ -103,6 +105,6 @@ public class ReservationServiceImpl extends DaoServiceImpl<Reservation> implemen
 			
 		}
 		return null;
-		
+	
 	}
 }

@@ -116,100 +116,99 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 	}
 
 	@Override
-	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin) 
-			throws ParseException, ReservationNotFoundException, MedecinNotSuccessException, ReservationNotSuccessException {
-		try {
-			log.info("Service spécifique du Medecin : méthode confirmerRdv appelée.");
-			
-			if (idReservation != null) {
-				// Récupération de la réservation à confirmer
-				Reservation reservationToConfirm = reservationRepository.findById(idReservation).get();
-				log.info("Appel repo reservation OK.");
-				
-				if (reservationToConfirm.isStatus() == false) {
-					// Récupération de la date du rdv et du médecin visé
-					Date dateToConfirm = reservationToConfirm.getDateRervation();
-					Medecin medecinConcerned = medecinRepository.findById(idMedecin).get();
-					log.info("Appel repo medecin OK.");
-					
-					// Récupération des dates de rdv du médecin et vérification si un rdv est déjà prévu à cette date
-					List<Consultation> listeConsultation = medecinConcerned.getConsultations();
-					List<Consultation> listeConsultationAlreadyToThisDate = listeConsultation.stream()
-							.filter(c -> c.getReservation().getDateRervation() == dateToConfirm)
-							.collect(Collectors.toList());
+	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin) throws ParseException, ReservationNotFoundException, MedecinNotSuccessException, ReservationNotSuccessException {
+//		try {
+//			log.info("Service spécifique du Medecin : méthode confirmerRdv appelée.");
+//			
+//			if (idReservation != null) {
+//				// Récupération de la réservation à confirmer
+//				Reservation reservationToConfirm = reservationRepository.findById(idReservation).get();
+//				log.info("Appel repo reservation OK.");
+//				
+//				if (reservationToConfirm.isStatus() == false) {
+//					// Récupération de la date du rdv et du médecin visé
+//					Date dateToConfirm = reservationToConfirm.getDateRervation();
+//					Medecin medecinConcerned = medecinRepository.findById(idMedecin).get();
+//					log.info("Appel repo medecin OK.");
+//					
+//					// Récupération des dates de rdv du médecin et vérification si un rdv est déjà prévu à cette date
+//					List<Consultation> listeConsultation = medecinConcerned.getConsultations();
+//					List<Consultation> listeConsultationAlreadyToThisDate = listeConsultation.stream()
+//							.filter(c -> c.getReservation().getDateRervation() == dateToConfirm)
+//							.collect(Collectors.toList());
+//
+//					if (listeConsultationAlreadyToThisDate.isEmpty()) {
+//
+//						SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+//						// vérification si l'heure du redv est entre 8h-12h et 14h-18h
+//						try {
+//							// TODO : update : ces horaires devrait être spécifique pour chaque medecin pour
+//							// varier ses temps de travail
+//							// Limite des horaires de travail
+//							Date TimeStartMorning = simpleDateFormat.parse("08:00");
+//							Date TimeStopMorning = simpleDateFormat.parse("12:00");
+//							Date TimeStartAfternoon = simpleDateFormat.parse("14:00");
+//							Date TimeStopAfternoon = simpleDateFormat.parse("18:00");
+//
+//							// Horaire du rdv à confirmer au format HH:mm
+//							String simpleDateFormatToConfirm = simpleDateFormat.format(dateToConfirm);
+//						    Date timeToConfirm = simpleDateFormat.parse(simpleDateFormatToConfirm);
+//						    
+//						    if ((timeToConfirm.after(TimeStartMorning) && timeToConfirm.before(TimeStopMorning))
+//						    		|| (timeToConfirm.after(TimeStartAfternoon) && timeToConfirm.before(TimeStopAfternoon))) {
+//						    	
+//						    	// Après vérification heures de travail création d'une nouvelle consultation associé à la réservation du rdv
+//						    	Consultation consultationConfirmed = new Consultation(reservationToConfirm);
+//						    	log.info("creation consultation OK.");
+//								consultationRepository.save(consultationConfirmed);
+//								log.info("save consultation OK.");
+//
+//								// Rdv confirmé ajout de la consultation dans la liste du medecin pour que ce soit dans son planning
+//								listeConsultation.add(consultationConfirmed);
+//								medecinConcerned.setConsultations(listeConsultation);
+//								if (listeConsultation == medecinConcerned.getConsultations()) {
+//									medecinRepository.save(medecinConcerned);
+//									log.info("save medecin OK.");
+//									
+//									// Changement du status de la réservation pour qu'elle ne soit plus dispo et que le patient sache qu'elle a été confirmée
+//									reservationToConfirm.setStatus(true);
+//									if (reservationToConfirm.isStatus() == true) {
+//										reservationRepository.save(reservationToConfirm);
+//										log.info("save reservation OK.");
+//										return medecinConcerned.getConsultations();
+//									}
+//									else {
+//										log.warn("Erreur méthode 'confirmerRdv': setStatuss sur Reservation a échoué.");
+//										throw new ReservationNotSuccessException("Reservation n'a pas pu réaliser la MAJ du status: set échoué");
+//									}
+//								}
+//								else {
+//									log.warn("Erreur méthode 'confirmerRdv': setConsultations sur Medecin a échoué.");
+//									throw new MedecinNotSuccessException("Medecin n'a pas pu réaliser la MAJ de la liste Consultation: set échoué");
+//								}
+//							}
+//						} catch (ParseException e) {
+//							e.printStackTrace();
+//						}
+//
+//					} else {
+//						log.warn("medecin déjà en rdv à ce créneau en choisir un autre");
+//					}
+//				} else {
+//					log.warn("votre réservation est déjà prise en compte");
+//				}
+//			}
+//			else {
+//				log.warn("Erreur méthode 'confirmerRdv': idReservation null.");
+//				throw new ReservationNotFoundException("Reservation non trouvé: idReservation = null");
+//			}
+//		} catch (ReservationNotFoundException | MedecinNotSuccessException | ReservationNotSuccessException me) {
+//			me.printStackTrace();
+//			me.getMessage();
+//			
+//		}
 
-					if (listeConsultationAlreadyToThisDate.isEmpty()) {
-
-						SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-						// vérification si l'heure du redv est entre 8h-12h et 14h-18h
-						try {
-							// TODO : update : ces horaires devrait être spécifique pour chaque medecin pour
-							// varier ses temps de travail
-							// Limite des horaires de travail
-							Date TimeStartMorning = simpleDateFormat.parse("08:00");
-							Date TimeStopMorning = simpleDateFormat.parse("12:00");
-							Date TimeStartAfternoon = simpleDateFormat.parse("14:00");
-							Date TimeStopAfternoon = simpleDateFormat.parse("18:00");
-
-							// Horaire du rdv à confirmer au format HH:mm
-							String simpleDateFormatToConfirm = simpleDateFormat.format(dateToConfirm);
-						    Date timeToConfirm = simpleDateFormat.parse(simpleDateFormatToConfirm);
-						    
-						    if ((timeToConfirm.after(TimeStartMorning) && timeToConfirm.before(TimeStopMorning))
-						    		|| (timeToConfirm.after(TimeStartAfternoon) && timeToConfirm.before(TimeStopAfternoon))) {
-						    	
-						    	// Après vérification heures de travail création d'une nouvelle consultation associé à la réservation du rdv
-						    	Consultation consultationConfirmed = new Consultation(reservationToConfirm);
-						    	log.info("creation consultation OK.");
-								consultationRepository.save(consultationConfirmed);
-								log.info("save consultation OK.");
-
-								// Rdv confirmé ajout de la consultation dans la liste du medecin pour que ce soit dans son planning
-								listeConsultation.add(consultationConfirmed);
-								medecinConcerned.setConsultations(listeConsultation);
-								if (listeConsultation == medecinConcerned.getConsultations()) {
-									medecinRepository.save(medecinConcerned);
-									log.info("save medecin OK.");
-									
-									// Changement du status de la réservation pour qu'elle ne soit plus dispo et que le patient sache qu'elle a été confirmée
-									reservationToConfirm.setStatus(true);
-									if (reservationToConfirm.isStatus() == true) {
-										reservationRepository.save(reservationToConfirm);
-										log.info("save reservation OK.");
-										return medecinConcerned.getConsultations();
-									}
-									else {
-										log.warn("Erreur méthode 'confirmerRdv': setStatuss sur Reservation a échoué.");
-										throw new ReservationNotSuccessException("Reservation n'a pas pu réaliser la MAJ du status: set échoué");
-									}
-								}
-								else {
-									log.warn("Erreur méthode 'confirmerRdv': setConsultations sur Medecin a échoué.");
-									throw new MedecinNotSuccessException("Medecin n'a pas pu réaliser la MAJ de la liste Consultation: set échoué");
-								}
-							}
-						} catch (ParseException e) {
-							e.printStackTrace();
-						}
-
-					} else {
-						log.warn("medecin déjà en rdv à ce créneau en choisir un autre");
-					}
-				} else {
-					log.warn("votre réservation est déjà prise en compte");
-				}
-			}
-			else {
-				log.warn("Erreur méthode 'confirmerRdv': idReservation null.");
-				throw new ReservationNotFoundException("Reservation non trouvé: idReservation = null");
-			}
-		} catch (ReservationNotFoundException | MedecinNotSuccessException | ReservationNotSuccessException me) {
-			me.printStackTrace();
-			me.getMessage();
-			
-		}
-		return null;
-	}
+	
 
 	@Override
 	public Map<Consultation, Date> consulterPlanning(Long idMedecin) throws MedecinNotFoundException {
@@ -222,8 +221,8 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 					List<Consultation> listeConsultations = medecinConcerned.getConsultations();
 					Map<Consultation, Date> planningConsultations = new HashMap<>();
 					for (int i = 0; i < listeConsultations.size(); i++) {
-						Consultation consultationPlanned = listeConsultations.get(i);
-						planningConsultations.put(consultationPlanned, consultationPlanned.getReservation().getDateRervation());
+//						Consultation consultationPlanned = listeConsultations.get(i);
+//						planningConsultations.put(consultationPlanned, consultationPlanned.getReservation().getDateRervation());
 					}
 					return planningConsultations;
 				}
@@ -241,6 +240,28 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 			mnfe.getMessage();
 		}
 		return null;
+	}
+
+	@Override
+	public List<Medecin> findByNom(String nom) throws MedecinNotFoundException {
+		log.info("Medecin service : méthode find by nom appelée");
+		if (nom != null) {
+			log.info("Appel repo find by nom OK");
+			return medecinRepository.findByNom(nom);
+		}
+		log.warn("Echec : nom du medecin null !");
+		throw new MedecinNotFoundException("Liste de Mecedin non trouvée: nom du medecin = null");
+	}
+
+	@Override
+	public List<Medecin> findBySpecialite(String specialite) throws MedecinNotFoundException {
+		log.info("Medecin service : méthode find by specialite appelée");
+		if (specialite != null) {
+			log.info("Appel repo find by nom OK");
+			return medecinRepository.findBySpecialite(specialite);
+		}
+		log.warn("Echec : specialite du medecin null !");
+		throw new MedecinNotFoundException("Liste de Mecedin non trouvée: specialite du medecin = null");
 	}
 
 }
