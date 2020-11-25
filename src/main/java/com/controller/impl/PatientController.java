@@ -21,10 +21,14 @@ import com.entity.Patient;
 import com.enums.Role;
 import com.exception.notfound.FichesMedicalesNotFoundException;
 import com.exception.notfound.PatientNotFoundException;
+import com.exception.notsuccess.ConnectedUserDtoNotSuccessException;
+import com.exception.notsuccess.ConnectedUserNotSuccessException;
 import com.exception.notsuccess.ConsultationNotSuccessException;
+import com.exception.notsuccess.ResponseDtoNotSuccessException;
 import com.exception.notsuccess.FichesMedicalesNotSuccessException;
 import com.exception.notsuccess.PatientNotSuccessException;
 import com.exception.notsuccess.ReservationNotSuccessException;
+import com.exception.notsuccess.TokenNotSuccessException;
 import com.security.ITokenManagement;
 import com.service.IPatientService;
 
@@ -61,10 +65,11 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	 * @return Un patient s'il existe déjà, null sinon.
 	 * @throws PatientNotFoundException
 	 * @throws PatientNotSuccessException 
+	 * @throws ResponseDtoNotSuccessException 
 	 */
 	@GetMapping(value = "/identifiant")
 	public ResponseDto<Patient> existsByIdentifiant(@RequestParam(name = "identifiant") String identifiant)
-			throws PatientNotFoundException, PatientNotSuccessException {
+			throws PatientNotFoundException, PatientNotSuccessException, ResponseDtoNotSuccessException {
 		log.info("Controller spécifique de Patient: méthode 'existsByIdentifiant' appelée.");
 		Patient patient = patientService.existsByIdentifiant(identifiant);
 		return makeDtoResponse(patient);
@@ -79,10 +84,13 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	 * @return Un patient s'il existe déjà, null sinon.
 	 * @throws PatientNotFoundException
 	 * @throws PatientNotSuccessException 
+	 * @throws TokenNotSuccessException 
+	 * @throws ConnectedUserNotSuccessException 
+	 * @throws ConnectedUserDtoNotSuccessException 
 	 */
 	@PostMapping(path = "/identifiant-mdp")
 	public ConnexionDto existsByIdentifiantAndMotDePasse(@RequestBody String[] tableau)
-			throws PatientNotFoundException, PatientNotSuccessException {
+			throws PatientNotFoundException, PatientNotSuccessException, ConnectedUserNotSuccessException, TokenNotSuccessException, ConnectedUserDtoNotSuccessException {
 		log.info("Controller spécifique de Patient: méthode 'existsByIdentifiantAndMotDePasse' appelée.");
 
 		ConnexionDto connexionDto = new ConnexionDto();
@@ -121,32 +129,6 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	}
 
 	/**
-	 * Méthode permettant de créer une réponse de type ConnectedUserDto, et
-	 * d'injecter les paramètres de connection d'un Patient (identifiant et mdp)
-	 * dans un patientDto.
-	 * 
-	 * @param patient Instance de la classe Patient.
-	 * @return Un objet ConnectedUserDto.
-	 */
-	private ConnectedUserDto makeConnectedUserDtoResponse(Patient patient) {
-		ConnectedUserDto response = new ConnectedUserDto();
-		if (patient != null) {
-			log.info("makeConnectedUserDtoResponse : patient OK.");
-			response.setRole(Role.PATIENT);
-			response.setIdentifiant(patient.getIdentifiant());
-			response.setMdp(patient.getMotDePasse());
-			response.setError(false);
-			response.setMsg("Success !");
-		} else {
-			log.info("Erreur 'makeConnectedUserDtoResponse' : patient null.");
-			response.setRole(Role.NONE);
-			response.setError(true);
-			response.setMsg("Error: Bad request.");
-		}
-		return response;
-	}
-
-	/**
 	 * Méthode permettant au patient de consulter sa liste de fiches médicales.
 	 * 
 	 * @param id Id du patient.
@@ -154,30 +136,92 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	 * @throws FichesMedicalesNotSuccessException 
 	 * @throws ConsultationNotSuccessException 
 	 * @throws ReservationNotSuccessException 
+	 * @throws ResponseDtoNotSuccessException 
 	 * @throws FichesMedcialesNotFoundException
 	 */
 	@GetMapping(value = "/consulterFichesMedicales/{id}")
 	public ResponseDto<List<FichesMedicales>> consulterFicheMedicale(@PathVariable Long id)
-			throws FichesMedicalesNotFoundException, ReservationNotSuccessException, ConsultationNotSuccessException, FichesMedicalesNotSuccessException {
+			throws FichesMedicalesNotFoundException, ReservationNotSuccessException, ConsultationNotSuccessException, FichesMedicalesNotSuccessException, ResponseDtoNotSuccessException {
 		log.info("Controller spécifique de Patient : méthode consulter Fiche Medicale appelée.");
 		List<FichesMedicales> listeFiches = patientService.consulterFicheMedicale(id);
 		return makeListFichesMedicalesResponse(listeFiches);
 	}
-
-	public ResponseDto<List<FichesMedicales>> makeListFichesMedicalesResponse(List<FichesMedicales> liste) {
-		ResponseDto<List<FichesMedicales>> resp = new ResponseDto<>();
-		if (liste.isEmpty() == false) {
-			log.info("makeListFichesMedicalesResponse : ResponseDto<List<FichesMedicales>> Ok");
-			resp.setError(false);
-			resp.setBody(liste);
-			resp.setStatus(HttpStatus.SC_OK);
-		} else {
-			log.info("makeListFichesMedicalesResponse : ResponseDto<List<FichesMedicales>> Erreur");
-			resp.setError(true);
-			resp.setBody(null);
-			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
+	
+	/**
+	 * Méthode permettant de créer une réponse de type ConnectedUserDto, et
+	 * d'injecter les paramètres de connection d'un Patient (identifiant et mdp)
+	 * dans un patientDto.
+	 * 
+	 * @param patient Instance de la classe Patient.
+	 * @return Un objet ConnectedUserDto.
+	 * @throws ConnectedUserDtoNotSuccessException
+	 */
+	private ConnectedUserDto makeConnectedUserDtoResponse(Patient patient) throws ConnectedUserDtoNotSuccessException{
+		try {
+			ConnectedUserDto response = new ConnectedUserDto();
+			if (patient != null) {
+				log.info("makeConnectedUserDtoResponse : patient OK.");
+				response.setRole(Role.PATIENT);
+				response.setIdentifiant(patient.getIdentifiant());
+				response.setMdp(patient.getMotDePasse());
+				response.setError(false);
+				response.setMsg("Success !");
+			} else {
+				log.info("Erreur 'makeConnectedUserDtoResponse' : patient null.");
+				response.setRole(Role.NONE);
+				response.setError(true);
+				response.setMsg("Error: Bad request.");
+			}
+			if (response.getMsg() != null ) {
+				return response;
+			}
+			else {
+				log.warn("Erreur méthode 'makeConnectedUserDtoResponse': set du ConnectedUserDto non fonctionnel.");
+				throw new ConnectedUserDtoNotSuccessException("Modification ConnectedUserDto échouée");
+			}
+		} catch (ConnectedUserDtoNotSuccessException dnse) {
+			dnse.printStackTrace();
+			dnse.getMessage();
+			
 		}
-		return resp;
+		return null;
+	}
+
+	/**
+	 * Méthode permettant de créer une réponse de type ResponseDto<List<FichesMedicales>>, et
+	 * d'envoyer en responseDto une liste de fiches médicales concernant des consultations
+	 *
+	 * @param liste List<FichesMedicales> attribut de plusieurs consultations.
+	 * @return ResponseDto<List<FichesMedicales>>.
+	 * @throws ResponseDtoNotSuccessException
+	 */
+	public ResponseDto<List<FichesMedicales>> makeListFichesMedicalesResponse(List<FichesMedicales> liste) throws ResponseDtoNotSuccessException{
+		try {
+			ResponseDto<List<FichesMedicales>> resp = new ResponseDto<>();
+			if (liste.isEmpty() == false) {
+				log.info("makeListFichesMedicalesResponse : ResponseDto<List<FichesMedicales>> Ok");
+				resp.setError(false);
+				resp.setBody(liste);
+				resp.setStatus(HttpStatus.SC_OK);
+			} else {
+				log.info("makeListFichesMedicalesResponse : ResponseDto<List<FichesMedicales>> Erreur");
+				resp.setError(true);
+				resp.setBody(null);
+				resp.setStatus(HttpStatus.SC_BAD_REQUEST);
+			}
+			if (resp.getStatus() != 200 || resp.getStatus() != 400) {
+				return resp;
+			}
+			else {
+				log.warn("Erreur méthode 'makeListFichesMedicalesResponse': set du ResponseDto non fonctionnel.");
+				throw new ResponseDtoNotSuccessException("Modification ResponseDto échouée");
+			}
+		} catch (ResponseDtoNotSuccessException dnse) {
+			dnse.printStackTrace();
+			dnse.getMessage();
+			
+		}
+		return null;
 	}
 
 }

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import com.enums.Role;
+import com.exception.notsuccess.ConnectedUserNotSuccessException;
 
 import lombok.Setter;
 import lombok.ToString;
@@ -34,19 +35,19 @@ public class ConnectedUser implements IConnectedUser {
 	// METHODES
 
 	@Override
-	public String getIdentifiant(String token) {
+	public String getIdentifiant(String token) throws ConnectedUserNotSuccessException {
 		log.info("Bean ConnectedUser : méthode 'get Identifiant' appelée.");
 		return token.equals(this.token) ? identifiant : null;
 	}
 
 	@Override
-	public String getMotDePasse(String token) {
+	public String getMotDePasse(String token) throws ConnectedUserNotSuccessException {
 		log.info("Bean ConnectedUser : méthode 'get Mot De Passe' appelée.");
 		return token.equals(this.token) ? motDePasse : null;
 	}
 
 	@Override
-	public Role getRole(String token) {
+	public Role getRole(String token) throws ConnectedUserNotSuccessException {
 		log.info("Bean ConnectedUser : méthode 'get Role' appelée.");
 		log.debug("token input: " + token);
 		log.debug("token in memory: " + this.token);
@@ -55,7 +56,7 @@ public class ConnectedUser implements IConnectedUser {
 	}
 
 	@Override
-	public boolean testToken(String token) {
+	public boolean testToken(String token) throws ConnectedUserNotSuccessException {
 		log.info("Bean ConnectedUser : méthode 'test Token' appelée.");
 		return token.equals(this.token);
 	}

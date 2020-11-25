@@ -1,6 +1,8 @@
 package com.controller.impl;
 
+import java.util.Date;
 import java.util.List;
+
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import com.dto.ResponseDto;
 import com.entity.Reservation;
 import com.enums.HeureRdv;
 import com.exception.notfound.ReservationNotFoundException;
+import com.exception.notsuccess.ResponseDtoNotSuccessException;
 import com.service.impl.ReservationServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,22 +43,20 @@ public class ReservationController extends DaoControllerImpl<Reservation> {
 	private ReservationServiceImpl service;
 
 	// METHODES
-	
-	/**
-	 * Méthode permettant de rechercher une liste d'enum d'HeureRdv par la date et l'id du Medecin
-	 * (validée ou non par un médecin).
-	 * 
-	 * @return Une liste d'HeureRdv disponibles.
+
+		/**
+	 * Méthode permettant de connaître les rdv disponible par jour et par medecin.
+	 * @param idMedecin L'id du medecin concerné.
+	 * @param date La date concernée.
+	 * @return Un ResponseDto contenant un boolean eror, un body de liste Heure Rdv et un status Http response.
 	 * @throws ReservationNotFoundException
 	 */
-	@GetMapping(value = "/consulterplanningRdv")
-	public ResponseDto<List<HeureRdv>> findReservationsDispo(@RequestParam String date,@RequestParam Long idMedecin) throws ReservationNotFoundException {
-		log.info("Controller spécifique de Reservation : méthode findReservationsDispo appelée.");
-		List<HeureRdv> listeRes = service.findResaParDateParMedecin(date, idMedecin);
-		return makeListHeureRdvResponse(listeRes);
+	@GetMapping (path="getAllResaParDateEtMedecin/")
+	public ResponseDto<List<HeureRdv>> findResaDispoParMedecin(@RequestParam Long idMedecin, @RequestParam  Date date ) throws ReservationNotFoundException {
+		log.info("Controller spécifique de Reservation : méthode find all resa dispo par medecin appelée.");
+		return makeListHeureRdvResponse(service.findResaParDateParMedecin(date, idMedecin));
 	}
-	
-	
+  
 	/**
 	 * @author Maxime Rembert
 	 * 
@@ -79,4 +80,10 @@ public class ReservationController extends DaoControllerImpl<Reservation> {
 	}
 	
 
+
+
+
+	
+
+	
 }
