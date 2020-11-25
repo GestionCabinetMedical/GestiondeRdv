@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.entity.Reservation;
 import com.enums.HeureRdv;
-import com.exception.notfound.ReservationNotFoundException;
 import com.exception.notsuccess.ReservationNotSuccessException;
 import com.repo.IReservationRepo;
 import com.service.IReservationService;
