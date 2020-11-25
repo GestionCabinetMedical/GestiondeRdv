@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  * 
  */
 @RestController
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/gestion-rdv/admin")
 @CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
 @Slf4j
 public class AdminController extends DaoControllerImpl<Admin> {
@@ -52,7 +52,7 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * @param username Identifiant de l'admin.
 	 * @return Un admin s'il existe déjà, null sinon.
 	 * @throws AdminNotFoundException
-	 * @throws AdminNotSuccessException 
+	 * @throws AdminNotSuccessException
 	 */
 	@GetMapping(value = "/identifiant")
 	public ResponseDto<Admin> existsByUsername(@RequestParam(name = "identifiant") String username)
@@ -64,16 +64,17 @@ public class AdminController extends DaoControllerImpl<Admin> {
 
 	/**
 	 * Méthode permettant de vérifier l'existence d'un admin par son identifiant et
-	 * son mot de passe.
+	 * son mot de passe (= connexion).
 	 * 
 	 * @param username Identifiant de l'admin recherché.
 	 * @param password Mot de passe de l'admin recherché.
 	 * @return Un admin s'il existe déjà, null sinon.
 	 * @throws AdminNotFoundException
-	 * @throws AdminNotSuccessException 
+	 * @throws AdminNotSuccessException
 	 */
 	@PostMapping(path = "/identifiant-mdp")
-	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau) throws AdminNotFoundException, AdminNotSuccessException {
+	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau)
+			throws AdminNotFoundException, AdminNotSuccessException {
 		log.info("Controller spécifique de Admin : méthode 'existsByUsernameAndPassword' appelée.");
 
 		ConnexionDto connexionDto = new ConnexionDto();
@@ -120,21 +121,21 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * @return Un objet ConnectedUserDto.
 	 */
 	private ConnectedUserDto makeConnectedUserDtoResponse(Admin admin) {
-		ConnectedUserDto response = new ConnectedUserDto();
+		ConnectedUserDto resp = new ConnectedUserDto();
 		if (admin != null) {
 			log.info("makeConnectedUserDtoResponse : admin OK.");
-			response.setRole(Role.ADMIN);
-			response.setIdentifiant(admin.getUsername());
-			response.setMdp(admin.getPassword());
-			response.setError(false);
-			response.setMsg("Success !");
+			resp.setRole(Role.ADMIN);
+			resp.setIdentifiant(admin.getUsername());
+			resp.setMdp(admin.getPassword());
+			resp.setError(false);
+			resp.setStatus(HttpStatus.SC_OK);
 		} else {
 			log.info("Erreur 'makeConnectedUserDtoResponse' : admin null.");
-			response.setRole(Role.NONE);
-			response.setError(true);
-			response.setMsg("Error: Bad request.");
+			resp.setRole(Role.NONE);
+			resp.setError(true);
+			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
 		}
-		return response;
+		return resp;
 	}
 
 }

@@ -22,8 +22,6 @@ public class ConnectedUserDto {
 	private Role role;
 
 	private boolean error;
-	private String msg;
-	
-	
+	private int status;
 
 }

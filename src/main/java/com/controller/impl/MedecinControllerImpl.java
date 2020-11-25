@@ -38,9 +38,9 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @RestController
-@RequestMapping(value = "/medecin")
-@Slf4j
+@RequestMapping(value = "/gestion-rdv/medecin")
 @CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
+@Slf4j
 public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 
 	// TODO: RESPONSEDTO A FAIRE
@@ -61,7 +61,7 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 	 * @param identifiant Identifiant du médecin recherché.
 	 * @return Un médecin s'il existe déjà, null sinon.
 	 * @throws MedecinNotFoundException
-	 * @throws MedecinNotSuccessException 
+	 * @throws MedecinNotSuccessException
 	 */
 	@GetMapping(value = "/identifiant")
 	public ResponseDto<Medecin> existsByIdentifiant(@RequestParam(name = "identifiant") String identifiant)
@@ -73,13 +73,13 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 
 	/**
 	 * Méthode permettant de vérifier l'existence d'un médecin par son identifiant
-	 * et son mot de passe.
+	 * et son mot de passe (= connexion).
 	 *
 	 * @param identifiant Identifiant du médecin recherché.
 	 * @param mdp         Mot de passe du médecin recherché.
 	 * @return Un médecin s'il existe déjà, null sinon.
 	 * @throws MedecinNotFoundException
-	 * @throws MedecinNotSuccessException 
+	 * @throws MedecinNotSuccessException
 	 */
 	@PostMapping(path = "/identifiant-mdp")
 	public ConnexionDto existsByIdentifiantAndMotDePasse(@RequestBody String[] tableau)
@@ -130,21 +130,21 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 	 * @return Un objet ConnectedUserDto.
 	 */
 	private ConnectedUserDto makeConnectedUserDtoResponse(Medecin medecin) {
-		ConnectedUserDto response = new ConnectedUserDto();
+		ConnectedUserDto resp = new ConnectedUserDto();
 		if (medecin != null) {
 			log.info("makeConnectedUserDtoResponse : medecin OK.");
-			response.setRole(Role.MEDECIN);
-			response.setIdentifiant(medecin.getIdentifiant());
-			response.setMdp(medecin.getMotDePasse());
-			response.setError(false);
-			response.setMsg("Success !");
+			resp.setRole(Role.MEDECIN);
+			resp.setIdentifiant(medecin.getIdentifiant());
+			resp.setMdp(medecin.getMotDePasse());
+			resp.setError(false);
+			resp.setStatus(HttpStatus.SC_OK);
 		} else {
 			log.info("Erreur 'makeConnectedUserDtoResponse' : medecin null.");
-			response.setRole(Role.NONE);
-			response.setError(true);
-			response.setMsg("Error: Bad request.");
+			resp.setRole(Role.NONE);
+			resp.setError(true);
+			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
 		}
-		return response;
+		return resp;
 	}
 
 	/**
@@ -159,12 +159,14 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 	 * @return List<Consultation> d'un medecin avec la nouvelle consultation prévue
 	 *         une fois la Réservation confirmée
 	 * @throws ParseException
-	 * @throws ReservationNotSuccessException 
-	 * @throws MedecinNotSuccessException 
-	 * @throws ReservationNotFoundException 
+	 * @throws ReservationNotSuccessException
+	 * @throws MedecinNotSuccessException
+	 * @throws ReservationNotFoundException
 	 */
 	@GetMapping(value = "/confirmerRdv")
-	public ResponseDto<List<Consultation>> confirmerRdv(@RequestParam Long idReservation, @RequestParam Long idMedecin) throws ParseException, ReservationNotFoundException, MedecinNotSuccessException, ReservationNotSuccessException {
+	public ResponseDto<List<Consultation>> confirmerRdv(@RequestParam Long idReservation, @RequestParam Long idMedecin)
+			throws ParseException, ReservationNotFoundException, MedecinNotSuccessException,
+			ReservationNotSuccessException {
 		log.info("Controller medecin : méthode confirmerRdv appelée");
 		List<Consultation> listeConsultations = medecinService.confirmerRdv(idReservation, idMedecin);
 		return makeListConsultationResponse(listeConsultations);
@@ -178,11 +180,11 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 	 *                  planning.
 	 * @return Map<Consultation, Date> qui liste en Key une consultation et en
 	 *         valeur la date de celle-ci
-	 * @throws MedecinNotFoundException 
-	 *
+	 * @throws MedecinNotFoundException
 	 */
 	@GetMapping(value = "/consulterPlanning")
-	public ResponseDto<Map<Consultation, Date>> consulterPlanning(@RequestParam Long idMedecin) throws MedecinNotFoundException {
+	public ResponseDto<Map<Consultation, Date>> consulterPlanning(@RequestParam Long idMedecin)
+			throws MedecinNotFoundException {
 		log.info("Controller medecin : méthode consulterPlanning appelée");
 		Map<Consultation, Date> planning = medecinService.consulterPlanning(idMedecin);
 		return makeMapConsultationDateResponse(planning);

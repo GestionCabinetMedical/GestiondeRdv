@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
  * 
  */
 @RestController
-@RequestMapping(value = "/patient")
+@RequestMapping(value = "/gestion-rdv/patient")
 @CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
 @Slf4j
 public class PatientController extends DaoControllerImpl<Patient> {
@@ -60,7 +60,7 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	 * @param identifiant Identifiant du patient recherché.
 	 * @return Un patient s'il existe déjà, null sinon.
 	 * @throws PatientNotFoundException
-	 * @throws PatientNotSuccessException 
+	 * @throws PatientNotSuccessException
 	 */
 	@GetMapping(value = "/identifiant")
 	public ResponseDto<Patient> existsByIdentifiant(@RequestParam(name = "identifiant") String identifiant)
@@ -72,13 +72,13 @@ public class PatientController extends DaoControllerImpl<Patient> {
 
 	/**
 	 * Méthode permettant de vérifier l'existence d'un patient par son identifiant
-	 * et son mot de passe.
+	 * et son mot de passe (= connexion).
 	 * 
 	 * @param identifiant Identifiant du patient recherché.
 	 * @param mdp         Mot de passe du patient recherché.
 	 * @return Un patient s'il existe déjà, null sinon.
 	 * @throws PatientNotFoundException
-	 * @throws PatientNotSuccessException 
+	 * @throws PatientNotSuccessException
 	 */
 	@PostMapping(path = "/identifiant-mdp")
 	public ConnexionDto existsByIdentifiantAndMotDePasse(@RequestBody String[] tableau)
@@ -129,21 +129,21 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	 * @return Un objet ConnectedUserDto.
 	 */
 	private ConnectedUserDto makeConnectedUserDtoResponse(Patient patient) {
-		ConnectedUserDto response = new ConnectedUserDto();
+		ConnectedUserDto resp = new ConnectedUserDto();
 		if (patient != null) {
 			log.info("makeConnectedUserDtoResponse : patient OK.");
-			response.setRole(Role.PATIENT);
-			response.setIdentifiant(patient.getIdentifiant());
-			response.setMdp(patient.getMotDePasse());
-			response.setError(false);
-			response.setMsg("Success !");
+			resp.setRole(Role.PATIENT);
+			resp.setIdentifiant(patient.getIdentifiant());
+			resp.setMdp(patient.getMotDePasse());
+			resp.setError(false);
+			resp.setStatus(HttpStatus.SC_OK);
 		} else {
 			log.info("Erreur 'makeConnectedUserDtoResponse' : patient null.");
-			response.setRole(Role.NONE);
-			response.setError(true);
-			response.setMsg("Error: Bad request.");
+			resp.setRole(Role.NONE);
+			resp.setError(true);
+			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
 		}
-		return response;
+		return resp;
 	}
 
 	/**
@@ -151,14 +151,15 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	 * 
 	 * @param id Id du patient.
 	 * @return Une liste de fiches médicales d'un patient.
-	 * @throws FichesMedicalesNotSuccessException 
-	 * @throws ConsultationNotSuccessException 
-	 * @throws ReservationNotSuccessException 
+	 * @throws FichesMedicalesNotSuccessException
+	 * @throws ConsultationNotSuccessException
+	 * @throws ReservationNotSuccessException
 	 * @throws FichesMedcialesNotFoundException
 	 */
 	@GetMapping(value = "/consulterFichesMedicales/{id}")
 	public ResponseDto<List<FichesMedicales>> consulterFicheMedicale(@PathVariable Long id)
-			throws FichesMedicalesNotFoundException, ReservationNotSuccessException, ConsultationNotSuccessException, FichesMedicalesNotSuccessException {
+			throws FichesMedicalesNotFoundException, ReservationNotSuccessException, ConsultationNotSuccessException,
+			FichesMedicalesNotSuccessException {
 		log.info("Controller spécifique de Patient : méthode consulter Fiche Medicale appelée.");
 		List<FichesMedicales> listeFiches = patientService.consulterFicheMedicale(id);
 		return makeListFichesMedicalesResponse(listeFiches);
