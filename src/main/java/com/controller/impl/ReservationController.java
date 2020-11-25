@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dto.ResponseDto;
 import com.entity.Reservation;
 import com.exception.notfound.ReservationNotFoundException;
+import com.exception.notsuccess.ResponseDtoNotSuccessException;
 import com.service.impl.ReservationServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -44,9 +45,10 @@ public class ReservationController extends DaoControllerImpl<Reservation> {
 	 * 
 	 * @return Une liste de réservations disponibles.
 	 * @throws ReservationNotFoundException
+	 * @throws ResponseDtoNotSuccessException 
 	 */
 	@GetMapping(value = "/consulterplanning")
-	public ResponseDto<List<Reservation>> findReservationsDispo() throws ReservationNotFoundException {
+	public ResponseDto<List<Reservation>> findReservationsDispo() throws ReservationNotFoundException, ResponseDtoNotSuccessException {
 		log.info("Controller spécifique de Reservation : méthode findReservationsDispo appelée.");
 		List<Reservation> listeRes = service.findReservationsDispo();
 		return makeListResponse(listeRes);

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.controller.IDaoController;
 import com.dto.ResponseDto;
+import com.exception.notsuccess.ResponseDtoNotSuccessException;
 import com.service.IDaoService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +39,7 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 
 	@Override
 	@PostMapping
-	public ResponseDto<E> add(@RequestBody E entite) {
+	public ResponseDto<E> add(@RequestBody E entite) throws ResponseDtoNotSuccessException {
 		log.info("Controller générique : méthode add appelée");
 		E e = serv.addOrUpdate(entite);
 		return makeDtoResponse(e);
@@ -46,7 +47,7 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 
 	@Override
 	@PutMapping
-	public ResponseDto<E> update(@RequestBody E entite) {
+	public ResponseDto<E> update(@RequestBody E entite) throws ResponseDtoNotSuccessException {
 		log.info("Controller générique : méthode update appelée");
 		E e = serv.addOrUpdate(entite);
 		return makeDtoResponse(e);
@@ -54,7 +55,7 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 
 	@Override
 	@DeleteMapping(path = "/{id}")
-	public ResponseDto<Boolean> deleteById(@PathVariable Long id) {
+	public ResponseDto<Boolean> deleteById(@PathVariable Long id) throws ResponseDtoNotSuccessException {
 		log.info("Controller générique : méthode delete By Id appelée");
 		boolean status = serv.deleteById(id);
 		return makeBooleanResponse(status);
@@ -62,7 +63,7 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 
 	@Override
 	@GetMapping(path = "/{id}")
-	public ResponseDto<E> findById(@PathVariable Long id) {
+	public ResponseDto<E> findById(@PathVariable Long id) throws ResponseDtoNotSuccessException {
 		log.info("Controller générique : méthode find By Id appelée");
 		E e = serv.findById(id);
 		return makeDtoResponse(e);
@@ -70,7 +71,7 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 
 	@Override
 	@GetMapping(path = "/all")
-	public ResponseDto<List<E>> findAll() {
+	public ResponseDto<List<E>> findAll() throws ResponseDtoNotSuccessException {
 		log.info("Controller générique : méthode find all appelée");
 		List<E> liste = serv.findAll();
 		return makeListResponse(liste);
@@ -81,23 +82,37 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 	 * 
 	 * @param e Entité.
 	 * @return ResponseDto de type générique <E>.
+	 * @throws ResponseDtoNotSuccessException
 	 */
-	public ResponseDto<E> makeDtoResponse(E e) {
-		ResponseDto<E> resp = new ResponseDto<>();
-		if (e != null) {
-			log.info("makeDtoResponse : responseDto Ok");
-			resp.setBody(e);
-			resp.setError(false);
-			resp.setMessage("Success");
-			resp.setStatus(HttpStatus.SC_OK);
-		} else {
-			log.info("makeDtoResponse : responseDto Erreur");
-			resp.setError(true);
-			resp.setBody(null);
-			resp.setMessage("Error");
-			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
+	public ResponseDto<E> makeDtoResponse(E e) throws ResponseDtoNotSuccessException {
+		try {
+			ResponseDto<E> resp = new ResponseDto<>();
+			if (e != null) {
+				log.info("makeDtoResponse : responseDto Ok");
+				resp.setBody(e);
+				resp.setError(false);
+				resp.setMessage("Success");
+				resp.setStatus(HttpStatus.SC_OK);
+			} else {
+				log.info("makeDtoResponse : responseDto Erreur");
+				resp.setError(true);
+				resp.setBody(null);
+				resp.setMessage("Error");
+				resp.setStatus(HttpStatus.SC_BAD_REQUEST);
+			}
+			if (resp.getStatus() != 200 || resp.getStatus() != 400) {
+				return resp;
+			}
+			else {
+				log.warn("Erreur méthode 'makeDtoResponse': set du ResponseDto non fonctionnel.");
+				throw new ResponseDtoNotSuccessException("Modification ResponseDto échouée");
+			}
+		} catch (ResponseDtoNotSuccessException dnse) {
+			dnse.printStackTrace();
+			dnse.getMessage();
+			
 		}
-		return resp;
+		return null;
 	}
 
 	/**
@@ -105,21 +120,35 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 	 * 
 	 * @param status Status de la réponse.
 	 * @return ResponseDto de type booléen.
+	 * @throws ResponseDtoNotSuccessException
 	 */
-	public ResponseDto<Boolean> makeBooleanResponse(Boolean status) {
-		ResponseDto<Boolean> resp = new ResponseDto<>();
-		if (status) {
-			log.info("makeBooleanResponse : ResponseDto<Boolean> Ok");
-			resp.setError(false);
-			resp.setBody(null);
-			resp.setStatus(HttpStatus.SC_OK);
-		} else {
-			log.info("makeBooleanResponse : ResponseDto<Boolean> Erreur");
-			resp.setError(true);
-			resp.setBody(null);
-			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
+	public ResponseDto<Boolean> makeBooleanResponse(Boolean status) throws ResponseDtoNotSuccessException {
+		try {
+			ResponseDto<Boolean> resp = new ResponseDto<>();
+			if (status) {
+				log.info("makeBooleanResponse : ResponseDto<Boolean> Ok");
+				resp.setError(false);
+				resp.setBody(null);
+				resp.setStatus(HttpStatus.SC_OK);
+			} else {
+				log.info("makeBooleanResponse : ResponseDto<Boolean> Erreur");
+				resp.setError(true);
+				resp.setBody(null);
+				resp.setStatus(HttpStatus.SC_BAD_REQUEST);
+			}
+			if (resp.getStatus() != 200 || resp.getStatus() != 400) {
+				return resp;
+			}
+			else {
+				log.warn("Erreur méthode 'makeBooleanResponse': set du ResponseDto non fonctionnel.");
+				throw new ResponseDtoNotSuccessException("Modification ResponseDto échouée");
+			}
+		} catch (ResponseDtoNotSuccessException dnse) {
+			dnse.printStackTrace();
+			dnse.getMessage();
+			
 		}
-		return resp;
+		return null;
 	}
 
 	/**
@@ -127,21 +156,35 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 	 * 
 	 * @param liste Liste d'instances de la classe <E>.
 	 * @return ResponseDto contenant une liste de type générique <E>.
+	 * @throws ResponseDtoNotSuccessException
 	 */
-	public ResponseDto<List<E>> makeListResponse(List<E> liste) {
-		ResponseDto<List<E>> resp = new ResponseDto<>();
-		if (liste != null) {
-			log.info("makeListResponse : ResponseDto<List<E>> Ok");
-			resp.setError(false);
-			resp.setBody(liste);
-			resp.setStatus(HttpStatus.SC_OK);
-		} else {
-			log.info("makeListResponse : ResponseDto<List<E>> Erreur");
-			resp.setError(true);
-			resp.setBody(null);
-			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
+	public ResponseDto<List<E>> makeListResponse(List<E> liste) throws ResponseDtoNotSuccessException {
+		try {
+			ResponseDto<List<E>> resp = new ResponseDto<>();
+			if (liste != null) {
+				log.info("makeListResponse : ResponseDto<List<E>> Ok");
+				resp.setError(false);
+				resp.setBody(liste);
+				resp.setStatus(HttpStatus.SC_OK);
+			} else {
+				log.info("makeListResponse : ResponseDto<List<E>> Erreur");
+				resp.setError(true);
+				resp.setBody(null);
+				resp.setStatus(HttpStatus.SC_BAD_REQUEST);
+			}
+			if (resp.getStatus() != 200 || resp.getStatus() != 400) {
+				return resp;
+			}
+			else {
+				log.warn("Erreur méthode 'makeListResponse': set du ResponseDto non fonctionnel.");
+				throw new ResponseDtoNotSuccessException("Modification ResponseDto échouée");
+			}
+		} catch (ResponseDtoNotSuccessException dnse) {
+			dnse.printStackTrace();
+			dnse.getMessage();
+			
 		}
-		return resp;
+		return null;
 	}
 
 }
