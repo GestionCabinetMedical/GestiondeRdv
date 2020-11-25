@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
  * {@link Reservation} qui étend de la classe générique {@code DaoServiceImpl}
  * et implémente l'interface spécifique {@code IReservationService}.
  * 
- * @author Sophie Lahmar
+ * @author Sophie Lahmar, Maxime Rembert
  * @see DaoServiceImpl
  * @see IReservationService
  *
@@ -31,62 +31,69 @@ public class ReservationServiceImpl extends DaoServiceImpl<Reservation> implemen
 	@Autowired
 	IReservationRepo repo;
 
+
 	@Override
 	public List<HeureRdv> findResaParDateParMedecin(String stringDate, Long idMedecin)
 			throws ReservationNotFoundException {
 		log.info("Service spécifique de Reservation : méthode find Resa dispo par medecin appelée.");
-		// aller chercher toutes les resa status true par date et pour 1 medeicn
-		log.info("appel repo find all resa par date et idMedecin");
-		List<Reservation> listeResa = repo.findAllResaParDateEtMedecin(stringDate, idMedecin);
-		// lire les heure rdv prise
-		List<HeureRdv> listeRdvStatusTrue = new ArrayList<HeureRdv>();
-		for (Reservation e : listeResa) {
-			listeRdvStatusTrue.add(e.getHeureRdv());
-		}
-		// deduire les heures libre
-		List<HeureRdv> listeRdvDispo = new ArrayList<HeureRdv>();
-		listeRdvDispo.add(HeureRdv.huit);
-		listeRdvDispo.add(HeureRdv.neuf);
-		listeRdvDispo.add(HeureRdv.dix);
-		listeRdvDispo.add(HeureRdv.onze);
-		listeRdvDispo.add(HeureRdv.quatorze);
-		listeRdvDispo.add(HeureRdv.quinze);
-		listeRdvDispo.add(HeureRdv.seize);
-		listeRdvDispo.add(HeureRdv.dixSept);
-		//parcours de la liste et suppression des rdv deja pris
-		for (HeureRdv h : listeRdvStatusTrue) {
-			switch (h) {
-			case huit:
-				listeRdvDispo.remove(HeureRdv.huit);
-				break;
-			case neuf:
-				listeRdvDispo.remove(HeureRdv.neuf);
-				break;
-			case dix:
-				listeRdvDispo.remove(HeureRdv.dix);
-				break;
-			case onze:
-				listeRdvDispo.remove(HeureRdv.onze);
-				break;
-			case quatorze:
-				listeRdvDispo.remove(HeureRdv.quatorze);
-				break;
-			case quinze:
-				listeRdvDispo.remove(HeureRdv.quinze);
-				break;
-			case seize:
-				listeRdvDispo.remove(HeureRdv.seize);
-				break;
-			case dixSept:
-				listeRdvDispo.remove(HeureRdv.dixSept);
-				break;
-			default:
-				break;
-			}
 
+		if (stringDate != null && idMedecin != null) {
+
+			// aller chercher toutes les resa status true par date et pour 1 medeicn
+			log.info("appel repo find all resa par date et idMedecin");
+			List<Reservation> listeResa = repo.findAllResaParDateEtMedecin(stringDate, idMedecin);
+			// lire les heure rdv prise
+			List<HeureRdv> listeRdvStatusTrue = new ArrayList<HeureRdv>();
+			for (Reservation e : listeResa) {
+				listeRdvStatusTrue.add(e.getHeureRdv());
+			}
+			// deduire les heures libre
+			List<HeureRdv> listeRdvDispo = new ArrayList<HeureRdv>();
+			listeRdvDispo.add(HeureRdv.huit);
+			listeRdvDispo.add(HeureRdv.neuf);
+			listeRdvDispo.add(HeureRdv.dix);
+			listeRdvDispo.add(HeureRdv.onze);
+			listeRdvDispo.add(HeureRdv.quatorze);
+			listeRdvDispo.add(HeureRdv.quinze);
+			listeRdvDispo.add(HeureRdv.seize);
+			listeRdvDispo.add(HeureRdv.dixSept);
+			// parcours de la liste et suppression des rdv deja pris
+			for (HeureRdv h : listeRdvStatusTrue) {
+				switch (h) {
+				case huit:
+					listeRdvDispo.remove(HeureRdv.huit);
+					break;
+				case neuf:
+					listeRdvDispo.remove(HeureRdv.neuf);
+					break;
+				case dix:
+					listeRdvDispo.remove(HeureRdv.dix);
+					break;
+				case onze:
+					listeRdvDispo.remove(HeureRdv.onze);
+					break;
+				case quatorze:
+					listeRdvDispo.remove(HeureRdv.quatorze);
+					break;
+				case quinze:
+					listeRdvDispo.remove(HeureRdv.quinze);
+					break;
+				case seize:
+					listeRdvDispo.remove(HeureRdv.seize);
+					break;
+				case dixSept:
+					listeRdvDispo.remove(HeureRdv.dixSept);
+					break;
+				default:
+					break;
+				}
+
+			}
+			// renvoyer liste des heure rdv libre
+			return listeRdvDispo;
 		}
-		// renvoyer liste des heure rdv libre
-		return listeRdvDispo;
+		log.warn("Erreur get  resa dispo by date et idMedecin : date ou IdMedecin null");
+		throw new ReservationNotFoundException("La date ou l'id Medecin est null");
 	}
 
 }

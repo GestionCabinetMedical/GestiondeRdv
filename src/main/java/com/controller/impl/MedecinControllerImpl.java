@@ -187,6 +187,21 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 		Map<Consultation, Date> planning = medecinService.consulterPlanning(idMedecin);
 		return makeMapConsultationDateResponse(planning);
 	}
+	
+	
+	
+	@GetMapping (path="nom")
+	public ResponseDto<List<Medecin>> findByNom(@RequestParam String nom)  throws MedecinNotFoundException {
+		log.info("Controller medecin : méthode find by nom appelée");
+		return makeListResponse(medecinService.findByNom(nom));
+	}
+	
+	@GetMapping (path="specialite")
+	public ResponseDto<List<Medecin>> findBySpecialite(@RequestParam String specialite)  throws MedecinNotFoundException {
+		log.info("Controller medecin : méthode find by nom appelée");
+		return makeListResponse(medecinService.findBySpecialite(specialite));
+	}
+	
 
 	public ResponseDto<List<Consultation>> makeListConsultationResponse(List<Consultation> liste) {
 		ResponseDto<List<Consultation>> resp = new ResponseDto<>();
