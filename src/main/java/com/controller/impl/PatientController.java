@@ -103,7 +103,7 @@ public class PatientController extends DaoControllerImpl<Patient> {
 			if (patient != null) {
 				log.info("Patient existant dans la BDD.");
 				ConnectedUserDto patientDto = makeConnectedUserDtoResponse(patient);
-				String token = tokenManage.makeAdminSession(patientDto);
+				String token = tokenManage.makePatientSession(patientDto);
 
 				connexionDto.setUser(patientDto);
 				connexionDto.setToken(token);

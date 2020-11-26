@@ -58,7 +58,6 @@ public class PatientServiceImpl extends DaoServiceImpl<Patient> implements IPati
 			log.info("Service spécifique de Patient: méthode 'existsByIdentifiant' appelée.");
 			if (identifiant != null) {
 				log.info("Appel repo OK.");
-				log.info("identifiant a chercher : "+ identifiant);
 				try {
 					Patient patient = patientRepo.findByIdentifiant(identifiant);
 					return patient;

@@ -53,8 +53,8 @@ public class ReservationController extends DaoControllerImpl<Reservation> {
 	 * @throws ResponseDtoNotSuccessException
 
 	 */
-	@GetMapping (path="getAllResaParDateEtMedecin/")
-	public ResponseDto<List<HeureRdv>> findResaDispoParMedecin(@RequestParam Long idMedecin, @RequestParam  String date )
+	@GetMapping (path="getAllResaParDateEtMedecin")
+	public ResponseDto<List<HeureRdv>> findResaDispoParMedecin(@RequestParam  String date, @RequestParam Long idMedecin )
 			throws ReservationNotSuccessException, ResponseDtoNotSuccessException {
 		log.info("Controller spécifique de Reservation : méthode find all resa dispo par medecin appelée.");
 		return makeListHeureRdvResponse(service.findResaParDateParMedecin(date, idMedecin));

@@ -1,9 +1,12 @@
 package com.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.entity.Consultation;
+import com.entity.Reservation;
 import com.exception.notfound.ConsultationNotFoundException;
 import com.repo.IConsultationRepository;
 import com.repo.IReservationRepo;
@@ -37,10 +40,17 @@ public class ConsultationServiceImpl extends DaoServiceImpl<Consultation> implem
 		//sauvegarde de la resa en status false
 		if (c != null) {
 			log.info("Sauvegarde de l'objet reservation en status false");
-			c.getReservation().setStatus(false);
-			resaRepo.save(c.getReservation());
-			log.info("Sauvegarde de la consultation");
-			return consultRepo.save(c);
+//			List<Reservation> listeResa = resaRepo.findByDateReservation(c.getReservation().getDateReservation());
+//			for(Reservation r : listeResa) {
+//				if(r.getHeureRdv() != c.getReservation().getHeureRdv()) {
+					c.getReservation().setStatus(false);
+					resaRepo.save(c.getReservation());
+					log.info("Sauvegarde de la consultation");
+					return consultRepo.save(c);
+//				}
+//			}
+//			log.warn("erreur : Cet horaire de reservation deja attribué !");
+			
 		}
 		log.warn("Consultation et reservation non sauvegardé : objet consultation null !");
 		throw new ConsultationNotFoundException("Fail - Objet consultation null !");
