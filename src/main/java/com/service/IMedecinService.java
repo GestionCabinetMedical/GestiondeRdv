@@ -8,6 +8,7 @@ import java.util.Map;
 import com.entity.Consultation;
 import com.entity.FichesMedicales;
 import com.entity.Medecin;
+import com.entity.Reservation;
 import com.exception.notfound.MedecinNotFoundException;
 import com.exception.notfound.ReservationNotFoundException;
 import com.exception.notsuccess.MedecinNotSuccessException;
@@ -64,34 +65,37 @@ public interface IMedecinService extends IDaoService<Medecin> {
 	public Map<String, Integer> totalMedecinsParSpecialite() throws MedecinNotSuccessException;
 
 	/**
-	 * Methode permettant au medecin de confirmer un rdv => ajout d'une consultation
-	 * dans sa liste (= son planning).
+	 * Methode permettant au medecin de confirmer un rdv => modification d'une resa en status true
 	 * 
-	 * @param idReservation Long associé à la Réservation faite par un patient à
-	 *                      réserver.
-	 * @param idMedecin     Long associé à un medecin qui peut confirmer ou non le
-	 *                      rdv.
-	 * @param idPatient     Long associé à un patient qui a fait la Réservation.
-	 * @return List<Consultation> d'un medecin avec la nouvelle consultation prévue
-	 *         une fois la Réservation confirmée.
-	 * @throws ParseException
+	 * @param Reservation  Entite Reservation a confirmer.
+	 * @return Booléen true si la modification a été effectué, false sinon.
 	 * @throws ReservationNotSuccessException 
-	 * @throws MedecinNotSuccessException 
-	 * @throws ReservationNotFoundException 
 	 */
-	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin) throws ParseException, ReservationNotFoundException, MedecinNotSuccessException, ReservationNotSuccessException;
+	public Boolean confirmerRdv(Reservation r) throws ReservationNotSuccessException;
 
+	/**
+	 * Methode permettant au medecin de consulter ses demande de rendez-vous
+	 * 
+	 * @param identifiant Identifiant du medecin.
+	 * @return List<Consultation> qui comprend toutes les consultations en status false du medecin.
+	 * @throws MedecinNotFoundException 
+	 * @throws MedecinNotSuccessException
+	 */
+	public List<Consultation> consulterResa(String identifiant) throws MedecinNotFoundException, MedecinNotSuccessException;
+	
 	/**
 	 * Methode permettant au medecin de consulter ses rdv prévus / consultations (=
 	 * son planning).
 	 * 
-	 * @param idMedecin Long associé à un medecin qui souhaite consulter le
-	 *                  planning.
-	 * @return Map<Consultation, Date> qui liste en Key une consultation et en
-	 *         valeur la date de celle-ci.
+	 * @param identifiant Identifiant du medecin.
+	 * @return List<Consultation> qui comprend toutes les consultations en status true du medecin.
 	 * @throws MedecinNotFoundException 
+	 * @throws MedecinNotSuccessException
 	 */
-	public Map<Consultation, Date> consulterPlanning(Long idMedecin) throws MedecinNotFoundException;
+	public List<Consultation> consulterPlanning(String identifiant) throws MedecinNotFoundException, MedecinNotSuccessException;
+	
+	public Map<String, List<Consultation>> consulterPlanningByDate(String identifiant,String date) throws MedecinNotFoundException, MedecinNotSuccessException, ParseException ;
+	
 	
 	/**
 	 * méthode permettant la recherche de medecin par nom.

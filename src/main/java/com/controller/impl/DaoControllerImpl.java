@@ -49,6 +49,7 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 	@PutMapping
 	public ResponseDto<E> update(@RequestBody E entite) throws ResponseDtoNotSuccessException {
 		log.info("Controller générique : méthode update appelée");
+		log.info("print objet - "+entite);
 		E e = serv.addOrUpdate(entite);
 		return makeDtoResponse(e);
 	}
