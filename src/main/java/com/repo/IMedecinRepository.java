@@ -67,13 +67,12 @@ public interface IMedecinRepository extends IDaoRepo<Medecin> {
 	 * @param nom Nom du medecin recherché.
 	 * @return Une liste de Medecin.
 	 */
-	public List<Medecin> findByNom (String nom);
-	
+	public List<Medecin> findByNomContainingIgnoreCase (String nom);
 	/**
 	 * méthode permettant la recherche de medecin par specialite.
 	 * @param specialite Specialite du medecin recherché.
 	 * @return Une liste de Medecin.
 	 */
-	public List<Medecin> findBySpecialite (String specialite);
+	public List<Medecin> findBySpecialiteContainingIgnoreCase (String specialite);
 
 }

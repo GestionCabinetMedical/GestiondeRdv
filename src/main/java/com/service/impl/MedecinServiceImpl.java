@@ -1,7 +1,9 @@
 package com.service.impl;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +20,7 @@ import com.exception.notfound.MedecinNotFoundException;
 import com.exception.notfound.ReservationNotFoundException;
 import com.exception.notsuccess.MedecinNotSuccessException;
 import com.exception.notsuccess.ReservationNotSuccessException;
+import com.google.common.collect.Comparators;
 import com.repo.IConsultationRepository;
 import com.repo.IMedecinRepository;
 import com.repo.IReservationRepo;
@@ -61,7 +64,8 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 					Medecin medecin = medecinRepository.findByIdentifiant(identifiant);
 					return medecin;
 				} catch (MedecinNotSuccessException mnse) {
-					log.warn("Erreur méthode 'existsByIdentifiant': findByIdentifiant dans repo => échoué trouver objet Medecin.");
+					log.warn(
+							"Erreur méthode 'existsByIdentifiant': findByIdentifiant dans repo => échoué trouver objet Medecin.");
 					mnse.printStackTrace();
 				}
 
@@ -77,7 +81,8 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 	}
 
 	@Override
-	public Medecin existsByIdentifiantAndMotDePasse(String identifiant, String mdp) throws MedecinNotSuccessException, MedecinNotFoundException {
+	public Medecin existsByIdentifiantAndMotDePasse(String identifiant, String mdp)
+			throws MedecinNotSuccessException, MedecinNotFoundException {
 		try {
 			log.info("Service spécifique de Medecin: méthode 'existsByIdentifiantAndMotDePasse' appelée.");
 			if (identifiant != null) {
@@ -87,7 +92,8 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 						Medecin medecin = medecinRepository.findByIdentifiantAndMotDePasse(identifiant, mdp);
 						return medecin;
 					} catch (MedecinNotSuccessException mnse) {
-						log.warn("Erreur méthode 'existsByIdentifiantAndMotDePasse': findByIdentifiantAndMotDePasse dans repo => échoué trouver objet Medecin.");
+						log.warn(
+								"Erreur méthode 'existsByIdentifiantAndMotDePasse': findByIdentifiantAndMotDePasse dans repo => échoué trouver objet Medecin.");
 						mnse.printStackTrace();
 					}
 				} else {
@@ -116,7 +122,17 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 	}
 
 	@Override
-	public List<Consultation> confirmerRdv(Long idReservation, Long idMedecin) throws ParseException, ReservationNotFoundException, MedecinNotSuccessException, ReservationNotSuccessException {
+	public Boolean confirmerRdv(Reservation r) throws ReservationNotSuccessException {
+		log.info("Medecin service : méthode confirmer rdv OK");
+		if (r != null) {
+			log.info("Modification de la resa en status true");
+			r.setStatus(true);
+			reservationRepository.save(r);
+			return true;
+		}
+		log.warn("Erreur méthode 'confirmerRdv': idReservation null.");
+		throw new ReservationNotSuccessException("Reservation non accepté: objet null");
+	}
 //		try {
 //			log.info("Service spécifique du Medecin : méthode confirmerRdv appelée.");
 //			
@@ -208,32 +224,136 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 //			
 //		}
 
-	
+	@Override
+	public List<Consultation> consulterResa(String identifiant)
+			throws MedecinNotFoundException, MedecinNotSuccessException {
+		try {
+			log.info("Service spécifique du Medecin : méthode consulter Resa appelée.");
+			if (identifiant != null) {
+				log.info("Recherche du medecin par identifiant via repo");
+				Medecin medecinConcerned = medecinRepository.findByIdentifiant(identifiant);
+				if (medecinConcerned != null) {
+					log.info("Recupération liste consultations associé au medecin au status false");
+					List<Consultation> listeConsultations = medecinConcerned.getConsultations().stream()
+							.filter(x -> x.getReservation().isStatus() == false).collect(Collectors.toList());
+
+					return listeConsultations;
+				} else {
+					log.warn("Erreur méthode 'consulterResa': repo trouve pas objet Medecin");
+					throw new MedecinNotFoundException("Medecin non trouvé avec le repo");
+				}
+			} else {
+				log.warn("Erreur méthode 'consulterResa': identifiant null.");
+				throw new MedecinNotFoundException("Mecedin non trouvé: identifiant null");
+			}
+		} catch (MedecinNotFoundException mnfe) {
+			mnfe.printStackTrace();
+			mnfe.getMessage();
+		}
+		return null;
+	}
 
 	@Override
-	public Map<Consultation, Date> consulterPlanning(Long idMedecin) throws MedecinNotFoundException {
+	public List<Consultation> consulterPlanning(String identifiant)
+			throws MedecinNotFoundException, MedecinNotSuccessException {
 		try {
 			log.info("Service spécifique du Medecin : méthode consulterPlanning appelée.");
-			if (idMedecin != null) {
-				Medecin medecinConcerned = medecinRepository.findById(idMedecin).get();
+			if (identifiant != null) {
+				log.info("Recherche du medecin par identifiant via repo");
+				Medecin medecinConcerned = medecinRepository.findByIdentifiant(identifiant);
 				if (medecinConcerned != null) {
-					log.info("Appel repo medecin OK.");
-					List<Consultation> listeConsultations = medecinConcerned.getConsultations();
-					Map<Consultation, Date> planningConsultations = new HashMap<>();
-					for (int i = 0; i < listeConsultations.size(); i++) {
-//						Consultation consultationPlanned = listeConsultations.get(i);
-//						planningConsultations.put(consultationPlanned, consultationPlanned.getReservation().getDateRervation());
-					}
-					return planningConsultations;
-				}
-				else {
+					log.info("Recupération liste consultations associé au medecin");
+					List<Consultation> listeConsultations = medecinConcerned.getConsultations().stream()
+							.filter(x -> x.getReservation().isStatus() == true).collect(Collectors.toList());
+
+					return listeConsultations;
+				} else {
 					log.warn("Erreur méthode 'consulterPlanning': repo trouve pas objet Medecin");
 					throw new MedecinNotFoundException("Medecin non trouvé avec le repo");
 				}
+			} else {
+				log.warn("Erreur méthode 'consulterPlanning': identifiant null.");
+				throw new MedecinNotFoundException("Mecedin non trouvé: identifiant = null");
 			}
-			else {
-				log.warn("Erreur méthode 'consulterPlanning': idMedecin null.");
-				throw new MedecinNotFoundException("Mecedin non trouvé: idMedecin = null");
+		} catch (MedecinNotFoundException mnfe) {
+			mnfe.printStackTrace();
+			mnfe.getMessage();
+		}
+		return null;
+	}
+
+	@Override
+	public Map<String, List<Consultation>> consulterPlanningByDate(String identifiant, String date)
+			throws MedecinNotFoundException, MedecinNotSuccessException, ParseException {
+
+		try {
+			log.info("Service spécifique du Medecin : méthode consulterPlanning appelée.");
+			if (identifiant != null) {
+				log.info("Recherche du medecin par identifiant via repo");
+				Medecin medecinConcerned = medecinRepository.findByIdentifiant(identifiant);
+				if (medecinConcerned != null) {
+					Map<String, List<Consultation>> map = new HashMap<>();
+					log.info("Recupération liste consultations associé au medecin");
+
+					// recuperer la liste des consult pour la date indiqué.
+					List<Consultation> listeConsultations = medecinConcerned.getConsultations().stream()
+							.filter(x -> x.getReservation().isStatus() == true
+									&& x.getReservation().getDateReservation() == date)
+							.collect(Collectors.toList());
+					map.put(date, listeConsultations);
+					
+//					// faire de même pour les 4 prochaines jours
+//					//convertir en date, ajouter +1, reconvertir, trier la liste (*4),ajouter à la map.
+//					Date date2 = new SimpleDateFormat("yyyy-mm-dd").parse(date);
+//					date2.setDate(date2.getDay()+1);
+//					DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");  
+//					String date2String = dateFormat.format(date2);
+//					List<Consultation> listeConsultationsDate2 = medecinConcerned.getConsultations().stream()
+//							.filter(x -> x.getReservation().isStatus() == true
+//									&& x.getReservation().getDateReservation() == date2String)
+//							.collect(Collectors.toList());
+//					map.put(date2String, listeConsultationsDate2);
+//					
+//					//date 3 (+2)
+//					Date date3 = date2;
+//					date3.setDate(date2.getDay()+1);
+//					String date3String =dateFormat.format(date3);
+//					List<Consultation> listeConsultationsDate3 = medecinConcerned.getConsultations().stream()
+//							.filter(x -> x.getReservation().isStatus() == true
+//									&& x.getReservation().getDateReservation() == date3String)
+//							.collect(Collectors.toList());
+//					map.put(date3String, listeConsultationsDate3);
+//					
+//					//date 4
+//					Date date4 = date3;
+//					date4.setDate(date3.getDay()+1);
+//					String date4String =dateFormat.format(date4);
+//					List<Consultation> listeConsultationsDate4 = medecinConcerned.getConsultations().stream()
+//							.filter(x -> x.getReservation().isStatus() == true
+//									&& x.getReservation().getDateReservation() == date3String)
+//							.collect(Collectors.toList());
+//					map.put(date4String, listeConsultationsDate4);
+//					
+//					
+//					//date 5
+//					Date date5 = date4;
+//					date5.setDate(date4.getDay()+1);
+//					String date5String =dateFormat.format(date5);
+//					List<Consultation> listeConsultationsDate5 = medecinConcerned.getConsultations().stream()
+//							.filter(x -> x.getReservation().isStatus() == true
+//									&& x.getReservation().getDateReservation() == date3String)
+//							.collect(Collectors.toList());
+//					map.put(date5String, listeConsultationsDate5);
+					
+					
+					return map;
+				} else {
+					log.warn("Erreur méthode 'consulterPlanning': repo trouve pas objet Medecin");
+					throw new MedecinNotFoundException("Medecin non trouvé avec le repo");
+				}
+			} else {
+				log.warn("Erreur méthode 'consulterPlanning': identifiant null.");
+				throw new MedecinNotFoundException("Mecedin non trouvé: identifiant = null");
 			}
 		} catch (MedecinNotFoundException mnfe) {
 			mnfe.printStackTrace();
@@ -247,7 +367,7 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 		log.info("Medecin service : méthode find by nom appelée");
 		if (nom != null) {
 			log.info("Appel repo find by nom OK");
-			return medecinRepository.findByNom(nom);
+			return medecinRepository.findByNomContainingIgnoreCase(nom);
 		}
 		log.warn("Echec : nom du medecin null !");
 		throw new MedecinNotFoundException("Liste de Mecedin non trouvée: nom du medecin = null");
@@ -258,7 +378,7 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 		log.info("Medecin service : méthode find by specialite appelée");
 		if (specialite != null) {
 			log.info("Appel repo find by nom OK");
-			return medecinRepository.findBySpecialite(specialite);
+			return medecinRepository.findBySpecialiteContainingIgnoreCase(specialite);
 		}
 		log.warn("Echec : specialite du medecin null !");
 		throw new MedecinNotFoundException("Liste de Mecedin non trouvée: specialite du medecin = null");
