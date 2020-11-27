@@ -135,18 +135,18 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 	}
 //		try {
 //			log.info("Service spécifique du Medecin : méthode confirmerRdv appelée.");
-//			
+//
 //			if (idReservation != null) {
 //				// Récupération de la réservation à confirmer
 //				Reservation reservationToConfirm = reservationRepository.findById(idReservation).get();
 //				log.info("Appel repo reservation OK.");
-//				
+//
 //				if (reservationToConfirm.isStatus() == false) {
 //					// Récupération de la date du rdv et du médecin visé
 //					Date dateToConfirm = reservationToConfirm.getDateRervation();
 //					Medecin medecinConcerned = medecinRepository.findById(idMedecin).get();
 //					log.info("Appel repo medecin OK.");
-//					
+//
 //					// Récupération des dates de rdv du médecin et vérification si un rdv est déjà prévu à cette date
 //					List<Consultation> listeConsultation = medecinConcerned.getConsultations();
 //					List<Consultation> listeConsultationAlreadyToThisDate = listeConsultation.stream()
@@ -169,10 +169,10 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 //							// Horaire du rdv à confirmer au format HH:mm
 //							String simpleDateFormatToConfirm = simpleDateFormat.format(dateToConfirm);
 //						    Date timeToConfirm = simpleDateFormat.parse(simpleDateFormatToConfirm);
-//						    
+//
 //						    if ((timeToConfirm.after(TimeStartMorning) && timeToConfirm.before(TimeStopMorning))
 //						    		|| (timeToConfirm.after(TimeStartAfternoon) && timeToConfirm.before(TimeStopAfternoon))) {
-//						    	
+//
 //						    	// Après vérification heures de travail création d'une nouvelle consultation associé à la réservation du rdv
 //						    	Consultation consultationConfirmed = new Consultation(reservationToConfirm);
 //						    	log.info("creation consultation OK.");
@@ -185,7 +185,7 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 //								if (listeConsultation == medecinConcerned.getConsultations()) {
 //									medecinRepository.save(medecinConcerned);
 //									log.info("save medecin OK.");
-//									
+//
 //									// Changement du status de la réservation pour qu'elle ne soit plus dispo et que le patient sache qu'elle a été confirmée
 //									reservationToConfirm.setStatus(true);
 //									if (reservationToConfirm.isStatus() == true) {
@@ -221,7 +221,7 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 //		} catch (ReservationNotFoundException | MedecinNotSuccessException | ReservationNotSuccessException me) {
 //			me.printStackTrace();
 //			me.getMessage();
-//			
+//
 //		}
 
 	@Override
@@ -301,19 +301,19 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 									&& x.getReservation().getDateReservation() == date)
 							.collect(Collectors.toList());
 					map.put(date, listeConsultations);
-					
+
 //					// faire de même pour les 4 prochaines jours
 //					//convertir en date, ajouter +1, reconvertir, trier la liste (*4),ajouter à la map.
 //					Date date2 = new SimpleDateFormat("yyyy-mm-dd").parse(date);
 //					date2.setDate(date2.getDay()+1);
-//					DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");  
+//					DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 //					String date2String = dateFormat.format(date2);
 //					List<Consultation> listeConsultationsDate2 = medecinConcerned.getConsultations().stream()
 //							.filter(x -> x.getReservation().isStatus() == true
 //									&& x.getReservation().getDateReservation() == date2String)
 //							.collect(Collectors.toList());
 //					map.put(date2String, listeConsultationsDate2);
-//					
+//
 //					//date 3 (+2)
 //					Date date3 = date2;
 //					date3.setDate(date2.getDay()+1);
@@ -323,7 +323,7 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 //									&& x.getReservation().getDateReservation() == date3String)
 //							.collect(Collectors.toList());
 //					map.put(date3String, listeConsultationsDate3);
-//					
+//
 //					//date 4
 //					Date date4 = date3;
 //					date4.setDate(date3.getDay()+1);
@@ -333,8 +333,8 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 //									&& x.getReservation().getDateReservation() == date3String)
 //							.collect(Collectors.toList());
 //					map.put(date4String, listeConsultationsDate4);
-//					
-//					
+//
+//
 //					//date 5
 //					Date date5 = date4;
 //					date5.setDate(date4.getDay()+1);
@@ -344,8 +344,8 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 //									&& x.getReservation().getDateReservation() == date3String)
 //							.collect(Collectors.toList());
 //					map.put(date5String, listeConsultationsDate5);
-					
-					
+
+
 					return map;
 				} else {
 					log.warn("Erreur méthode 'consulterPlanning': repo trouve pas objet Medecin");

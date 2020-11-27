@@ -23,7 +23,6 @@ import com.entity.Medecin;
 import com.entity.Reservation;
 import com.enums.Role;
 import com.exception.notfound.MedecinNotFoundException;
-import com.exception.notfound.ReservationNotFoundException;
 import com.exception.notsuccess.ConnectedUserDtoNotSuccessException;
 import com.exception.notsuccess.ConnectedUserNotSuccessException;
 import com.exception.notsuccess.ResponseDtoNotSuccessException;
@@ -43,9 +42,9 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @RestController
-@RequestMapping(value = "/medecin")
-@Slf4j
+@RequestMapping(value = "/gestion-rdv/medecin")
 @CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
+@Slf4j
 public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 
 	// ATTRIBUTS
@@ -77,9 +76,9 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 
 	/**
 	 * Méthode permettant de vérifier l'existence d'un médecin par son identifiant
-	 * et son mot de passe.
+	 * et son mot de passe (= connexion).
 	 *
-	 * @param identifiant Identifiant du médecin recherché.
+	 * @param username Identifiant du médecin recherché.
 	 * @param mdp         Mot de passe du médecin recherché.
 	 * @return Un médecin s'il existe déjà, null sinon.
 	 * @throws MedecinNotFoundException
@@ -88,23 +87,19 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 	 * @throws ConnectedUserNotSuccessException
 	 * @throws ConnectedUserDtoNotSuccessException
 	 */
-	@PostMapping(path = "/identifiant-mdp")
-	public ConnexionDto existsByIdentifiantAndMotDePasse(@RequestBody String[] tableau)
+	@PostMapping(path = "/connexion")
+	public ConnexionDto existsByIdentifiantAndMotDePasse(@RequestParam String username, @RequestParam String mdp)
 			throws MedecinNotFoundException, MedecinNotSuccessException, ConnectedUserNotSuccessException,
 			TokenNotSuccessException, ConnectedUserDtoNotSuccessException {
 		log.info("Controller spécifique de Medecin: méthode 'existsByIdentifiantAndMotDePasse' appelée.");
 
 		ConnexionDto connexionDto = new ConnexionDto();
-
 		try {
-			String username = tableau[0];
-			String mdp = tableau[1];
 			Medecin medecin = medecinService.existsByIdentifiantAndMotDePasse(username, mdp);
-
 			if (medecin != null) {
 				log.info("Medecin existant dans la BDD.");
 				ConnectedUserDto medecinDto = makeConnectedUserDtoResponse(medecin);
-				String token = tokenManage.makeAdminSession(medecinDto);
+				String token = tokenManage.makeMedecinSession(medecinDto);
 
 				connexionDto.setUser(medecinDto);
 				connexionDto.setToken(token);
@@ -146,7 +141,7 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 
 	/**
 	 * Methode permettant au medecin de consulter ses demande de rendez-vous
-	 * 
+	 *
 	 * @param identifiant Identifiant du medecin.
 	 * @return List<Consultation> qui comprend toutes les consultations en status
 	 *         false du medecin.
@@ -165,7 +160,7 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 	/**
 	 * Methode permettant au medecin de consulter ses rdv prévus / consultations (=
 	 * son planning).
-	 * 
+	 *
 	 * @param identifiant Identifiant du medecin.
 	 * @return List<Consultation> qui comprend toutes les consultations en status
 	 *         true du medecin.
@@ -186,7 +181,7 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 		log.info("Controller medecin : méthode consulter Planning appelée");
 		return makeMapDateAndConsultationResponse(medecinService.consulterPlanningByDate(identifiant, date));
 	}
-	
+
 	@GetMapping(path = "nom")
 	public ResponseDto<List<Medecin>> findByNom(@RequestParam String nom)
 			throws MedecinNotFoundException, ResponseDtoNotSuccessException {
@@ -315,7 +310,7 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 		}
 		return null;
 	}
-	
+
 	public ResponseDto<Map<String, List<Consultation>>> makeMapDateAndConsultationResponse(Map<String,List<Consultation>> map)
 			throws ResponseDtoNotSuccessException {
 		try {

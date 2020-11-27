@@ -22,9 +22,9 @@ import lombok.NoArgsConstructor;
  * Classe {@code Reservation} qui caractérise une réservation faite par un
  * {@link Patient}. Cette classe contient une liste non-exhaustive d'attributs
  * qui décrivent une réservation.
- * 
+ *
  * @author Sophie Lahmar
- * 
+ *
  */
 @Data
 @AllArgsConstructor
@@ -45,7 +45,7 @@ public class Reservation implements Serializable {
 
 	@Column(name = "CONSULTATION_EN_URGENCE",columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private boolean isUrgent;
-	
+
 	@Column(name ="HEURE_RDV")
 	private HeureRdv heureRdv;
 

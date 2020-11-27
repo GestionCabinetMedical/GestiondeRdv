@@ -22,7 +22,6 @@ public class FichesMedicalesNotFoundException extends NotFoundException {
 	 */
 	public FichesMedicalesNotFoundException(String msg) {
 		super(msg);
-		// TODO Auto-generated constructor stub
 	}
 
 }

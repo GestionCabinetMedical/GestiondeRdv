@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  * Classe controller générique implémentant l'interface générique
  * {@code IDaoController}. Son rôle est de contrôler les flux de données
  * entrant.
- * 
+ *
  * @author Maxime Rembert
  * @see IDaoController
  *
@@ -78,13 +78,6 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 		return makeListResponse(liste);
 	}
 
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 * @param e Entité.
-	 * @return ResponseDto de type générique <E>.
-	 * @throws ResponseDtoNotSuccessException
-	 */
 	public ResponseDto<E> makeDtoResponse(E e) throws ResponseDtoNotSuccessException {
 		try {
 			ResponseDto<E> resp = new ResponseDto<>();
@@ -111,18 +104,11 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 		} catch (ResponseDtoNotSuccessException dnse) {
 			dnse.printStackTrace();
 			dnse.getMessage();
-			
+
 		}
 		return null;
 	}
 
-	/**
-	 * Méthode
-	 * 
-	 * @param status Status de la réponse.
-	 * @return ResponseDto de type booléen.
-	 * @throws ResponseDtoNotSuccessException
-	 */
 	public ResponseDto<Boolean> makeBooleanResponse(Boolean status) throws ResponseDtoNotSuccessException {
 		try {
 			ResponseDto<Boolean> resp = new ResponseDto<>();
@@ -147,18 +133,11 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 		} catch (ResponseDtoNotSuccessException dnse) {
 			dnse.printStackTrace();
 			dnse.getMessage();
-			
+
 		}
 		return null;
 	}
 
-	/**
-	 * @author Sophie Lahmar
-	 * 
-	 * @param liste Liste d'instances de la classe <E>.
-	 * @return ResponseDto contenant une liste de type générique <E>.
-	 * @throws ResponseDtoNotSuccessException
-	 */
 	public ResponseDto<List<E>> makeListResponse(List<E> liste) throws ResponseDtoNotSuccessException {
 		try {
 			ResponseDto<List<E>> resp = new ResponseDto<>();
@@ -183,7 +162,7 @@ public class DaoControllerImpl<E> implements IDaoController<E> {
 		} catch (ResponseDtoNotSuccessException dnse) {
 			dnse.printStackTrace();
 			dnse.getMessage();
-			
+
 		}
 		return null;
 	}
