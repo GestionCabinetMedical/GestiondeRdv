@@ -1,5 +1,6 @@
 package com.repo;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.jpa.repository.Query;
@@ -59,5 +60,19 @@ public interface IMedecinRepository extends IDaoRepo<Medecin> {
 	 * @throws MedecinNotSuccessException
 	 */
 	public Medecin findByIdentifiantAndMotDePasse(String identifiant, String mdp) throws MedecinNotSuccessException;
+	
+	
+	/**
+	 * Méthode permettant la recherche de medecin par nom.
+	 * @param nom Nom du medecin recherché.
+	 * @return Une liste de Medecin.
+	 */
+	public List<Medecin> findByNomContainingIgnoreCase (String nom);
+	/**
+	 * méthode permettant la recherche de medecin par specialite.
+	 * @param specialite Specialite du medecin recherché.
+	 * @return Une liste de Medecin.
+	 */
+	public List<Medecin> findBySpecialiteContainingIgnoreCase (String specialite);
 
 }

@@ -52,7 +52,7 @@ public class Patient implements Serializable {
 	@Column(name = "IDENTIFIANT", unique = true, nullable = false)
 	private String identifiant;
 
-	@Column(name = "MOT_DE_PASSE", unique = true, nullable = false)
+	@Column(name = "MOT_DE_PASSE", nullable = false)
 	private String motDePasse;
 
 	@OneToMany(fetch = FetchType.EAGER)

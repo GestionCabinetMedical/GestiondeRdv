@@ -42,16 +42,19 @@ public class ReservationController extends DaoControllerImpl<Reservation> {
 
 	// METHODES
 
-		/**
-	 * Méthode permettant de connaître les rdv disponible par jour et par medecin.
+
+	/**
+	 * Méthode permettant de rechercher une liste d'enum d'HeureRdv par la date et l'id du Medecin
+	 * (validée ou non par un médecin).
 	 * @param idMedecin L'id du medecin concerné.
 	 * @param date La date concernée.
 	 * @return Un ResponseDto contenant un boolean eror, un body de liste Heure Rdv et un status Http response.
 	 * @throws ReservationNotSuccessException 
-	 * @throws ResponseDtoNotSuccessException 
+	 * @throws ResponseDtoNotSuccessException
+
 	 */
-	@GetMapping (path="getAllResaParDateEtMedecin/")
-	public ResponseDto<List<HeureRdv>> findResaDispoParMedecin(@RequestParam Long idMedecin, @RequestParam  String date )
+	@GetMapping (path="getAllResaParDateEtMedecin")
+	public ResponseDto<List<HeureRdv>> findResaDispoParMedecin(@RequestParam  String date, @RequestParam Long idMedecin )
 			throws ReservationNotSuccessException, ResponseDtoNotSuccessException {
 		log.info("Controller spécifique de Reservation : méthode find all resa dispo par medecin appelée.");
 		return makeListHeureRdvResponse(service.findResaParDateParMedecin(date, idMedecin));

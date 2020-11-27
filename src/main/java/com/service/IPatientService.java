@@ -55,4 +55,26 @@ public interface IPatientService extends IDaoService<Patient> {
 	 */
 	public List<FichesMedicales> consulterFicheMedicale(Long id) throws FichesMedicalesNotFoundException, ReservationNotSuccessException, ConsultationNotSuccessException, FichesMedicalesNotSuccessException;
 
+	
+	/**
+	 * Méthode permettant de rechercher un patient par son tout ou partie de son
+	 * adresse sans tenir compte de la case
+	 * 
+	 * @param adresse L'adresse du patient recherché.
+	 * @return Une liste de Patient correspondant à l'adresse recherché.
+	 * @throws PatientNotFoundException
+	 * @throws PatientNotSuccessException
+	 */
+	public List<Patient> findByAdresseContainingIgnoreCase(String adresse) throws PatientNotFoundException, PatientNotSuccessException;
+
+	/**
+	 * Méthode permettant de recherche un patient par tout ou partie de son nom sans
+	 * tenir compte de la case.
+	 * 
+	 * @param nom Nom du patient recherché.
+	 * @return Une liste de Patient correspondant au nom recherché.
+	 * @throws PatientNotFoundException
+	 * @throws PatientNotSuccessException
+	 */
+	public List<Patient> findByNomContainingIgnoreCase(String nom) throws PatientNotFoundException, PatientNotSuccessException;
 }
