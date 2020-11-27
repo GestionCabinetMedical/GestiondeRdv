@@ -23,5 +23,6 @@ public class ConnectedUserDto {
 
 	private boolean error;
 	private String msg;
+	private int status;
 
 }

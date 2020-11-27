@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dto.ConnectedUserDto;
 import com.dto.ResponseDto;
 import com.enums.Role;
+import com.exception.notsuccess.ConnectedUserDtoNotSuccessException;
+import com.exception.notsuccess.ConnectedUserNotSuccessException;
 import com.security.ISessionService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,9 +39,12 @@ public class SessionController {
 	 * 
 	 * @param token Le token associé à la session.
 	 * @return Un objet ConnectedUserDto.
+	 * @throws ConnectedUserDtoNotSuccessException
+	 * @throws ConnectedUserNotSuccessException
 	 */
 	@PostMapping(path = "/user")
-	public ConnectedUserDto getUser(@RequestBody String token) {
+	public ConnectedUserDto getUser(@RequestBody String token)
+			throws ConnectedUserNotSuccessException, ConnectedUserDtoNotSuccessException {
 		log.info("Controller Session : méthode 'getUser' appelée.");
 		ConnectedUserDto user = service.getUser(token);
 
@@ -62,9 +67,10 @@ public class SessionController {
 	 * 
 	 * @param token Le token associé à la session.
 	 * @return Un objet ResponseDto contenant un role.
+	 * @throws ConnectedUserNotSuccessException
 	 */
 	@PostMapping(path = "/role")
-	public ResponseDto<Role> getUserRole(@RequestBody String token) {
+	public ResponseDto<Role> getUserRole(@RequestBody String token) throws ConnectedUserNotSuccessException {
 		log.info("Controller Session : méthode 'getUserRole' appelée");
 		Role role = service.getUserRole(token);
 		int status;
@@ -86,9 +92,10 @@ public class SessionController {
 	 * 
 	 * @param token Le token associé à la session.
 	 * @return Un objet ResponseDto contenant l'identifiant en format string.
+	 * @throws ConnectedUserNotSuccessException
 	 */
 	@PostMapping(path = "/identifiant")
-	public ResponseDto<String> getUserIdentifiant(@RequestBody String token) {
+	public ResponseDto<String> getUserIdentifiant(@RequestBody String token) throws ConnectedUserNotSuccessException {
 		log.info("Controller Session : méthode 'getUserIdentifiant' appelée");
 		String identifiant = service.getUserIdentifiant(token);
 		int status;
@@ -110,9 +117,10 @@ public class SessionController {
 	 * 
 	 * @param token Le token associé à la session.
 	 * @return Un objet ResponseDto contenant le mot de passe en format string.
+	 * @throws ConnectedUserNotSuccessException
 	 */
 	@PostMapping(path = "/mdp")
-	public ResponseDto<String> getUserMotDePasse(@RequestBody String token) {
+	public ResponseDto<String> getUserMotDePasse(@RequestBody String token) throws ConnectedUserNotSuccessException {
 		log.info("Controller Session : méthode 'getUserMotDePasse' appelée");
 		String mdp = service.getUserMotDePasse(token);
 		int status;
@@ -128,11 +136,6 @@ public class SessionController {
 		}
 	}
 
-	/**
-	 * 
-	 * @param role
-	 * @return
-	 */
 	public ResponseDto<Role> makeRoleDtoResponse(Role role) {
 		ResponseDto<Role> resp = new ResponseDto<>();
 		if (role != null) {
@@ -151,11 +154,6 @@ public class SessionController {
 		return resp;
 	}
 
-	/**
-	 * 
-	 * @param identifiant
-	 * @return
-	 */
 	private ResponseDto<String> makeDtoResponse(String stringDto) {
 		ResponseDto<String> resp = new ResponseDto<>();
 		if (stringDto != null) {
