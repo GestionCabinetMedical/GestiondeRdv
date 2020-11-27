@@ -79,9 +79,10 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * @throws ConnectedUserNotSuccessException
 	 * @throws ConnectedUserDtoNotSuccessException
 	 */
-	@PostMapping(path = "/identifiant-mdp")
-	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau)
-			throws AdminNotFoundException, AdminNotSuccessException, ConnectedUserNotSuccessException, TokenNotSuccessException, ConnectedUserDtoNotSuccessException {
+	@PostMapping(path = "/connexion")
+	public ConnexionDto existsByUsernameAndPassword(@RequestParam String username, @RequestParam String mdp)
+			throws AdminNotFoundException, AdminNotSuccessException, ConnectedUserNotSuccessException,
+			TokenNotSuccessException, ConnectedUserDtoNotSuccessException {
 		log.info("Controller spécifique de Admin : méthode 'existsByUsernameAndPassword' appelée.");
 
 		ConnexionDto connexionDto = new ConnexionDto();
@@ -124,7 +125,7 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * @return Un objet ConnectedUserDto.
 	 * @throws ConnectedUserDtoNotSuccessException
 	 */
-	private ConnectedUserDto makeConnectedUserDtoResponse(Admin admin) throws ConnectedUserDtoNotSuccessException{
+	private ConnectedUserDto makeConnectedUserDtoResponse(Admin admin) throws ConnectedUserDtoNotSuccessException {
 		try {
 			ConnectedUserDto response = new ConnectedUserDto();
 			if (admin != null) {
@@ -140,10 +141,9 @@ public class AdminController extends DaoControllerImpl<Admin> {
 				response.setError(true);
 				response.setMsg("Error: Bad request.");
 			}
-			if (response.getMsg() != null ) {
+			if (response.getMsg() != null) {
 				return response;
-			}
-			else {
+			} else {
 				log.warn("Erreur méthode 'makeConnectedUserDtoResponse': set du ConnectedUserDto non fonctionnel.");
 				throw new ConnectedUserDtoNotSuccessException("Modification ConnectedUserDto échouée");
 			}
