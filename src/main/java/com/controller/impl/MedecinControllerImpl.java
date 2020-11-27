@@ -193,6 +193,8 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 	public ResponseDto<List<Medecin>> findBySpecialite(@RequestParam String specialite)
 			throws MedecinNotFoundException, ResponseDtoNotSuccessException {
 		log.info("Controller medecin : méthode find by nom appelée");
+		List<Medecin> listMedecins =  medecinService.findBySpecialite(specialite);
+		System.out.println(listMedecins);
 		return makeListResponse(medecinService.findBySpecialite(specialite));
 	}
 

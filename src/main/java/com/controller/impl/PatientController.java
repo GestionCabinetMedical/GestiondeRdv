@@ -87,7 +87,7 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	 * @throws ConnectedUserNotSuccessException
 	 * @throws ConnectedUserDtoNotSuccessException
 	 */
-	@PostMapping(path = "/connexion")
+	@GetMapping(path = "/connexion")
 	public ConnexionDto existsByIdentifiantAndMotDePasse(@RequestParam String username, @RequestParam String mdp)
 			throws PatientNotFoundException, PatientNotSuccessException, ConnectedUserNotSuccessException,
 			TokenNotSuccessException, ConnectedUserDtoNotSuccessException {
