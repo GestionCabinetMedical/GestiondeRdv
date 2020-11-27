@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,13 +28,13 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Classe controller {@code AdminController} spécifique de {@link Admin} qui
  * hérite de la classe générique {@code DaoControllerImpl}.
- * 
+ *
  * @author Sophie Lahmar
  * @see DaoControllerImpl
- * 
+ *
  */
 @RestController
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/gestion-rdv/admin")
 @CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
 @Slf4j
 public class AdminController extends DaoControllerImpl<Admin> {
@@ -52,12 +51,12 @@ public class AdminController extends DaoControllerImpl<Admin> {
 
 	/**
 	 * Méthode permettant de vérifier l'existence d'un admin par son identifiant.
-	 * 
+	 *
 	 * @param username Identifiant de l'admin.
 	 * @return Un admin s'il existe déjà, null sinon.
 	 * @throws AdminNotFoundException
-	 * @throws AdminNotSuccessException 
-	 * @throws ResponseDtoNotSuccessException 
+	 * @throws AdminNotSuccessException
+	 * @throws ResponseDtoNotSuccessException
 	 */
 	@GetMapping(value = "/identifiant")
 	public ResponseDto<Admin> existsByUsername(@RequestParam(name = "identifiant") String username)
@@ -69,29 +68,25 @@ public class AdminController extends DaoControllerImpl<Admin> {
 
 	/**
 	 * Méthode permettant de vérifier l'existence d'un admin par son identifiant et
-	 * son mot de passe.
-	 * 
+	 * son mot de passe (= connexion).
+	 *
 	 * @param username Identifiant de l'admin recherché.
 	 * @param password Mot de passe de l'admin recherché.
 	 * @return Un admin s'il existe déjà, null sinon.
 	 * @throws AdminNotFoundException
-	 * @throws AdminNotSuccessException 
-	 * @throws TokenNotSuccessException 
-	 * @throws ConnectedUserNotSuccessException 
-	 * @throws ConnectedUserDtoNotSuccessException 
+	 * @throws AdminNotSuccessException
+	 * @throws TokenNotSuccessException
+	 * @throws ConnectedUserNotSuccessException
+	 * @throws ConnectedUserDtoNotSuccessException
 	 */
 	@PostMapping(path = "/identifiant-mdp")
-	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau) 
+	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau)
 			throws AdminNotFoundException, AdminNotSuccessException, ConnectedUserNotSuccessException, TokenNotSuccessException, ConnectedUserDtoNotSuccessException {
 		log.info("Controller spécifique de Admin : méthode 'existsByUsernameAndPassword' appelée.");
 
 		ConnexionDto connexionDto = new ConnexionDto();
-
 		try {
-			String username = tableau[0];
-			String mdp = tableau[1];
 			Admin admin = adminService.existsByUsernameAndPassword(username, mdp);
-
 			if (admin != null) {
 				log.info("Admin existant dans la BDD.");
 				ConnectedUserDto adminDto = makeConnectedUserDtoResponse(admin);
@@ -124,7 +119,7 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * Méthode permettant de créer une réponse de type ConnectedUserDto, et
 	 * d'injecter les paramètres de connection d'un Admin (identifiant et mdp) dans
 	 * un adminDto.
-	 * 
+	 *
 	 * @param admin Instance de la classe Admin.
 	 * @return Un objet ConnectedUserDto.
 	 * @throws ConnectedUserDtoNotSuccessException
@@ -155,10 +150,10 @@ public class AdminController extends DaoControllerImpl<Admin> {
 		} catch (ConnectedUserDtoNotSuccessException dnse) {
 			dnse.printStackTrace();
 			dnse.getMessage();
-			
+
 		}
 		return null;
-		
+
 	}
 
 }

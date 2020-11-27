@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,13 +36,13 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Classe controller {@code PatientController} spécifique de {@link Patient} qui
  * hérite de la classe générique {@code DaoControllerImpl}.
- * 
+ *
  * @author Sophie Lahmar
  * @see DaoControllerImpl
- * 
+ *
  */
 @RestController
-@RequestMapping(value = "/patient")
+@RequestMapping(value = "/gestion-rdv/patient")
 @CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
 @Slf4j
 public class PatientController extends DaoControllerImpl<Patient> {
@@ -60,12 +59,12 @@ public class PatientController extends DaoControllerImpl<Patient> {
 
 	/**
 	 * Méthode permettant de vérifier l'existence d'un patient par son identifiant.
-	 * 
+	 *
 	 * @param identifiant Identifiant du patient recherché.
 	 * @return Un patient s'il existe déjà, null sinon.
 	 * @throws PatientNotFoundException
-	 * @throws PatientNotSuccessException 
-	 * @throws ResponseDtoNotSuccessException 
+	 * @throws PatientNotSuccessException
+	 * @throws ResponseDtoNotSuccessException
 	 */
 	@GetMapping(value = "/identifiant")
 	public ResponseDto<Patient> existsByIdentifiant(@RequestParam(name = "identifiant") String identifiant)
@@ -77,29 +76,25 @@ public class PatientController extends DaoControllerImpl<Patient> {
 
 	/**
 	 * Méthode permettant de vérifier l'existence d'un patient par son identifiant
-	 * et son mot de passe.
-	 * 
-	 * @param identifiant Identifiant du patient recherché.
+	 * et son mot de passe (= connexion).
+	 *
+	 * @param username Identifiant du patient recherché.
 	 * @param mdp         Mot de passe du patient recherché.
 	 * @return Un patient s'il existe déjà, null sinon.
 	 * @throws PatientNotFoundException
-	 * @throws PatientNotSuccessException 
-	 * @throws TokenNotSuccessException 
-	 * @throws ConnectedUserNotSuccessException 
-	 * @throws ConnectedUserDtoNotSuccessException 
+	 * @throws PatientNotSuccessException
+	 * @throws TokenNotSuccessException
+	 * @throws ConnectedUserNotSuccessException
+	 * @throws ConnectedUserDtoNotSuccessException
 	 */
-	@PostMapping(path = "/identifiant-mdp")
-	public ConnexionDto existsByIdentifiantAndMotDePasse(@RequestBody String[] tableau)
+	@PostMapping(path = "/connexion")
+	public ConnexionDto existsByIdentifiantAndMotDePasse(@RequestParam String username, @RequestParam String mdp)
 			throws PatientNotFoundException, PatientNotSuccessException, ConnectedUserNotSuccessException, TokenNotSuccessException, ConnectedUserDtoNotSuccessException {
 		log.info("Controller spécifique de Patient: méthode 'existsByIdentifiantAndMotDePasse' appelée.");
 
 		ConnexionDto connexionDto = new ConnexionDto();
-
 		try {
-			String username = tableau[0];
-			String mdp = tableau[1];
 			Patient patient = patientService.existsByIdentifiantAndMotDePasse(username, mdp);
-
 			if (patient != null) {
 				log.info("Patient existant dans la BDD.");
 				ConnectedUserDto patientDto = makeConnectedUserDtoResponse(patient);
@@ -129,14 +124,40 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	}
 
 	/**
+	 * Méthode permettant de créer une réponse de type ConnectedUserDto, et
+	 * d'injecter les paramètres de connection d'un Patient (identifiant et mdp)
+	 * dans un patientDto.
+	 *
+	 * @param patient Instance de la classe Patient.
+	 * @return Un objet ConnectedUserDto.
+	 */
+	private ConnectedUserDto makeConnectedUserDtoResponse(Patient patient) {
+		ConnectedUserDto resp = new ConnectedUserDto();
+		if (patient != null) {
+			log.info("makeConnectedUserDtoResponse : patient OK.");
+			resp.setRole(Role.PATIENT);
+			resp.setIdentifiant(patient.getIdentifiant());
+			resp.setMdp(patient.getMotDePasse());
+			resp.setError(false);
+			resp.setStatus(HttpStatus.SC_OK);
+		} else {
+			log.info("Erreur 'makeConnectedUserDtoResponse' : patient null.");
+			resp.setRole(Role.NONE);
+			resp.setError(true);
+			resp.setStatus(HttpStatus.SC_BAD_REQUEST);
+		}
+		return resp;
+	}
+
+	/**
 	 * Méthode permettant au patient de consulter sa liste de fiches médicales.
-	 * 
+	 *
 	 * @param id Id du patient.
 	 * @return Une liste de fiches médicales d'un patient.
-	 * @throws FichesMedicalesNotSuccessException 
-	 * @throws ConsultationNotSuccessException 
-	 * @throws ReservationNotSuccessException 
-	 * @throws ResponseDtoNotSuccessException 
+	 * @throws FichesMedicalesNotSuccessException
+	 * @throws ConsultationNotSuccessException
+	 * @throws ReservationNotSuccessException
+	 * @throws ResponseDtoNotSuccessException
 	 * @throws FichesMedcialesNotFoundException
 	 */
 	@GetMapping(value = "/consulterFichesMedicales/{id}")
@@ -146,12 +167,12 @@ public class PatientController extends DaoControllerImpl<Patient> {
 		List<FichesMedicales> listeFiches = patientService.consulterFicheMedicale(id);
 		return makeListFichesMedicalesResponse(listeFiches);
 	}
-	
+
 	/**
 	 * Méthode permettant de créer une réponse de type ConnectedUserDto, et
 	 * d'injecter les paramètres de connection d'un Patient (identifiant et mdp)
 	 * dans un patientDto.
-	 * 
+	 *
 	 * @param patient Instance de la classe Patient.
 	 * @return Un objet ConnectedUserDto.
 	 * @throws ConnectedUserDtoNotSuccessException
@@ -182,7 +203,7 @@ public class PatientController extends DaoControllerImpl<Patient> {
 		} catch (ConnectedUserDtoNotSuccessException dnse) {
 			dnse.printStackTrace();
 			dnse.getMessage();
-			
+
 		}
 		return null;
 	}
@@ -219,7 +240,7 @@ public class PatientController extends DaoControllerImpl<Patient> {
 		} catch (ResponseDtoNotSuccessException dnse) {
 			dnse.printStackTrace();
 			dnse.getMessage();
-			
+
 		}
 		return null;
 	}
