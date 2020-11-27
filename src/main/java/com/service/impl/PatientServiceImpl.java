@@ -157,4 +157,55 @@ public class PatientServiceImpl extends DaoServiceImpl<Patient> implements IPati
 		return null;
 	}
 
+	@Override
+	public List<Patient> findByAdresseContainingIgnoreCase(String adresse)
+			throws PatientNotFoundException, PatientNotSuccessException {
+		try {
+			log.info("Service spécifique de Patient: méthode 'findByAdresseContainingIgnoreCase' appelée.");
+			if (adresse != null) {
+				log.info("Appel repo OK.");
+				try {
+					List<Patient> listePatient = patientRepo.findByAdresseContainingIgnoreCase(adresse);
+					return listePatient;
+				} catch (PatientNotSuccessException pnse) {
+					log.warn("Erreur méthode 'findByAdresseContainingIgnoreCase': findByAdresseContainingIgnoreCase dans repo => échoué trouver objet liste Patient.");
+					pnse.printStackTrace();
+				}
+			} else {
+				log.warn("Erreur méthode 'findByAdresseContainingIgnoreCase': adresse null.");
+				throw new PatientNotFoundException("Aucun Patient n'existe avec cette adresse.");
+			}
+		} catch (PatientNotFoundException pnfe) {
+			pnfe.printStackTrace();
+			pnfe.getMessage();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Patient> findByNomContainingIgnoreCase(String nom)
+			throws PatientNotFoundException, PatientNotSuccessException {
+		try {
+			log.info("Service spécifique de Patient: méthode 'findByNomContainingIgnoreCase' appelée.");
+			if (nom != null) {
+				log.info("Appel repo OK.");
+				try {
+					List<Patient> listePatient = patientRepo.findByNomContainingIgnoreCase(nom);
+					return listePatient;
+				} catch (PatientNotSuccessException pnse) {
+					log.warn("Erreur méthode 'findByNomContainingIgnoreCase': findByNomContainingIgnoreCase dans repo => échoué trouver objet liste Patient.");
+					pnse.printStackTrace();
+				}
+			} else {
+				log.warn("Erreur méthode 'findByNomContainingIgnoreCase': nom null.");
+				throw new PatientNotFoundException("Aucun Patient n'existe avec ce nom.");
+			}
+		} catch (PatientNotFoundException pnfe) {
+			pnfe.printStackTrace();
+			pnfe.getMessage();
+		}
+		return null;
+	}
+
+
 }
