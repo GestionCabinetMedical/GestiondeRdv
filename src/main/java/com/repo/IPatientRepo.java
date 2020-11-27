@@ -1,5 +1,7 @@
 package com.repo;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.entity.Patient;
@@ -47,5 +49,25 @@ public interface IPatientRepo extends IDaoRepo<Patient> {
 	 * @throws PatientNotSuccessException
 	 */
 	public Patient findByIdentifiantAndMotDePasse(String identifiant, String mdp) throws PatientNotSuccessException;
+
+	/**
+	 * Méthode permettant de rechercher un patient par son tout ou partie de son
+	 * adresse sans tenir compte de la case
+	 * 
+	 * @param adresse L'adresse du patient recherché.
+	 * @return Une liste de Patient correspondant à l'adresse recherché.
+	 * @throws PatientNotSuccessException
+	 */
+	public List<Patient> findByAdresseContainingIgnoreCase(String adresse)throws PatientNotSuccessException;
+
+	/**
+	 * Méthode permettant de recherche un patient par tout ou partie de son nom sans
+	 * tenir compte de la case.
+	 * 
+	 * @param nom Nom du patient recherché.
+	 * @return Une liste de Patient correspondant au nom recherché.
+	 * @throws PatientNotSuccessException
+	 */
+	public List<Patient> findByNomContainingIgnoreCase(String nom)throws PatientNotSuccessException;
 
 }

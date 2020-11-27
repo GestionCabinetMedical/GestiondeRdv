@@ -145,6 +145,39 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	}
 
 	/**
+	 * Méthode permettant de rechercher un patient par son tout ou partie de son
+	 * adresse sans tenir compte de la case
+	 * 
+	 * @param adresse L'adresse du patient recherché.
+	 * @return Une liste de Patient correspondant à l'adresse recherché.
+	 * @throws ResponseDtoNotSuccessException 
+	 * @throws PatientNotFoundException
+	 * @throws PatientNotSuccessException
+	 */
+	@GetMapping (path = "/adresse")
+	public ResponseDto<List<Patient>> findPatientByAdresse(@RequestParam String adresse) throws PatientNotFoundException, ResponseDtoNotSuccessException, PatientNotSuccessException {
+		log.info("Constroller specifique de Patient : méthode find Patient By Adresse appelée");
+		return makeListResponse(patientService.findByAdresseContainingIgnoreCase(adresse));
+	}
+	
+	/**
+	 * Méthode permettant de recherche un patient par tout ou partie de son nom sans
+	 * tenir compte de la case.
+	 * 
+	 * @param nom Nom du patient recherché.
+	 * @return Une liste de Patient correspondant au nom recherché.
+	 * @throws ResponseDtoNotSuccessException 
+	 * @throws PatientNotFoundException
+	 * @throws PatientNotSuccessException
+	 */
+	@GetMapping (path = "/nom")
+	public ResponseDto<List<Patient>> findPatientByNom(@RequestParam String nom) throws PatientNotFoundException, ResponseDtoNotSuccessException, PatientNotSuccessException {
+		log.info("Constroller specifique de Patient : méthode find Patient By Nom appelée");
+		return makeListResponse(patientService.findByNomContainingIgnoreCase(nom));
+	}
+	
+	
+	/**
 	 * Méthode permettant de créer une réponse de type ConnectedUserDto, et
 	 * d'injecter les paramètres de connection d'un Patient (identifiant et mdp)
 	 * dans un patientDto.
