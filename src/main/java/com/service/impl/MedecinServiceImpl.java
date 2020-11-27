@@ -127,14 +127,14 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 				
 				if (reservationToConfirm.isStatus() == false) {
 					// Récupération de la date du rdv et du médecin visé
-					Date dateToConfirm = reservationToConfirm.getDateRervation();
+					Date dateToConfirm = reservationToConfirm.getDateReservation();
 					Medecin medecinConcerned = medecinRepository.findById(idMedecin).get();
 					log.info("Appel repo medecin OK.");
 					
 					// Récupération des dates de rdv du médecin et vérification si un rdv est déjà prévu à cette date
 					List<Consultation> listeConsultation = medecinConcerned.getConsultations();
 					List<Consultation> listeConsultationAlreadyToThisDate = listeConsultation.stream()
-							.filter(c -> c.getReservation().getDateRervation() == dateToConfirm)
+							.filter(c -> c.getReservation().getDateReservation() == dateToConfirm)
 							.collect(Collectors.toList());
 
 					if (listeConsultationAlreadyToThisDate.isEmpty()) {
@@ -222,7 +222,7 @@ public class MedecinServiceImpl extends DaoServiceImpl<Medecin> implements IMede
 					Map<Consultation, Date> planningConsultations = new HashMap<>();
 					for (int i = 0; i < listeConsultations.size(); i++) {
 						Consultation consultationPlanned = listeConsultations.get(i);
-						planningConsultations.put(consultationPlanned, consultationPlanned.getReservation().getDateRervation());
+						planningConsultations.put(consultationPlanned, consultationPlanned.getReservation().getDateReservation());
 					}
 					return planningConsultations;
 				}

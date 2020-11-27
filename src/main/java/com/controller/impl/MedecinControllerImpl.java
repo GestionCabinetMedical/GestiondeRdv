@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -75,28 +74,24 @@ public class MedecinControllerImpl extends DaoControllerImpl<Medecin> {
 	 * Méthode permettant de vérifier l'existence d'un médecin par son identifiant
 	 * et son mot de passe (= connexion).
 	 *
-	 * @param identifiant Identifiant du médecin recherché.
+	 * @param username Identifiant du médecin recherché.
 	 * @param mdp         Mot de passe du médecin recherché.
 	 * @return Un médecin s'il existe déjà, null sinon.
 	 * @throws MedecinNotFoundException
 	 * @throws MedecinNotSuccessException
 	 */
-	@PostMapping(path = "/identifiant-mdp")
-	public ConnexionDto existsByIdentifiantAndMotDePasse(@RequestBody String[] tableau)
+	@PostMapping(path = "/connexion")
+	public ConnexionDto existsByIdentifiantAndMotDePasse(@RequestParam String username, @RequestParam String mdp)
 			throws MedecinNotFoundException, MedecinNotSuccessException {
 		log.info("Controller spécifique de Medecin: méthode 'existsByIdentifiantAndMotDePasse' appelée.");
 
 		ConnexionDto connexionDto = new ConnexionDto();
-
 		try {
-			String username = tableau[0];
-			String mdp = tableau[1];
 			Medecin medecin = medecinService.existsByIdentifiantAndMotDePasse(username, mdp);
-
 			if (medecin != null) {
 				log.info("Medecin existant dans la BDD.");
 				ConnectedUserDto medecinDto = makeConnectedUserDtoResponse(medecin);
-				String token = tokenManage.makeAdminSession(medecinDto);
+				String token = tokenManage.makeMedecinSession(medecinDto);
 
 				connexionDto.setUser(medecinDto);
 				connexionDto.setToken(token);

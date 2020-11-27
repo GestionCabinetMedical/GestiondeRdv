@@ -36,7 +36,7 @@ public class Reservation implements Serializable {
 	private boolean status;
 
 	@Column(name = "DATE_RESERVATION", nullable = false)
-	private Date dateRervation;
+	private Date dateReservation;
 
 	@Column(name = "CONSULTATION_EN_URGENCE")
 	private boolean isUrgent;

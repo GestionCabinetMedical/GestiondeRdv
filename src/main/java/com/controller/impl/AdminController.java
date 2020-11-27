@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -72,18 +71,14 @@ public class AdminController extends DaoControllerImpl<Admin> {
 	 * @throws AdminNotFoundException
 	 * @throws AdminNotSuccessException
 	 */
-	@PostMapping(path = "/identifiant-mdp")
-	public ConnexionDto existsByUsernameAndPassword(@RequestBody String[] tableau)
+	@PostMapping(path = "/connexion")
+	public ConnexionDto existsByUsernameAndPassword(@RequestParam String username, @RequestParam String mdp)
 			throws AdminNotFoundException, AdminNotSuccessException {
 		log.info("Controller spécifique de Admin : méthode 'existsByUsernameAndPassword' appelée.");
 
 		ConnexionDto connexionDto = new ConnexionDto();
-
 		try {
-			String username = tableau[0];
-			String mdp = tableau[1];
 			Admin admin = adminService.existsByUsernameAndPassword(username, mdp);
-
 			if (admin != null) {
 				log.info("Admin existant dans la BDD.");
 				ConnectedUserDto adminDto = makeConnectedUserDtoResponse(admin);

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -74,28 +73,24 @@ public class PatientController extends DaoControllerImpl<Patient> {
 	 * Méthode permettant de vérifier l'existence d'un patient par son identifiant
 	 * et son mot de passe (= connexion).
 	 * 
-	 * @param identifiant Identifiant du patient recherché.
+	 * @param username Identifiant du patient recherché.
 	 * @param mdp         Mot de passe du patient recherché.
 	 * @return Un patient s'il existe déjà, null sinon.
 	 * @throws PatientNotFoundException
 	 * @throws PatientNotSuccessException
 	 */
-	@PostMapping(path = "/identifiant-mdp")
-	public ConnexionDto existsByIdentifiantAndMotDePasse(@RequestBody String[] tableau)
+	@PostMapping(path = "/connexion")
+	public ConnexionDto existsByIdentifiantAndMotDePasse(@RequestParam String username, @RequestParam String mdp)
 			throws PatientNotFoundException, PatientNotSuccessException {
 		log.info("Controller spécifique de Patient: méthode 'existsByIdentifiantAndMotDePasse' appelée.");
 
 		ConnexionDto connexionDto = new ConnexionDto();
-
 		try {
-			String username = tableau[0];
-			String mdp = tableau[1];
 			Patient patient = patientService.existsByIdentifiantAndMotDePasse(username, mdp);
-
 			if (patient != null) {
 				log.info("Patient existant dans la BDD.");
 				ConnectedUserDto patientDto = makeConnectedUserDtoResponse(patient);
-				String token = tokenManage.makeAdminSession(patientDto);
+				String token = tokenManage.makePatientSession(patientDto);
 
 				connexionDto.setUser(patientDto);
 				connexionDto.setToken(token);
